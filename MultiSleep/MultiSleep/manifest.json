@@ -1,0 +1,10 @@
+{
+  "Name": "MultiSleep",
+  "Author": "Kaito Kid",
+  "Version": "1.0.0",
+  "Description": "Mod that allow sleeping multiple days at a time",
+  "UniqueID": "KaitoKid.ArchipelagoStandaloneMods.MultiSleep",
+  "EntryDll": "MultiSleep.dll",
+  "MinimumApiVersion": "4.0.0",
+  "UpdateKeys": [ "GitHub:agilbert1412/ArchipelagoStandaloneMods" ]
+}
