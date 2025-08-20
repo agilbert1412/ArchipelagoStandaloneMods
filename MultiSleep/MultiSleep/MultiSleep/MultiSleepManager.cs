@@ -138,6 +138,7 @@ namespace MultiSleep.MultiSleep
                 possibleResponses.Add(new Response(MultiSleepUntilBehavior.RAIN, "Rain"));
                 possibleResponses.Add(new Response(MultiSleepUntilBehavior.STORM, "Storm"));
             }
+            possibleResponses.Add(new Response(MultiSleepUntilBehavior.GREAT_LUCK, "Great Luck"));
             possibleResponses.Add(new Response(MultiSleepUntilBehavior.FESTIVAL, "Festival"));
             possibleResponses.Add(new Response(MultiSleepUntilBehavior.BIRTHDAY, "Birthday"));
             possibleResponses.Add(new Response(MultiSleepUntilBehavior.TRAVELING_CART, "Traveling Cart"));
@@ -163,6 +164,7 @@ namespace MultiSleep.MultiSleep
             {
                 case MultiSleepUntilBehavior.RAIN:
                 case MultiSleepUntilBehavior.STORM:
+                case MultiSleepUntilBehavior.GREAT_LUCK:
                 case MultiSleepUntilBehavior.FESTIVAL:
                 case MultiSleepUntilBehavior.BIRTHDAY:
                 case MultiSleepUntilBehavior.TRAVELING_CART:

@@ -10,6 +10,7 @@ namespace MultiSleep.MultiSleep
     {
         public const string RAIN = "Rain";
         public const string STORM = "Storm";
+        public const string GREAT_LUCK = "Great Luck";
         public const string FESTIVAL = "Festival";
         public const string BIRTHDAY = "Birthday";
         public const string TRAVELING_CART = "Traveling Cart";
@@ -34,6 +35,8 @@ namespace MultiSleep.MultiSleep
                     return !Game1.isRaining && !Game1.isLightning && !Game1.isGreenRain;
                 case STORM:
                     return !Game1.isLightning;
+                case GREAT_LUCK:
+                    return Game1.player.DailyLuck <= 0.07;
                 case FESTIVAL:
                     return !IsFestivalDay();
                 case BIRTHDAY:
