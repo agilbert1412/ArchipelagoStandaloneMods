@@ -1,0 +1,10 @@
+{
+  "Name": "CustomMail",
+  "Author": "Kaito Kid",
+  "Version": "1.0.0",
+  "Description": "Mod that allows generating custom letters manually, using smapi commands",
+  "UniqueID": "KaitoKid.ArchipelagoStandaloneMods.CustomMail",
+  "EntryDll": "CustomMail.dll",
+  "MinimumApiVersion": "4.0.0",
+  "UpdateKeys": [ "GitHub:agilbert1412/ArchipelagoStandaloneMods" ]
+}
