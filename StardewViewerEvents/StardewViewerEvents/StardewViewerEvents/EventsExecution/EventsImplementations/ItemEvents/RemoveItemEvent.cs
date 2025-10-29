@@ -2,7 +2,7 @@
 using StardewValley;
 using StardewViewerEvents.Events;
 
-namespace StardewViewerEvents.EventsExecution.EventsImplementations.Item
+namespace StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents
 {
     public class RemoveItemEvent : ExecutableEvent
     {

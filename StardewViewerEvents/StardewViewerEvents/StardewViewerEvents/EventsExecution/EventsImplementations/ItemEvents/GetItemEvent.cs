@@ -1,9 +1,8 @@
-﻿using Discord;
-using StardewModdingAPI;
+﻿using StardewModdingAPI;
 using StardewValley;
 using StardewViewerEvents.Events;
 
-namespace StardewViewerEvents.EventsExecution.EventsImplementations.Item
+namespace StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents
 {
     public abstract class GetItemEvent : ExecutableEvent
     {
@@ -28,7 +27,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.Item
             return 1;
         }
 
-        public virtual void GiveItemToPlayer(Item item)
+        public virtual void GiveItemToPlayer(StardewValley.Item item)
         {
             Game1.player.addItemByMenuIfNecessary(item);
         }
