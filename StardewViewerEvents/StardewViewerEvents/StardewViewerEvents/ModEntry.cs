@@ -72,10 +72,16 @@ namespace StardewViewerEvents
         private void OnDayEnding(object? sender, DayEndingEventArgs e)
         {
             _viewerEventsExecutor.Queue.Pause();
+            //_viewerEventsService.DiscordCommunications
         }
 
         private void OnUpdateTicked(object? sender, UpdateTickedEventArgs e)
         {
+            if (!_viewerEventsService.IsInitialized)
+            {
+                return;
+            }
+
             var framesBetweenEvents = Config.EventsDelay * 60;
             if (e.IsMultipleOf(framesBetweenEvents))
             {

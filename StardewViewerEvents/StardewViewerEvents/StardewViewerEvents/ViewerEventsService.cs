@@ -18,20 +18,28 @@ namespace StardewViewerEvents
         public CreditAccounts CreditAccounts => _creditAccounts;
 
         public IBotCommunicator DiscordCommunications => _discordBot.Communications;
+        public bool IsInitialized { get; set; }
 
         public ViewerEventsService(IMonitor logger, ModConfig config, ViewerEventsExecutor eventsExecutor)
         {
             _logger = logger;
             _config = config;
             _eventsExecutor = eventsExecutor;
+            IsInitialized = false;
         }
 
         public async Task Initialize(string path)
         {
+            if (IsInitialized)
+            {
+                return;
+            }
+
             _creditAccounts = new CreditAccounts(path);
             await InitializeDiscordIntegration(path);
             await InitializeTwitchIntegration(path);
             _creditAccounts.SetCommunicator(_discordBot.Communications);
+            IsInitialized = true;
         }
 
         private async Task InitializeDiscordIntegration(string path)
@@ -48,7 +56,6 @@ namespace StardewViewerEvents
                 await _discordBot.InitializeAsync(_config.DiscordToken);
 
                 _logger.LogInfo($"Discord Integration Initialized!");
-                await Task.Delay(-1);
             }
             catch (Exception e)
             {

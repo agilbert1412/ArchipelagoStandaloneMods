@@ -2,6 +2,7 @@
 using StardewModdingAPI;
 using StardewValley;
 using StardewViewerEvents.Events;
+using StardewViewerEvents.Events.Constants;
 using StardewViewerEvents.EventsExecution.EventsImplementations;
 
 namespace StardewViewerEvents.EventsExecution
@@ -65,18 +66,27 @@ namespace StardewViewerEvents.EventsExecution
         {
             var message = GetChatMessage();
 
-            Game1.chatBox.addMessage(message, Color.Blue);
+            var color = Color.LightBlue;
+            if (BaseEvent.alignment == Alignment.POSITIVE)
+            {
+                color = Color.LightGreen;
+            }
+            else if (BaseEvent.alignment == Alignment.NEGATIVE)
+            {
+                color = Color.IndianRed;
+            }
+
+            Game1.chatBox.addMessage(message, color);
         }
 
         private string GetChatMessage()
         {
-            var message = $"{QueuedEvent.BaseEvent.name}";
+            var message = $"{QueuedEvent.username} sent {QueuedEvent.BaseEvent.name}";
             if (QueuedEvent.queueCount > 1)
             {
                 message += $" (x{QueuedEvent.queueCount})";
             }
 
-            message += $" from {QueuedEvent.username}";
             return message;
         }
     }

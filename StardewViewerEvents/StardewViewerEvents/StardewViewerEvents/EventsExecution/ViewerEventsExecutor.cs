@@ -44,30 +44,39 @@ namespace StardewViewerEvents.EventsExecution
             Queue.RemoveFirst();
             Queue.PrintToConsole();
 
-            var executableEvent = eventToSend.GetExecutableEvent(logger, modHelper);
-
-            if (!executableEvent.ValidateParameters())
-            {
-                var accountToRefund = accounts[eventToSend.userId];
-                var refundAmount = baseEvent.cost * eventToSend.queueCount;
-                accountToRefund.AddCredits(refundAmount);
-                await communications.SendMessageAsync(channels.EventsChannel, $"Cannot trigger {eventToSend.baseEventName} with these parameters [{eventToSend.parameters}]. You have been refunded {refundAmount} credits. Current Balance: {accountToRefund.GetCredits()}");
-                return;
-            }
-
-            if (!executableEvent.CanExecuteRightNow())
-            {
-                Queue.QueueEvent(eventToSend);
-                return;
-            }
-
             try
             {
-                executableEvent.Execute();
+                var executableEvent = eventToSend.GetExecutableEvent(logger, modHelper);
+
+                if (!executableEvent.ValidateParameters())
+                {
+                    var accountToRefund = accounts[eventToSend.userId];
+                    var refundAmount = baseEvent.cost * eventToSend.queueCount;
+                    accountToRefund.AddCredits(refundAmount);
+                    await communications.SendMessageAsync(channels.EventsChannel,
+                        $"Cannot trigger {eventToSend.baseEventName} with these parameters [{string.Join(", ", eventToSend.parameters)}]. You have been refunded {refundAmount} credits. Current Balance: {accountToRefund.GetCredits()}");
+                    return;
+                }
+
+                if (!executableEvent.CanExecuteRightNow())
+                {
+                    Queue.QueueEvent(eventToSend);
+                    return;
+                }
+
+                try
+                {
+                    executableEvent.Execute();
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"Error while executing event '{baseEventName}'", ex);
+                }
             }
-            catch (Exception ex)
+            catch (NotImplementedException ex)
             {
-                _logger.LogError($"Error while executing event '{baseEventName}'", ex);
+                _logger.LogError(ex.Message);
+                await communications.SendMessageAsync(channels.AdminChannel, ex.Message);
             }
         }
 
@@ -86,19 +95,25 @@ namespace StardewViewerEvents.EventsExecution
                 }
             }
 
-            AddEventToQueueIfNeeded(sender, chosenEvent, args);
+            AddEventToQueue(sender, chosenEvent, args);
         }
 
-        private void AddEventToQueueIfNeeded(SocketUser sender, ViewerEvent chosenEvent, string[] args)
+        public void AddEventToQueue(SocketUser sender, ViewerEvent chosenEvent, string[] args)
         {
-            var invokedEvent = new QueuedEvent(chosenEvent, args);
-            invokedEvent.username = sender.Username;
-            invokedEvent.userId = sender.Id;
+            var invokedEvent = CreateQueuedEvent(sender, chosenEvent, args);
 
             Queue.QueueEvent(invokedEvent);
-            invokedEvent.queueCount = 1;
 
             Console.WriteLine($"Added {invokedEvent.baseEventName} to queue.");
+        }
+
+        public QueuedEvent CreateQueuedEvent(SocketUser sender, ViewerEvent chosenEvent, string[] args)
+        {
+            var invokedEvent = new QueuedEvent(chosenEvent, args);
+            invokedEvent.username = sender.GlobalName;
+            invokedEvent.userId = sender.Id;
+            invokedEvent.queueCount = 1;
+            return invokedEvent;
         }
     }
 }

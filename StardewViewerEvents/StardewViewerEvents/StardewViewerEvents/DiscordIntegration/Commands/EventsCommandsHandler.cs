@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Discord.WebSocket;
 using StardewModdingAPI;
+using StardewValley;
 using StardewViewerEvents.Credits;
 using StardewViewerEvents.Events;
 using StardewViewerEvents.EventsExecution;
@@ -27,6 +28,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             HandleSetBank(message, messageText, eventExecutor);
             HandleSetGlobalPriceMultiplier(message, messageText, eventExecutor);
             HandleGlobalPause(message, messageText, eventExecutor);
+            HandleTestAllEvents(message, messageText, eventExecutor);
         }
 
         public async Task HandleEventsUserCommands(SocketUserMessage message, string messageText, CreditAccounts creditAccounts, ViewerEventsExecutor eventExecutor)
@@ -91,7 +93,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             var queuedForcedEvent = new QueuedEvent(forcedEvent, args);
 
             queuedForcedEvent.queueCount = 1;
-            queuedForcedEvent.username = message.Author.Username;
+            queuedForcedEvent.username = message.Author.GlobalName;
             queuedForcedEvent.userId = message.Author.Id;
             eventExecutor.Queue.PushAtBeginning(queuedForcedEvent);
             _communications.ReplyTo(message, $"Forced {forcedEvent.name} immediately.");
@@ -164,6 +166,25 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
                 _communications.ReplyTo(message, $"All eventExecutor.Events are now resumed");
                 return;
             }
+        }
+
+        private void HandleTestAllEvents(SocketUserMessage message, string messageText, ViewerEventsExecutor eventExecutor)
+        {
+            if (!messageText.StartsWith("!testallevents"))
+            {
+                return;
+            }
+
+            var counter = 0;
+            var random = new Random();
+            foreach (var (eventName, viewerEvent) in eventExecutor.Events._events.OrderBy(x => random.NextDouble()))
+            {
+                eventExecutor.AddEventToQueue(message.Author, viewerEvent, viewerEvent.hasParameters ? new []{"test"} : Array.Empty<string>());
+                counter++;
+            }
+
+            _communications.ReplyTo(message, $"Queued up one instance of all {counter} available events.");
+            eventExecutor.Queue.PrintToConsole();
         }
 
         private void HandleGetGlobalPriceMultiplier(SocketUserMessage message, string messageText, ViewerEventsExecutor eventExecutor)

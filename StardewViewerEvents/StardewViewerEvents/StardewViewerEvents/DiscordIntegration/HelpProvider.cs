@@ -185,8 +185,8 @@ namespace StardewViewerEvents.DiscordIntegration
             adminCommandsListString += "!pause and !unpause" + Environment.NewLine;
             adminCommandsListString += "    Pauses and Resumes the dequeueing of events. Viewers can still purchase events, but they will not trigger in-game, they will wait patiently in the queue." + Environment.NewLine + Environment.NewLine;
 
-            // adminCommandsListString += "!setmission [mission]" + Environment.NewLine;
-            // adminCommandsListString += "    Sets the current mission" + Environment.NewLine + Environment.NewLine;
+            adminCommandsListString += "!testallevents" + Environment.NewLine;
+            adminCommandsListString += "    Queues up one copy of every available event" + Environment.NewLine + Environment.NewLine;
 
             adminCommandsListString += "```";
 
