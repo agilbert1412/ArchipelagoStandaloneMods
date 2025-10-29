@@ -1,0 +1,10 @@
+{
+  "Name": "StardewViewerEvents",
+  "Author": "Kaito Kid",
+  "Version": "0.0.1",
+  "Description": "Allows viewers to purchase events with credits",
+  "UniqueID": "KaitoKid.ArchipelagoStandaloneMods.StardewViewerEvents",
+  "EntryDll": "StardewViewerEvents.dll",
+  "MinimumApiVersion": "4.0.0",
+  "UpdateKeys": [ "GitHub:agilbert1412/ArchipelagoStandaloneMods" ]
+}

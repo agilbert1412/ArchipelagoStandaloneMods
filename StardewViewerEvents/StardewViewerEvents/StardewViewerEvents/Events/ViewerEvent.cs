@@ -1,0 +1,101 @@
+﻿using Newtonsoft.Json.Linq;
+using StardewModdingAPI;
+using StardewViewerEvents.Events.Constants;
+using StardewViewerEvents.EventsExecution;
+using StardewViewerEvents.EventsExecution.EventsImplementations;
+
+namespace StardewViewerEvents.Events
+{
+    public class ViewerEvent
+    {
+        public string name;
+        public int cost; // The current cost
+        public int bank; // The currently donated credits contributing to the next activation
+        public bool stackable;
+        public string alignment; // "positive", "negative" or "neutral"
+        public string description;
+        public string descriptionAnsi; // the description with coloring!
+
+        public ViewerEvent()
+        {
+            bank = 0;
+        }
+
+        public ViewerEvent(JObject data)
+        {
+            name = data["name"].ToString();
+            cost = int.Parse(data["cost"].ToString());
+            bank = int.Parse(data["bank"].ToString());
+            stackable = bool.Parse(data["stackable"].ToString());
+            alignment = data["alignment"].ToString();
+            description = data["description"].ToString();
+
+            descriptionAnsi = data.ContainsKey("descriptionAnsi") && !string.IsNullOrWhiteSpace(data["descriptionAnsi"].ToString()) ? data["descriptionAnsi"].ToString() : description;
+        }
+
+        public int CheckCost()
+        {
+            return bank / cost;
+        }
+
+        public void CallEvent(double multiplier)
+        {
+            bank -= GetMultiplierCost(multiplier);
+        }
+
+        public int GetCostToNextActivation(double multiplier)
+        {
+            return GetMultiplierCost(multiplier) - GetBank();
+        }
+
+        public int GetBank()
+        {
+            return bank;
+        }
+
+        public bool IsStackable()
+        {
+            return stackable;
+        }
+
+        public void AddToBank(int amountToAdd)
+        {
+            bank += amountToAdd;
+        }
+
+        public void SetBank(int newBank)
+        {
+            bank = newBank;
+        }
+
+        public int GetMultiplierCost(double multiplier)
+        {
+            return (int)Math.Ceiling(cost * multiplier);
+        }
+
+        public void SetCost(int newCost)
+        {
+            cost = newCost;
+        }
+
+        public void SetCostWithMultiplier(int newCost, double multiplier)
+        {
+            cost = (int)Math.Round(newCost / multiplier);
+        }
+
+        public ExecutableEvent GetExecutableEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent)
+        {
+            switch (queuedEvent.BaseEvent.name)
+            {
+                case EventName.ITEM_ADD:
+                    return new AddItemEvent(logger, modHelper, queuedEvent);
+                case EventName.ITEM_REMOVE:
+                    return new RemoveItemEvent(logger, modHelper, queuedEvent);
+                case EventName.TELEPORT:
+                    return new TeleportEvent(logger, modHelper, queuedEvent);
+            }
+
+            throw new NotImplementedException($"No Executable event found for event '{queuedEvent.BaseEvent.name}'");
+        }
+    }
+}
