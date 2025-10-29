@@ -43,7 +43,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
                 return;
             }
 
-            if (!_commandReader.IsCommandValid(messageText, out string eventName))
+            if (!_commandReader.IsCommandValid(messageText, out string eventName, out string[] args))
             {
                 _communications.ReplyTo(message, "Usage: !queueevent [eventName]");
                 return;
@@ -57,7 +57,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
                 return;
             }
 
-            eventExecutor.AddOrIncrementEventInQueue(message.Author.Username, chosenEvent);
+            eventExecutor.AddOrIncrementEventInQueue(message.Author.Username, chosenEvent, args);
             _communications.ReplyTo(message, $"Queued up one instance of {chosenEvent.name}.");
             eventExecutor.Queue.PrintToConsole();
         }
@@ -69,7 +69,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
                 return;
             }
 
-            if (!_commandReader.IsCommandValid(messageText, out string eventName))
+            if (!_commandReader.IsCommandValid(messageText, out string eventName, out string[] args))
             {
                 _communications.ReplyTo(message, "Usage: !triggerevent [eventName]");
                 return;
@@ -87,7 +87,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             forcedEvent.name = eventName;
             forcedEvent.SetBank(1);
             forcedEvent.SetCost(1);
-            var queuedForcedEvent = new QueuedEvent(forcedEvent);
+            var queuedForcedEvent = new QueuedEvent(forcedEvent, args);
             queuedForcedEvent.queueCount = 1;
             queuedForcedEvent.username = message.Author.Username;
             eventExecutor.Queue.PushAtBeginning(queuedForcedEvent);
@@ -103,7 +103,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
                 return;
             }
 
-            if (!_commandReader.IsCommandValid(messageText, out string eventName, out var bankAmount))
+            if (!_commandReader.IsCommandValid(messageText, out string eventName, out int bankAmount))
             {
                 _communications.ReplyTo(message, "Usage: !setbank [eventName] [bankAmount]");
                 return;
@@ -198,7 +198,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
 
             Console.WriteLine("Purchase: " + messageText);
 
-            if (!_commandReader.IsCommandValid(messageText, out string eventName))
+            if (!_commandReader.IsCommandValid(messageText, out string eventName, out string[] parameters))
             {
                 _communications.ReplyTo(message, "Usage: !purchase [eventName]");
                 return;
@@ -214,7 +214,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             var costForNextStack = chosenEvent.GetCostToNextActivation(eventExecutor.Events.CurrentMultiplier);
 
             LogPay(message.Author.Username, costForNextStack);
-            await PayForEvent(message, creditAccounts, eventExecutor, chosenEvent, costForNextStack);
+            await PayForEvent(message, creditAccounts, eventExecutor, chosenEvent, costForNextStack, parameters);
         }
 
         private async Task HandleCommandPay(SocketUserMessage message, string messageText, CreditAccounts creditAccounts, ViewerEventsExecutor eventExecutor)
@@ -225,7 +225,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             }
 
             Console.WriteLine("Pay: " + messageText);
-            if (!_commandReader.IsCommandValid(messageText, out string eventName, out var creditsToPay))
+            if (!_commandReader.IsCommandValid(messageText, out string eventName, out int creditsToPay))
             {
                 _communications.ReplyTo(message, "Usage: !pay [eventName] [creditAmount]");
                 return;
@@ -251,10 +251,16 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
                 return;
             }
 
-            await PayForEvent(message, creditAccounts, eventExecutor, chosenEvent, creditsToPay);
+            if (chosenEvent.hasParameters)
+            {
+                _communications.ReplyTo(message, $"{eventName} requires parameters, so can only be purchased with !purchase");
+                return;
+            }
+
+            await PayForEvent(message, creditAccounts, eventExecutor, chosenEvent, creditsToPay, Array.Empty<string>());
         }
 
-        private async Task PayForEvent(SocketUserMessage message, CreditAccounts creditAccounts, ViewerEventsExecutor eventExecutor, ViewerEvent chosenEvent, int creditsToPay)
+        private async Task PayForEvent(SocketUserMessage message, CreditAccounts creditAccounts, ViewerEventsExecutor eventExecutor, ViewerEvent chosenEvent, int creditsToPay, string[] args)
         {
             var userAccount = creditAccounts[message.Author.Id];
 
@@ -276,7 +282,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             chosenEvent.AddToBank(creditsToPay);
             userAccount.RemoveCredits(creditsToPay);
 
-            var numberOfActivations = TriggerEventAsNeeded(message.Author.Username, chosenEvent, eventExecutor);
+            var numberOfActivations = TriggerEventAsNeeded(message.Author.Username, chosenEvent, eventExecutor, args);
 
             if (numberOfActivations > 0)
             {
@@ -292,14 +298,14 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             eventExecutor.Queue.PrintToConsole();
         }
 
-        private int TriggerEventAsNeeded(string senderName, ViewerEvent chosenEvent, ViewerEventsExecutor eventExecutor)
+        private int TriggerEventAsNeeded(string senderName, ViewerEvent chosenEvent, ViewerEventsExecutor eventExecutor, string[] args)
         {
             var numberOfActivations = 0;
             while (chosenEvent.GetBank() >= chosenEvent.GetMultiplierCost(eventExecutor.Events.CurrentMultiplier))
             {
                 chosenEvent.CallEvent(eventExecutor.Events.CurrentMultiplier);
                 LogEvent(senderName, chosenEvent);
-                eventExecutor.AddOrIncrementEventInQueue(senderName, chosenEvent);
+                eventExecutor.AddOrIncrementEventInQueue(senderName, chosenEvent, args);
                 numberOfActivations++;
             }
 

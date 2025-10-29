@@ -10,12 +10,14 @@ namespace StardewViewerEvents.Events
         public string baseEventName;
         public int queueCount; //how many of these should be called
         public string username; //who triggered it
+        public string[] parameters;
 
-        public QueuedEvent(ViewerEvent e)
+        public QueuedEvent(ViewerEvent e, string[] args)
         {
             _baseEvent = e;
             baseEventName = e.name;
             queueCount = 0;
+            parameters = args;
         }
 
         public QueuedEvent(JObject data, EventCollection allEvents)
@@ -23,6 +25,7 @@ namespace StardewViewerEvents.Events
             baseEventName = data["baseEventName"].ToString();
             queueCount = int.Parse(data["queueCount"].ToString());
             username = data["username"].ToString();
+            parameters = data["parameters"].ToObject<string[]>();
             _baseEvent = allEvents.GetEvent(baseEventName);
         }
 

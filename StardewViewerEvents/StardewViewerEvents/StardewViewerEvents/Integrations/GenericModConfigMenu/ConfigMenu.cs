@@ -123,8 +123,6 @@ namespace StardewViewerEvents.Integrations.GenericModConfigMenu
                 save: () => Helper.WriteConfig(Config)
             );
 
-            configMenu.SetTitleScreenOnlyForNextOptions(ModManifest, true);
-
             configMenu.AddNumberOption(
                 mod: ModManifest,
                 name: () => "Delay between events",
@@ -135,6 +133,8 @@ namespace StardewViewerEvents.Integrations.GenericModConfigMenu
                 getValue: () => (int)Config.EventsDelay,
                 setValue: (value) => Config.EventsDelay = (uint)value
             );
+
+            configMenu.SetTitleScreenOnlyForNextOptions(ModManifest, true);
 
             configMenu.AddTextOption(
                 mod: ModManifest,

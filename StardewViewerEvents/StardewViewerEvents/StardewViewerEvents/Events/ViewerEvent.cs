@@ -12,13 +12,13 @@ namespace StardewViewerEvents.Events
         public int cost; // The current cost
         public int bank; // The currently donated credits contributing to the next activation
         public bool stackable;
+        public bool hasParameters;
         public string alignment; // "positive", "negative" or "neutral"
         public string description;
         public string descriptionAnsi; // the description with coloring!
 
         public ViewerEvent()
         {
-            bank = 0;
         }
 
         public ViewerEvent(JObject data)
@@ -27,6 +27,7 @@ namespace StardewViewerEvents.Events
             cost = int.Parse(data["cost"].ToString());
             bank = int.Parse(data["bank"].ToString());
             stackable = bool.Parse(data["stackable"].ToString());
+            hasParameters = bool.Parse(data["hasParameters"].ToString());
             alignment = data["alignment"].ToString();
             description = data["description"].ToString();
 

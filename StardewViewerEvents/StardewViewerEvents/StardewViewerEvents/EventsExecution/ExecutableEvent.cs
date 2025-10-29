@@ -21,6 +21,31 @@ namespace StardewViewerEvents.EventsExecution
             QueuedEvent = queuedEvent;
         }
 
+        public virtual bool CanExecuteRightNow()
+        {
+            if (AnyEventActive())
+            {
+                return false;
+            }
+
+            if (AnyFadeActive())
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool AnyEventActive()
+        {
+            return Game1.eventUp || Game1.CurrentEvent != null;
+        }
+
+        private static bool AnyFadeActive()
+        {
+            return Game1.fadeIn || Game1.fadeToBlack || Game1.globalFade || Game1.nonWarpFade;
+        }
+
         public virtual void Execute()
         {
             ShowEventInChat();

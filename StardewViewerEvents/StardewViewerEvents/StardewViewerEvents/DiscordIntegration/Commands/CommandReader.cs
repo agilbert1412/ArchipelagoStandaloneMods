@@ -88,6 +88,25 @@
             return true;
         }
 
+        public bool IsCommandValid(string messageText, out string arg1, out string[] parameters)
+        {
+            var numberParts = 2;
+            var lineparts = messageText.Split(" ", numberParts);
+
+            arg1 = "";
+            parameters = Array.Empty<string>();
+
+            if (lineparts.Length < numberParts)
+            {
+                return false;
+            }
+
+            arg1 = lineparts[1];
+            parameters = lineparts.Skip(2).ToArray();
+
+            return true;
+        }
+
         public bool IsCommandValid(string messageText, out double arg1)
         {
             var numberParts = 2;

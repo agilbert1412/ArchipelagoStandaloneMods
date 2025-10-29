@@ -8,29 +8,24 @@ public class EventsGenerator
     {
         var events = new List<ViewerEvent>
         {
-            new()
-            {
-                name = EventName.ITEM_ADD,
-                alignment = Alignment.POSITIVE,
-                cost = 500,
-                description = "Give an item to the player",
-            },
-            new()
-            {
-                name = EventName.ITEM_REMOVE,
-                alignment = Alignment.NEGATIVE,
-                cost = 200,
-                description = "Take away an item from the player",
-            },
-            new()
-            {
-                name = EventName.TELEPORT,
-                alignment = Alignment.NEUTRAL,
-                cost = 50,
-                description = "Take away an item from the player",
-            },
+            CreateEvent(EventName.ITEM_ADD, Alignment.POSITIVE, 500, "Give an item to the player"),
+            CreateEvent(EventName.ITEM_REMOVE, Alignment.NEGATIVE, 200, "Take away an item from the player"),
+            CreateEvent(EventName.TELEPORT, Alignment.NEUTRAL, 50, "Take away an item from the player"),
         };
 
         return events;
+    }
+
+    private ViewerEvent CreateEvent(string name, string alignment, int cost, string description, string descriptionAnsi = null)
+    {
+        return new ViewerEvent
+        {
+            name = name,
+            alignment = alignment,
+            cost = cost,
+            bank = 0,
+            description = description,
+            descriptionAnsi = descriptionAnsi ?? description,
+        };
     }
 }

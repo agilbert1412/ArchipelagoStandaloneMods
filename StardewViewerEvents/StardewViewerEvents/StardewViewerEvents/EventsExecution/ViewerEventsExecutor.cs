@@ -41,6 +41,13 @@ namespace StardewViewerEvents.EventsExecution
             Queue.PrintToConsole();
 
             var executableEvent = eventToSend.GetExecutableEvent(logger, modHelper);
+
+            if (!executableEvent.CanExecuteRightNow())
+            {
+                Queue.QueueEvent(eventToSend);
+                return;
+            }
+
             try
             {
                 executableEvent.Execute();
@@ -51,34 +58,27 @@ namespace StardewViewerEvents.EventsExecution
             }
         }
 
-        public void AddOrIncrementEventInQueue(string senderName, ViewerEvent chosenEvent)
+        public void AddOrIncrementEventInQueue(string senderName, ViewerEvent chosenEvent, string[] args)
         {
-            var isInQueue = false;
-            if (chosenEvent.IsStackable())
+            if (chosenEvent.IsStackable() && (args == null || args.Length == 0))
             {
                 foreach (var qe in Queue)
                 {
                     if (qe.baseEventName == chosenEvent.name)
                     {
                         qe.queueCount += 1;
-
-                        isInQueue = true;
                         Console.WriteLine($"Increased queue count of {chosenEvent.name} to {qe.queueCount}.");
+                        return;
                     }
                 }
             }
 
-            AddEventToQueueIfNeeded(senderName, isInQueue, chosenEvent);
+            AddEventToQueueIfNeeded(senderName, chosenEvent, args);
         }
 
-        private void AddEventToQueueIfNeeded(string senderName, bool isInQueue, ViewerEvent chosenEvent)
+        private void AddEventToQueueIfNeeded(string senderName, ViewerEvent chosenEvent, string[] args)
         {
-            if (isInQueue)
-            {
-                return;
-            }
-
-            var invokedEvent = new QueuedEvent(chosenEvent);
+            var invokedEvent = new QueuedEvent(chosenEvent, args);
             invokedEvent.username = senderName;
 
             Queue.QueueEvent(invokedEvent);

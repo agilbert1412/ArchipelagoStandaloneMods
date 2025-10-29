@@ -64,10 +64,7 @@ namespace StardewViewerEvents.Events
 
         public void PrintToConsole()
         {
-            _logger.LogInfo("Queue is currently:\n[");
-            _logger.LogInfo(GetPrintableQueue());
-            _logger.LogInfo("]");
-            _logger.LogInfo("-------------------------------");
+            _logger.LogInfo($"Queue is currently:{Environment.NewLine}[{Environment.NewLine}{GetPrintableQueue()}{Environment.NewLine}]{Environment.NewLine}-------------------------------");
         }
 
         private string GetDiscordMessage()
