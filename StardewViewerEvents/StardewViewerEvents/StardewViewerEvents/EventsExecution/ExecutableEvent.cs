@@ -10,15 +10,25 @@ namespace StardewViewerEvents.EventsExecution
     {
         protected readonly IMonitor _logger;
         protected readonly IModHelper _modHelper;
-        protected readonly TileChooser _tileChooser;
+        protected static readonly TileChooser _tileChooser = new();
         private QueuedEvent QueuedEvent { get; }
+        private ViewerEvent BaseEvent => QueuedEvent.BaseEvent;
 
         protected ExecutableEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent)
         {
             _logger = logger;
             _modHelper = modHelper;
-            _tileChooser = new TileChooser();
             QueuedEvent = queuedEvent;
+        }
+
+        public virtual bool ValidateParameters()
+        {
+            if (BaseEvent.hasParameters)
+            {
+                return QueuedEvent.parameters is { Length: >= 1 };
+            }
+
+            return QueuedEvent.parameters is not { Length: > 0 };
         }
 
         public virtual bool CanExecuteRightNow()

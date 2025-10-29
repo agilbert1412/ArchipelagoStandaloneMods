@@ -16,13 +16,15 @@ public class EventsGenerator
         return events;
     }
 
-    private ViewerEvent CreateEvent(string name, string alignment, int cost, string description, string descriptionAnsi = null)
+    private ViewerEvent CreateEvent(string name, string alignment, int cost, string description, bool stackable = true, bool hasParameters = false, string descriptionAnsi = null)
     {
         return new ViewerEvent
         {
             name = name,
             alignment = alignment,
             cost = cost,
+            stackable = stackable,
+            hasParameters = hasParameters,
             bank = 0,
             description = description,
             descriptionAnsi = descriptionAnsi ?? description,

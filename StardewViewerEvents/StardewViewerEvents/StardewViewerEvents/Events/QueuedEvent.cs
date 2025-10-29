@@ -10,13 +10,13 @@ namespace StardewViewerEvents.Events
         public string baseEventName;
         public int queueCount; //how many of these should be called
         public string username; //who triggered it
+        public ulong userId; //who triggered it
         public string[] parameters;
 
         public QueuedEvent(ViewerEvent e, string[] args)
         {
             _baseEvent = e;
             baseEventName = e.name;
-            queueCount = 0;
             parameters = args;
         }
 
@@ -25,6 +25,7 @@ namespace StardewViewerEvents.Events
             baseEventName = data["baseEventName"].ToString();
             queueCount = int.Parse(data["queueCount"].ToString());
             username = data["username"].ToString();
+            userId = ulong.Parse(data["userId"].ToString());
             parameters = data["parameters"].ToObject<string[]>();
             _baseEvent = allEvents.GetEvent(baseEventName);
         }
@@ -34,6 +35,11 @@ namespace StardewViewerEvents.Events
         public ExecutableEvent GetExecutableEvent(IMonitor logger, IModHelper modHelper)
         {
             return BaseEvent.GetExecutableEvent(logger, modHelper, this);
+        }
+
+        public bool ValidateParameters(IMonitor logger, IModHelper modHelper)
+        {
+            return GetExecutableEvent(logger, modHelper).ValidateParameters();
         }
     }
 }

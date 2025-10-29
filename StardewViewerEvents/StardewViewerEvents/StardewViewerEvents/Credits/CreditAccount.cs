@@ -2,7 +2,7 @@
 
 namespace StardewViewerEvents.Credits
 {
-    class CreditAccount
+    public class CreditAccount
     {
         private const int CREDITS_STARTING_AMOUNT = 100; // Equivalent to donating one dollar
 

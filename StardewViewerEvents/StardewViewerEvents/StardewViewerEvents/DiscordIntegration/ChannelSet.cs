@@ -1,6 +1,6 @@
 ﻿namespace StardewViewerEvents.DiscordIntegration
 {
-    internal class ChannelSet
+    public class ChannelSet
     {
         public ulong DebugChannel { get; set; }
         public ulong DonationsChannel { get; set; }

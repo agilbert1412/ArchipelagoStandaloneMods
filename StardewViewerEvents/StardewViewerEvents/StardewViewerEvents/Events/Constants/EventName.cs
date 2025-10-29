@@ -1,0 +1,96 @@
+﻿namespace StardewViewerEvents.Events.Constants
+{
+    public static class EventName
+    {
+        public const string ITEM_HOME = "itemhome";
+        public const string ITEM_SELL = "itemsell";
+        public const string ITEM_SHIP = "itemship";
+        public const string ITEM_DELETE = "itemdelete";
+        public const string ITEM_DROP = "itemdrop";
+        public const string ITEM_QUALITY_DOWN = "itemqualitydown";
+        public const string ITEM_QUALITY_UP = "itemqualityup";
+
+        public const string ITEM_GET_RANDOM = "getrandom";
+        public const string ITEM_GET_SPECIFIC = "getitem";
+        public const string ITEM_FILL_INVENTORY = "fillinventory";
+        public const string ITEM_GET_EXOTIC = "exotic";
+
+        public const string TELEPORT_NEAR = "blink";
+        public const string TELEPORT_HOME = "gohome";
+        public const string TELEPORT_MAP = "goto";
+        public const string TELEPORT_RANDOM = "goaway";
+
+        public const string SPAWN_MONSTER_RANDOM = "spawnrandom";
+        public const string SPAWN_MONSTER_SPECIFIC = "spawnmonster";
+        public const string NEW_BABY = "newbaby";
+        public const string BYE_BABY = "byebaby";
+        public const string TEMPORARY_BABY = "tempbaby";
+
+        public const string DEBRIS_RANDOM = "debris";
+        public const string DEBRIS_TWIG = "twig";
+        public const string DEBRIS_WEED = "weed";
+        public const string DEBRIS_STONE = "stone";
+        public const string DEBRIS_TREE = "tree";
+        public const string DEBRIS_BOULDER = "browder";
+        public const string DEBRIS_X_SHAPE = "xmarksthespot";
+        public const string DEBRIS_O_SHAPE = "otakesthesquare";
+
+        public const string SOUND_SPECIFIC = "sound";
+        public const string SOUND_BARK = "bark";
+        public const string SOUND_MEOW = "meow";
+
+        public const string SLEEP_ONCE = "sleep";
+        public const string SLEEP_WEEK = "bigsleep";
+        public const string SLEEP_MONTH = "sleepingbeauty";
+
+        public const string BITE_RANDOM = "biterandom";
+        public const string BITE_SPECIFIC = "bitespecific";
+        public const string BITE_CURRENT_AREA = "bitearea";
+
+        public const string WEATHER_SPECIFIC = "forecast";
+        public const string WEATHER_RANDOM = "noforecast";
+
+        public const string SHOW_AD = "ad";
+        public const string SHOW_MAIL = "mail";
+
+        public const string EMOTE_SPECIFIC = "emote";
+        public const string EMOTE_RANDOM = "moodswing";
+
+        // Status Effects
+
+        // Jojapocalypse Check
+
+        public const string RANDOMIZE_FULL_OUTFIT = "fullmakeover";
+        public const string RANDOMIZE_ONE_OUTFIT_PART = "makeover";
+        public const string CHANGE_GENDER = "hrt";
+        public const string RANDOMIZE_PROFESSIONS = "backtoschool";
+        public const string RANDOM_NAME = "refactoring";
+        public const string CHANGE_FAVORITE_THING = "acquiredtaste";
+
+        public const string MONEY_ADD = "moneybags";
+        public const string MONEY_REMOVE = "recession";
+        public const string HEALTH_ADD = "healthy";
+        public const string HEALTH_REMOVE = "hurty";
+        public const string ENERGY_ADD = "fresh";
+        public const string ENERGY_REMOVE = "tired";
+        public const string TIME_FORWARD = "timeflies";
+        public const string TIME_BACKWARDS = "timetravel";
+        // Add remove xp and friendship?
+
+        public const string RANDOMIZE_ENTRANCE = "lost";
+
+        public const string OPEN_MENU = "menu";
+
+        // jump start machine
+
+        public const string CUTSCENE_RANDOM = "cutscene";
+
+        public const string REVERSE_CONTROLS = "keyboard";
+
+        public const string INVISIBLE_COWS = "wemoounseen";
+
+        public const string SPEED_UP = "hurryup";
+        public const string SPEED_DOWN = "slowdown";
+        // Change clock speed?
+    }
+}

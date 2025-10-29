@@ -1,5 +1,6 @@
 ﻿using Discord;
 using Discord.WebSocket;
+using StardewModdingAPI;
 using StardewViewerEvents.Credits;
 using StardewViewerEvents.Events;
 using StardewViewerEvents.EventsExecution;
@@ -57,7 +58,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
                 return;
             }
 
-            eventExecutor.AddOrIncrementEventInQueue(message.Author.Username, chosenEvent, args);
+            eventExecutor.AddOrIncrementEventInQueue(message.Author, chosenEvent, args);
             _communications.ReplyTo(message, $"Queued up one instance of {chosenEvent.name}.");
             eventExecutor.Queue.PrintToConsole();
         }
@@ -88,8 +89,10 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             forcedEvent.SetBank(1);
             forcedEvent.SetCost(1);
             var queuedForcedEvent = new QueuedEvent(forcedEvent, args);
+
             queuedForcedEvent.queueCount = 1;
             queuedForcedEvent.username = message.Author.Username;
+            queuedForcedEvent.userId = message.Author.Id;
             eventExecutor.Queue.PushAtBeginning(queuedForcedEvent);
             _communications.ReplyTo(message, $"Forced {forcedEvent.name} immediately.");
 
@@ -282,7 +285,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             chosenEvent.AddToBank(creditsToPay);
             userAccount.RemoveCredits(creditsToPay);
 
-            var numberOfActivations = TriggerEventAsNeeded(message.Author.Username, chosenEvent, eventExecutor, args);
+            var numberOfActivations = TriggerEventAsNeeded(message.Author, chosenEvent, eventExecutor, args);
 
             if (numberOfActivations > 0)
             {
@@ -298,14 +301,14 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             eventExecutor.Queue.PrintToConsole();
         }
 
-        private int TriggerEventAsNeeded(string senderName, ViewerEvent chosenEvent, ViewerEventsExecutor eventExecutor, string[] args)
+        private int TriggerEventAsNeeded(SocketUser sender, ViewerEvent chosenEvent, ViewerEventsExecutor eventExecutor, string[] args)
         {
             var numberOfActivations = 0;
             while (chosenEvent.GetBank() >= chosenEvent.GetMultiplierCost(eventExecutor.Events.CurrentMultiplier))
             {
                 chosenEvent.CallEvent(eventExecutor.Events.CurrentMultiplier);
-                LogEvent(senderName, chosenEvent);
-                eventExecutor.AddOrIncrementEventInQueue(senderName, chosenEvent, args);
+                LogEvent(sender.Username, chosenEvent);
+                eventExecutor.AddOrIncrementEventInQueue(sender, chosenEvent, args);
                 numberOfActivations++;
             }
 

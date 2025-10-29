@@ -1,5 +1,8 @@
-﻿using StardewModdingAPI;
+﻿using Discord.WebSocket;
+using StardewModdingAPI;
 using StardewValley;
+using StardewViewerEvents.Credits;
+using StardewViewerEvents.DiscordIntegration;
 using StardewViewerEvents.Events;
 using StardewViewerEvents.Extensions;
 
@@ -8,19 +11,26 @@ namespace StardewViewerEvents.EventsExecution
     public class ViewerEventsExecutor
     {
         private readonly IMonitor _logger;
+        private readonly IBotCommunicator _communications;
+        private readonly CreditAccounts _accounts;
+        private readonly ChannelSet _channels;
+
         public EventCollection Events { get; }
         public EventQueue Queue { get; }
 
-        public ViewerEventsExecutor(IMonitor logger)
+        public ViewerEventsExecutor(IMonitor logger, IBotCommunicator communications, CreditAccounts accounts, ChannelSet channels)
         {
             _logger = logger;
+            _communications = communications;
+            _accounts = accounts;
+            _channels = channels;
             Events = new EventCollection();
             Queue = new EventQueue(logger);
 
             _logger.LogInfo(Events.Count + " is the total events count.");
         }
 
-        public void DequeueEvent(IMonitor logger, IModHelper modHelper)
+        public async Task DequeueEvent(IMonitor logger, IModHelper modHelper)
         {
             if (Queue.IsEmpty || Queue.IsPaused())
             {
@@ -42,6 +52,15 @@ namespace StardewViewerEvents.EventsExecution
 
             var executableEvent = eventToSend.GetExecutableEvent(logger, modHelper);
 
+            if (!executableEvent.ValidateParameters())
+            {
+                var accountToRefund = _accounts[eventToSend.userId];
+                var refundAmount = baseEvent.cost * eventToSend.queueCount;
+                accountToRefund.AddCredits(refundAmount);
+                await _communications.SendMessageAsync(_channels.EventsChannel, $"Cannot trigger {eventToSend.baseEventName} with these parameters [{eventToSend.parameters}]. You have been refunded {refundAmount} credits. Current Balance: {accountToRefund.GetCredits()}");
+                return;
+            }
+
             if (!executableEvent.CanExecuteRightNow())
             {
                 Queue.QueueEvent(eventToSend);
@@ -58,7 +77,7 @@ namespace StardewViewerEvents.EventsExecution
             }
         }
 
-        public void AddOrIncrementEventInQueue(string senderName, ViewerEvent chosenEvent, string[] args)
+        public void AddOrIncrementEventInQueue(SocketUser sender, ViewerEvent chosenEvent, string[] args)
         {
             if (chosenEvent.IsStackable() && (args == null || args.Length == 0))
             {
@@ -73,13 +92,14 @@ namespace StardewViewerEvents.EventsExecution
                 }
             }
 
-            AddEventToQueueIfNeeded(senderName, chosenEvent, args);
+            AddEventToQueueIfNeeded(sender, chosenEvent, args);
         }
 
-        private void AddEventToQueueIfNeeded(string senderName, ViewerEvent chosenEvent, string[] args)
+        private void AddEventToQueueIfNeeded(SocketUser sender, ViewerEvent chosenEvent, string[] args)
         {
             var invokedEvent = new QueuedEvent(chosenEvent, args);
-            invokedEvent.username = senderName;
+            invokedEvent.username = sender.Username;
+            invokedEvent.userId = sender.Id;
 
             Queue.QueueEvent(invokedEvent);
             invokedEvent.queueCount = 1;

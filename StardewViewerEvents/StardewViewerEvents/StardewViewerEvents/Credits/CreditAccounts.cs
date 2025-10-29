@@ -5,7 +5,7 @@ using System.Text;
 
 namespace StardewViewerEvents.Credits
 {
-    internal class CreditAccounts
+    public class CreditAccounts
     {
         private static readonly Random _random = new Random();
         private readonly IBotCommunicator _communications;
