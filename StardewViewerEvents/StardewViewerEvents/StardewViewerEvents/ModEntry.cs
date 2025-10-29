@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
+using StardewViewerEvents.DiscordIntegration;
 using StardewViewerEvents.EventsExecution;
 using StardewViewerEvents.Integrations.GenericModConfigMenu;
 
@@ -78,7 +79,7 @@ namespace StardewViewerEvents
             var framesBetweenEvents = Config.EventsDelay * 60;
             if (e.IsMultipleOf(framesBetweenEvents))
             {
-                _viewerEventsExecutor.DequeueEvent(Monitor, Helper);
+                _viewerEventsExecutor.DequeueEvent(Monitor, Helper, _viewerEventsService.DiscordCommunications, _viewerEventsService.CreditAccounts, DiscordModule.ActiveChannels);
             }
         }
 

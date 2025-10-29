@@ -16,7 +16,7 @@ namespace StardewViewerEvents.DiscordIntegration
         private readonly ViewerEventsExecutor _eventsExecutor;
         private readonly string _directory;
 
-        private readonly ChannelSet _activeChannels = ChannelSet.TestMyBotsChannels;
+        public static readonly ChannelSet ActiveChannels = ChannelSet.TestMyBotsChannels;
 
         private readonly CreditsCommandsHandler _creditsCommandsHandler;
         private readonly EventsCommandsHandler _eventsCommandsHandler;
@@ -31,7 +31,7 @@ namespace StardewViewerEvents.DiscordIntegration
         public const string CREDITS_FILE = "Credits.json";
         public const string QUEUE_FILE = "Queue.json";
 
-        public DiscordModule(IMonitor logger, IBotCommunicator communications, ViewerEventsExecutor eventsExecutor, string path)
+        public DiscordModule(IMonitor logger, IBotCommunicator communications, ViewerEventsExecutor eventsExecutor, CreditAccounts creditAccounts, string path)
         {
             _logger = logger;
             _communications = communications;
@@ -39,11 +39,11 @@ namespace StardewViewerEvents.DiscordIntegration
             _directory = path;
 
             _commandReader = new CommandReader();
-            _helpProvider = new HelpProvider(_communications, _activeChannels);
+            _helpProvider = new HelpProvider(_communications, ActiveChannels);
             _creditsCommandsHandler = new CreditsCommandsHandler(_communications, _commandReader);
             _eventsCommandsHandler = new EventsCommandsHandler(_communications, _commandReader, _helpProvider);
-            _donationsCommandsHandler = new DonationsCommandsHandler(_communications, _activeChannels);
-            _accounts = new CreditAccounts(_communications, path);
+            _donationsCommandsHandler = new DonationsCommandsHandler(_communications, ActiveChannels);
+            _accounts = creditAccounts;
 
             SetupData();
 
@@ -169,17 +169,17 @@ namespace StardewViewerEvents.DiscordIntegration
 
         private bool IsInAdminChannel(SocketMessage message)
         {
-            return message.Channel.Id == _activeChannels.AdminChannel;
+            return message.Channel.Id == ActiveChannels.AdminChannel;
         }
 
         private bool IsInEventsChannel(SocketMessage message)
         {
-            return message.Channel.Id == _activeChannels.EventsChannel;
+            return message.Channel.Id == ActiveChannels.EventsChannel;
         }
 
         private bool IsInDonationsChannel(SocketMessage message)
         {
-            return message.Channel.Id == _activeChannels.DonationsChannel;
+            return message.Channel.Id == ActiveChannels.DonationsChannel;
         }
     }
 }

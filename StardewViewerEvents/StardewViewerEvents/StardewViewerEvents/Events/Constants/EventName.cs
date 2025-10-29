@@ -2,6 +2,8 @@
 {
     public static class EventName
     {
+        public const string INVISIBLE_COWS = "wemoounseen";
+
         public const string ITEM_HOME = "itemhome";
         public const string ITEM_SELL = "itemsell";
         public const string ITEM_SHIP = "itemship";
@@ -27,10 +29,7 @@
         public const string TEMPORARY_BABY = "tempbaby";
 
         public const string DEBRIS_RANDOM = "debris";
-        public const string DEBRIS_TWIG = "twig";
-        public const string DEBRIS_WEED = "weed";
-        public const string DEBRIS_STONE = "stone";
-        public const string DEBRIS_TREE = "tree";
+        public const string DEBRIS_TREE = "lorax";
         public const string DEBRIS_BOULDER = "browder";
         public const string DEBRIS_X_SHAPE = "xmarksthespot";
         public const string DEBRIS_O_SHAPE = "otakesthesquare";
@@ -39,7 +38,7 @@
         public const string SOUND_BARK = "bark";
         public const string SOUND_MEOW = "meow";
 
-        public const string SLEEP_ONCE = "sleep";
+        public const string SLEEP_ONCE = "sleepy";
         public const string SLEEP_WEEK = "bigsleep";
         public const string SLEEP_MONTH = "sleepingbeauty";
 
@@ -87,10 +86,20 @@
 
         public const string REVERSE_CONTROLS = "keyboard";
 
-        public const string INVISIBLE_COWS = "wemoounseen";
-
         public const string SPEED_UP = "hurryup";
         public const string SPEED_DOWN = "slowdown";
         // Change clock speed?
+
+
+        public const string CROW = "cawcaw";
+        public const string NUDGE = "nudge";
+        public const string SHUFFLE_INVENTORY = "messy";
+        public const string SHUFFLE_ALL = "hoarder";
+        public const string BENJAMIN_BUDTON = "benjamin";
+        public const string DROUGHT = "dry";
+        public const string BOMB = "boom";
+        public const string BIG_BOOM = "bigboom";
+
+        // public const string  = "";
     }
 }

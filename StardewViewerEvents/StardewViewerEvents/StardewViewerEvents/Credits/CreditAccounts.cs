@@ -8,18 +8,22 @@ namespace StardewViewerEvents.Credits
     public class CreditAccounts
     {
         private static readonly Random _random = new Random();
-        private readonly IBotCommunicator _communications;
+        private IBotCommunicator _communications;
         private readonly string _directory;
 
         private Dictionary<ulong, CreditAccount> _accounts;
 
         private DateTime _lastBackupTime;
 
-        public CreditAccounts(IBotCommunicator discord, string path)
+        public CreditAccounts(string path)
         {
-            _communications = discord;
             _directory = path;
             _accounts = new Dictionary<ulong, CreditAccount>();
+        }
+
+        public void SetCommunicator(IBotCommunicator botCommunications)
+        {
+            _communications = botCommunications;
         }
 
         public CreditAccount this[ulong discordId]

@@ -11,26 +11,20 @@ namespace StardewViewerEvents.EventsExecution
     public class ViewerEventsExecutor
     {
         private readonly IMonitor _logger;
-        private readonly IBotCommunicator _communications;
-        private readonly CreditAccounts _accounts;
-        private readonly ChannelSet _channels;
 
         public EventCollection Events { get; }
         public EventQueue Queue { get; }
 
-        public ViewerEventsExecutor(IMonitor logger, IBotCommunicator communications, CreditAccounts accounts, ChannelSet channels)
+        public ViewerEventsExecutor(IMonitor logger)
         {
             _logger = logger;
-            _communications = communications;
-            _accounts = accounts;
-            _channels = channels;
             Events = new EventCollection();
             Queue = new EventQueue(logger);
 
             _logger.LogInfo(Events.Count + " is the total events count.");
         }
 
-        public async Task DequeueEvent(IMonitor logger, IModHelper modHelper)
+        public async Task DequeueEvent(IMonitor logger, IModHelper modHelper, IBotCommunicator communications, CreditAccounts accounts, ChannelSet channels)
         {
             if (Queue.IsEmpty || Queue.IsPaused())
             {
@@ -54,10 +48,10 @@ namespace StardewViewerEvents.EventsExecution
 
             if (!executableEvent.ValidateParameters())
             {
-                var accountToRefund = _accounts[eventToSend.userId];
+                var accountToRefund = accounts[eventToSend.userId];
                 var refundAmount = baseEvent.cost * eventToSend.queueCount;
                 accountToRefund.AddCredits(refundAmount);
-                await _communications.SendMessageAsync(_channels.EventsChannel, $"Cannot trigger {eventToSend.baseEventName} with these parameters [{eventToSend.parameters}]. You have been refunded {refundAmount} credits. Current Balance: {accountToRefund.GetCredits()}");
+                await communications.SendMessageAsync(channels.EventsChannel, $"Cannot trigger {eventToSend.baseEventName} with these parameters [{eventToSend.parameters}]. You have been refunded {refundAmount} credits. Current Balance: {accountToRefund.GetCredits()}");
                 return;
             }
 

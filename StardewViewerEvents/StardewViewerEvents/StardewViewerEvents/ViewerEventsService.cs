@@ -1,7 +1,9 @@
 ﻿using StardewModdingAPI;
+using StardewViewerEvents.Credits;
 using StardewViewerEvents.DiscordIntegration;
 using StardewViewerEvents.EventsExecution;
 using StardewViewerEvents.Extensions;
+using System.IO;
 
 namespace StardewViewerEvents
 {
@@ -10,6 +12,12 @@ namespace StardewViewerEvents
         private IMonitor _logger;
         private ModConfig _config;
         private ViewerEventsExecutor _eventsExecutor;
+        private DiscordBot _discordBot;
+        private CreditAccounts _creditAccounts;
+
+        public CreditAccounts CreditAccounts => _creditAccounts;
+
+        public IBotCommunicator DiscordCommunications => _discordBot.Communications;
 
         public ViewerEventsService(IMonitor logger, ModConfig config, ViewerEventsExecutor eventsExecutor)
         {
@@ -20,8 +28,10 @@ namespace StardewViewerEvents
 
         public async Task Initialize(string path)
         {
+            _creditAccounts = new CreditAccounts(path);
             await InitializeDiscordIntegration(path);
             await InitializeTwitchIntegration(path);
+            _creditAccounts.SetCommunicator(_discordBot.Communications);
         }
 
         private async Task InitializeDiscordIntegration(string path)
@@ -34,8 +44,8 @@ namespace StardewViewerEvents
             try
             {
                 _logger.LogInfo($"Initializing Discord Integration...");
-                var bot = new DiscordBot(_logger, _eventsExecutor, path);
-                await bot.InitializeAsync(_config.DiscordToken);
+                _discordBot = new DiscordBot(_logger, _eventsExecutor, _creditAccounts, path);
+                await _discordBot.InitializeAsync(_config.DiscordToken);
 
                 _logger.LogInfo($"Discord Integration Initialized!");
                 await Task.Delay(-1);

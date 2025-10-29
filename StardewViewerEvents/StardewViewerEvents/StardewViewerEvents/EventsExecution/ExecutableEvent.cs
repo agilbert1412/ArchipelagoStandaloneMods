@@ -11,7 +11,7 @@ namespace StardewViewerEvents.EventsExecution
         protected readonly IMonitor _logger;
         protected readonly IModHelper _modHelper;
         protected static readonly TileChooser _tileChooser = new();
-        private QueuedEvent QueuedEvent { get; }
+        protected QueuedEvent QueuedEvent { get; }
         private ViewerEvent BaseEvent => QueuedEvent.BaseEvent;
 
         protected ExecutableEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent)
@@ -38,10 +38,10 @@ namespace StardewViewerEvents.EventsExecution
                 return false;
             }
 
-            if (AnyFadeActive())
-            {
-                return false;
-            }
+            //if (AnyFadeActive())
+            //{
+            //    return false;
+            //}
 
             return true;
         }

@@ -5,25 +5,33 @@ using StardewViewerEvents.Events;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations
 {
-    public class TeleportEvent : ExecutableEvent
+    public abstract class TeleportEvent : ExecutableEvent
     {
+        private GameLocation _destinationMap;
+        private Vector2 _destinationTile;
 
-        public TeleportEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        protected TeleportEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
+        }
+
+        public override bool CanExecuteRightNow()
+        {
+            if (!TryGetDestination(out _destinationMap, out _destinationTile))
+            {
+                return false;
+            }
+
+            return base.CanExecuteRightNow();
         }
 
         public override void Execute()
         {
             base.Execute();
 
-            var destinationMap = Game1.player.currentLocation;
-            var destinationTile = _tileChooser.GetRandomTileInbounds(destinationMap, Game1.player.TilePoint, 20);
-            if (destinationMap == null || destinationTile == null)
-            {
-                return;
-            }
-            TeleportFarmerTo(destinationMap.Name, destinationTile.Value);
+            TeleportFarmerTo(_destinationMap.Name, _destinationTile);
         }
+
+        public abstract bool TryGetDestination(out GameLocation map, out Vector2 tile);
 
         private void TeleportFarmerTo(string locationName, Vector2 tile)
         {

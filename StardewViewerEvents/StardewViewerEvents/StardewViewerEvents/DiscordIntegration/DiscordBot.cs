@@ -1,5 +1,6 @@
 ﻿using Discord.WebSocket;
 using StardewModdingAPI;
+using StardewViewerEvents.Credits;
 using StardewViewerEvents.EventsExecution;
 
 namespace StardewViewerEvents.DiscordIntegration
@@ -9,11 +10,13 @@ namespace StardewViewerEvents.DiscordIntegration
         private IBotCommunicator _discord;
         private DiscordModule _discordModule;
 
-        public DiscordBot(IMonitor logger, ViewerEventsExecutor eventsExecutor, string path)
+        public DiscordBot(IMonitor logger, ViewerEventsExecutor eventsExecutor, CreditAccounts creditAccounts, string path)
         {
             _discord = new DiscordWrapper(logger);
-            _discordModule = new DiscordModule(logger, _discord, eventsExecutor, path);
+            _discordModule = new DiscordModule(logger, _discord, eventsExecutor, creditAccounts, path);
         }
+
+        public IBotCommunicator Communications => _discord;
 
         public async Task InitializeAsync(string token)
         {

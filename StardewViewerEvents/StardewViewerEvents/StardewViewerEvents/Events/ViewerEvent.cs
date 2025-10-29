@@ -88,12 +88,14 @@ namespace StardewViewerEvents.Events
         {
             switch (queuedEvent.BaseEvent.name)
             {
-                case EventName.ITEM_ADD:
-                    return new AddItemEvent(logger, modHelper, queuedEvent);
-                case EventName.ITEM_REMOVE:
-                    return new RemoveItemEvent(logger, modHelper, queuedEvent);
-                case EventName.TELEPORT:
-                    return new TeleportEvent(logger, modHelper, queuedEvent);
+                case EventName.TELEPORT_HOME:
+                    return new TeleportHomeEvent(logger, modHelper, queuedEvent);
+                case EventName.TELEPORT_MAP:
+                    return new TeleportMapEvent(logger, modHelper, queuedEvent);
+                case EventName.TELEPORT_NEAR:
+                    return new TeleportNearbyEvent(logger, modHelper, queuedEvent);
+                case EventName.TELEPORT_RANDOM:
+                    return new TeleportRandomEvent(logger, modHelper, queuedEvent);
             }
 
             throw new NotImplementedException($"No Executable event found for event '{queuedEvent.BaseEvent.name}'");
