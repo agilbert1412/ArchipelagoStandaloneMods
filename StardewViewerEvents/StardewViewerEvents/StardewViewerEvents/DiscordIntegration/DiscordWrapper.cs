@@ -116,12 +116,7 @@ namespace StardewViewerEvents.DiscordIntegration
                 return "";
             }
 
-            if (!string.IsNullOrWhiteSpace(user.GlobalName))
-            {
-                return user.GlobalName;
-            }
-
-            return user.Username;
+            return user.GetDisplayName();
         }
 
         public string GetUserName(ulong userId)

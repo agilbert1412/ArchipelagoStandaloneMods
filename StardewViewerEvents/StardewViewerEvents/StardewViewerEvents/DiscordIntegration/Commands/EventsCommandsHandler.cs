@@ -5,6 +5,7 @@ using StardewValley;
 using StardewViewerEvents.Credits;
 using StardewViewerEvents.Events;
 using StardewViewerEvents.EventsExecution;
+using StardewViewerEvents.Extensions;
 
 namespace StardewViewerEvents.DiscordIntegration.Commands
 {
@@ -93,7 +94,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             var queuedForcedEvent = new QueuedEvent(forcedEvent, args);
 
             queuedForcedEvent.queueCount = 1;
-            queuedForcedEvent.username = message.Author.GlobalName;
+            queuedForcedEvent.username = message.Author.GetDisplayName();
             queuedForcedEvent.userId = message.Author.Id;
             eventExecutor.Queue.PushAtBeginning(queuedForcedEvent);
             _communications.ReplyTo(message, $"Forced {forcedEvent.name} immediately.");

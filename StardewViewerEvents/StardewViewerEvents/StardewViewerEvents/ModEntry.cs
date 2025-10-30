@@ -15,6 +15,7 @@ namespace StardewViewerEvents
         private Harmony _harmony;
         private ViewerEventsService _viewerEventsService;
         private ViewerEventsExecutor _viewerEventsExecutor;
+        private HarmonyPatcher _harmonyPatcher;
 
         public ModEntry() : base()
         {
@@ -42,6 +43,9 @@ namespace StardewViewerEvents
             _helper.Events.GameLoop.DayStarted += OnDayStarted;
             _helper.Events.GameLoop.DayEnding += OnDayEnding;
             _helper.Events.GameLoop.UpdateTicked += OnUpdateTicked;
+
+            _harmonyPatcher = new HarmonyPatcher();
+            _harmonyPatcher.Initialize(Monitor, _helper, _harmony);
         }
 
         private void OnGameLaunched(object sender, GameLaunchedEventArgs e)

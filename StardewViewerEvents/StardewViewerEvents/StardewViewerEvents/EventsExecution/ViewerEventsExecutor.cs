@@ -110,7 +110,7 @@ namespace StardewViewerEvents.EventsExecution
         public QueuedEvent CreateQueuedEvent(SocketUser sender, ViewerEvent chosenEvent, string[] args)
         {
             var invokedEvent = new QueuedEvent(chosenEvent, args);
-            invokedEvent.username = sender.GlobalName;
+            invokedEvent.username = sender.GetDisplayName();
             invokedEvent.userId = sender.Id;
             invokedEvent.queueCount = 1;
             return invokedEvent;

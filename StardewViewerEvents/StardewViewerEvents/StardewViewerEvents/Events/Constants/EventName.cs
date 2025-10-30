@@ -22,8 +22,8 @@
         public const string TELEPORT_MAP = "goto";
         public const string TELEPORT_RANDOM = "goaway";
 
-        public const string SPAWN_MONSTER_RANDOM = "spawnrandom";
-        public const string SPAWN_MONSTER_SPECIFIC = "spawnmonster";
+        public const string SPAWN_MONSTER_RANDOM = "encounter";
+        public const string SPAWN_MONSTER_SPECIFIC = "monster";
         public const string NEW_BABY = "newbaby";
         public const string BYE_BABY = "byebaby";
         public const string TEMPORARY_BABY = "tempbaby";
@@ -33,6 +33,10 @@
         public const string DEBRIS_BOULDER = "browder";
         public const string DEBRIS_X_SHAPE = "xmarksthespot";
         public const string DEBRIS_O_SHAPE = "otakesthesquare";
+
+        public const string SMALL_BOMB = "boomling";
+        public const string BOMB = "boom";
+        public const string BIG_BOMB = "bigboom";
 
         public const string SOUND_SPECIFIC = "sound";
         public const string SOUND_BARK = "bark";
@@ -97,8 +101,6 @@
         public const string SHUFFLE_ALL = "hoarder";
         public const string BENJAMIN_BUDTON = "benjamin";
         public const string DROUGHT = "dry";
-        public const string BOMB = "boom";
-        public const string BIG_BOOM = "bigboom";
 
         // public const string  = "";
     }

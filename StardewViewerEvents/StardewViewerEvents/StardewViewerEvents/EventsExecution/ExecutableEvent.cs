@@ -32,6 +32,11 @@ namespace StardewViewerEvents.EventsExecution
             return QueuedEvent.parameters is not { Length: > 0 };
         }
 
+        protected string GetSingleParameter()
+        {
+            return string.Join(" ", QueuedEvent.parameters);
+        }
+
         public virtual bool CanExecuteRightNow()
         {
             if (AnyEventActive())

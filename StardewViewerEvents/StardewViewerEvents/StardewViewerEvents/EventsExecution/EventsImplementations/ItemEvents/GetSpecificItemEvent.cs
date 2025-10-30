@@ -19,13 +19,13 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents
                 return false;
             }
 
-            var desiredItem = string.Join(" ", QueuedEvent.parameters);
+            var desiredItem = GetSingleParameter();
             return ItemUtility.ItemExists(desiredItem);
         }
 
         public override string GetItemId()
         {
-            var desiredItem = string.Join(" ", QueuedEvent.parameters);
+            var desiredItem = GetSingleParameter();
             if (ItemUtility.TryFindItem(desiredItem, out var foundItem))
             {
                 return foundItem.QualifiedItemId;

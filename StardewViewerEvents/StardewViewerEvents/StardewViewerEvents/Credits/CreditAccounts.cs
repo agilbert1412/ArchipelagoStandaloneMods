@@ -116,6 +116,14 @@ namespace StardewViewerEvents.Credits
             return _accounts[discordId];
         }
 
+        public CreditAccount[] GetAccountsActiveInThePastMinutes(ulong maxMinutesSinceLastActivity)
+        {
+            var activeAccounts = _accounts
+                .Where(kvp => (DateTime.Now - kvp.Value.lastActivityTime).TotalMinutes <= maxMinutesSinceLastActivity)
+                .OrderByDescending(kvp => kvp.Value.lastActivityTime);
+            return activeAccounts.Select(x => x.Value).ToArray();
+        }
+
         public CreditAccount[] GetAccountsActiveInThePastMinutes(ulong maxMinutesSinceLastActivity, ulong exceptId)
         {
             var activeAccounts = _accounts.Where(kvp => kvp.Key != exceptId)

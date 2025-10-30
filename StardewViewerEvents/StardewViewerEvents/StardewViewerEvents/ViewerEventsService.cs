@@ -9,6 +9,8 @@ namespace StardewViewerEvents
 {
     public class ViewerEventsService
     {
+        public static ViewerEventsService Instance;
+
         private IMonitor _logger;
         private ModConfig _config;
         private ViewerEventsExecutor _eventsExecutor;
@@ -22,10 +24,16 @@ namespace StardewViewerEvents
 
         public ViewerEventsService(IMonitor logger, ModConfig config, ViewerEventsExecutor eventsExecutor)
         {
+            if (Instance != null)
+            {
+                throw new Exception($"Cannot initialize the service more than once");
+            }
+
             _logger = logger;
             _config = config;
             _eventsExecutor = eventsExecutor;
             IsInitialized = false;
+            Instance = this;
         }
 
         public async Task Initialize(string path)

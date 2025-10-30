@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using StardewValley;
 using StardewValley.Monsters;
+using StardewViewerEvents.Extensions;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEvents
 {
@@ -30,9 +31,25 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
 
         public static readonly string[] AllMonsterTypes = _easyMonsterTypes.Union(_mediumMonsterTypes).Union(_hardMonsterTypes).ToArray();
 
-        public void SpawnOneMonster(GameLocation map)
+        public void SpawnOneRandomMonster(GameLocation map)
         {
             var monster = ChooseRandomMonster(map);
+            SpawnOneMonster(map, monster);
+        }
+
+        public void SpawnOneSpecificMonster(GameLocation map, string monsterName)
+        {
+            var monster = GetSpecificMonster(map, monsterName);
+            SpawnOneMonster(map, monster);
+        }
+
+        public bool IsValidMonster(string monsterName)
+        {
+            return AllMonsterTypes.Any(x => x.SanitizeEntityName() == monsterName.SanitizeEntityName());
+        }
+
+        public void SpawnOneMonster(GameLocation map, Monster monster)
+        {
             AddMonster(map, monster);
         }
 
@@ -49,19 +66,25 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
             monsters.AddRange(_easyMonsterTypes);
             monsters.AddRange(_mediumMonsterTypes);
             monsters.AddRange(_hardMonsterTypes);
-            return ChooseRandomMonsterFrom(map, monsters);
+            return GetRandomMonsterFrom(map, monsters);
         }
 
-        private Monster ChooseRandomMonsterFrom(GameLocation map, IList<string> monsters)
+        private Monster GetRandomMonsterFrom(GameLocation map, IList<string> monsters)
+        {
+            var chosenMonsterType = monsters[Game1.random.Next(0, monsters.Count)];
+            return GetSpecificMonster(map, chosenMonsterType);
+        }
+
+        public Monster GetSpecificMonster(GameLocation map, string monsterName)
         {
             var spawnPosition = _tileChooser.GetRandomTileInboundsOffScreen(map);
-            var chosenMonsterType = monsters[Game1.random.Next(0, monsters.Count)];
-            return GetMonster(chosenMonsterType, spawnPosition);
+            return GetMonster(monsterName, spawnPosition);
         }
 
         public Monster GetMonster(string chosenMonsterType, Vector2 spawnPosition)
         {
-            switch (chosenMonsterType)
+            var monsterName = AllMonsterTypes.FirstOrDefault(x => x.SanitizeEntityName() == chosenMonsterType.SanitizeEntityName());
+            switch (monsterName)
             {
                 case "Bat":
                     return new Bat(spawnPosition * 64f, 1);

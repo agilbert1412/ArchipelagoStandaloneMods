@@ -1,4 +1,5 @@
 ﻿using StardewViewerEvents.Events.Constants;
+using StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents;
 
 namespace StardewViewerEvents.Events;
 
@@ -32,11 +33,15 @@ public class EventsGenerator
             CreateEvent(EventName.NEW_BABY, Alignment.NEUTRAL, 10, "Welcome a new child to the family", false),
             CreateEvent(EventName.BYE_BABY, Alignment.NEUTRAL, 10, "Choose the childfree life, retroactively", false),
 
-            CreateEvent(EventName.DEBRIS_RANDOM, Alignment.NEGATIVE, 2, "Spawn a random piece of debris nearby", false),
+            CreateEvent(EventName.DEBRIS_RANDOM, Alignment.NEGATIVE, 5, $"Spawn {RandomDebrisEvent.AMOUNT} random pieces of debris nearby", false),
             CreateEvent(EventName.DEBRIS_BOULDER, Alignment.NEGATIVE, 10, "Spawn a boulder nearby", false),
             CreateEvent(EventName.DEBRIS_TREE, Alignment.NEGATIVE, 10, "Spawn a tree nearby", false),
-            CreateEvent(EventName.DEBRIS_X_SHAPE, Alignment.NEGATIVE, 30, "Spawn debris in the shape of an X, centered on the player", false),
-            CreateEvent(EventName.DEBRIS_O_SHAPE, Alignment.NEGATIVE, 30, "Spawn debris in the shape of an O, centered on the player", false),
+            CreateEvent(EventName.DEBRIS_X_SHAPE, Alignment.NEGATIVE, 10, "Spawn debris in the shape of an X, centered on the player", false),
+            CreateEvent(EventName.DEBRIS_O_SHAPE, Alignment.NEGATIVE, 10, "Spawn debris in the shape of an O, centered on the player", false),
+            
+            CreateEvent(EventName.SMALL_BOMB, Alignment.NEGATIVE, 10, "Spawn a small lit bomb", false),
+            CreateEvent(EventName.BOMB, Alignment.NEGATIVE, 40, "Spawn a medium lit bomb", false),
+            CreateEvent(EventName.BIG_BOMB, Alignment.NEGATIVE, 60, "Spawn a large lit bomb", false),
 
             CreateEvent(EventName.SOUND_MEOW, Alignment.NEUTRAL, 1, "Play a meow", false),
             CreateEvent(EventName.SOUND_BARK, Alignment.NEUTRAL, 1, "Play a bark", false),

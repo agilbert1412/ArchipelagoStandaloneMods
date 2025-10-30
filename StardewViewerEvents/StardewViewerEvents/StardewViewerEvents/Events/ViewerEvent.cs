@@ -3,6 +3,8 @@ using StardewModdingAPI;
 using StardewViewerEvents.Events.Constants;
 using StardewViewerEvents.EventsExecution;
 using StardewViewerEvents.EventsExecution.EventsImplementations;
+using StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEvents;
+using StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.TeleportEvents;
 
@@ -120,16 +122,26 @@ namespace StardewViewerEvents.Events
                     return new ItemQualityDownEvent(logger, modHelper, queuedEvent);
                 case EventName.ITEM_QUALITY_UP:
                     return new ItemQualityUpEvent(logger, modHelper, queuedEvent);
-                //case EventName.SPAWN_MONSTER_RANDOM:
-                //    return new SpawnRandomMonsterEvent(logger, modHelper, queuedEvent);
-                //case EventName.SPAWN_MONSTER_SPECIFIC:
-                //    return new SpawnSpecificMonsterEvent(logger, modHelper, queuedEvent);
-                //case EventName.TEMPORARY_BABY:
-                //    return new SpawnTemporaryBabyEvent(logger, modHelper, queuedEvent);
-                //case EventName.NEW_BABY:
-                //    return new BirthBabyEvent(logger, modHelper, queuedEvent);
-                //case EventName.BYE_BABY:
-                //    return new DoveBabyEvent(logger, modHelper, queuedEvent);
+                case EventName.SPAWN_MONSTER_RANDOM:
+                    return new SpawnRandomMonsterEvent(logger, modHelper, queuedEvent);
+                case EventName.SPAWN_MONSTER_SPECIFIC:
+                    return new SpawnSpecificMonsterEvent(logger, modHelper, queuedEvent);
+                case EventName.TEMPORARY_BABY:
+                    return new SpawnTemporaryBabyEvent(logger, modHelper, queuedEvent);
+                case EventName.NEW_BABY:
+                    return new BirthBabyEvent(logger, modHelper, queuedEvent);
+                case EventName.BYE_BABY:
+                    return new DoveBabyEvent(logger, modHelper, queuedEvent);
+                case EventName.DEBRIS_RANDOM:
+                    return new RandomDebrisEvent(logger, modHelper, queuedEvent);
+                case EventName.DEBRIS_BOULDER:
+                    return new BoulderEvent(logger, modHelper, queuedEvent);
+                case EventName.DEBRIS_TREE:
+                    return new TreeEvent(logger, modHelper, queuedEvent);
+                case EventName.DEBRIS_O_SHAPE:
+                    return new OShapeDebrisEvent(logger, modHelper, queuedEvent);
+                case EventName.DEBRIS_X_SHAPE:
+                    return new XShapeDebrisEvent(logger, modHelper, queuedEvent);
             }
 
             throw new NotImplementedException($"No Executable event found for event '{queuedEvent.BaseEvent.name}'");

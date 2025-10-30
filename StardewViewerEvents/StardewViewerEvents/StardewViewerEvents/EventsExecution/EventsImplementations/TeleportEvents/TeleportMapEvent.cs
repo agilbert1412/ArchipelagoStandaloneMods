@@ -19,7 +19,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.TeleportEven
                 return false;
             }
 
-            var desiredMapName = string.Join(" ", QueuedEvent.parameters);
+            var desiredMapName = GetSingleParameter();
             return TryGetDesiredMap(desiredMapName, out _);
         }
 
@@ -27,7 +27,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.TeleportEven
         {
             map = Game1.player.currentLocation;
             tile = Game1.player.Tile;
-            var desiredMapName = string.Join(" ", QueuedEvent.parameters);
+            var desiredMapName = GetSingleParameter();
             if (!TryGetDesiredMap(desiredMapName, out map))
             {
                 return false;

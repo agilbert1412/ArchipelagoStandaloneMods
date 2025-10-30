@@ -10,7 +10,7 @@ namespace StardewViewerEvents.Extensions
     { 
         public static string SanitizeEntityName(this string entityName)
         {
-            return entityName.Replace(" ", "").ToLower();
+            return entityName == null ? "" : entityName.Replace(" ", "").ToLower();
         }
     }
 }
