@@ -1,10 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using StardewModdingAPI;
 using StardewValley;
-using StardewValley.Locations;
 using StardewViewerEvents.Events;
 
-namespace StardewViewerEvents.EventsExecution.EventsImplementations.Teleport
+namespace StardewViewerEvents.EventsExecution.EventsImplementations.TeleportEvents
 {
     public class TeleportHomeEvent : TeleportEvent
     {

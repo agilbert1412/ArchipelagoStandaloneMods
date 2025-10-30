@@ -1,9 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using StardewValley;
 using StardewValley.Monsters;
-using StardewViewerEvents.EventsExecution.EventsImplementations;
 
-namespace StardewArchipelago.Items.Traps
+namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEvents
 {
     public class MonsterSpawner
     {

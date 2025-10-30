@@ -4,7 +4,7 @@ using StardewValley;
 using StardewViewerEvents.Events;
 using StardewViewerEvents.Extensions;
 
-namespace StardewViewerEvents.EventsExecution.EventsImplementations.Teleport
+namespace StardewViewerEvents.EventsExecution.EventsImplementations.TeleportEvents
 {
     public class TeleportMapEvent : TeleportEvent
     {

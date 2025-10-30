@@ -4,16 +4,16 @@
     {
         public const string INVISIBLE_COWS = "wemoounseen";
 
-        public const string ITEM_HOME = "itemhome";
-        public const string ITEM_SELL = "itemsell";
-        public const string ITEM_SHIP = "itemship";
-        public const string ITEM_TRASH = "itemtrash";
-        public const string ITEM_DROP = "itemdrop";
-        public const string ITEM_QUALITY_DOWN = "itemqualitydown";
-        public const string ITEM_QUALITY_UP = "itemqualityup";
+        public const string ITEM_HOME = "sendhome";
+        public const string ITEM_SELL = "salesman";
+        public const string ITEM_SHIP = "shipit";
+        public const string ITEM_TRASH = "trashit";
+        public const string ITEM_DROP = "butterfingers";
+        public const string ITEM_QUALITY_DOWN = "madecheap";
+        public const string ITEM_QUALITY_UP = "madepremium";
 
-        public const string ITEM_GET_RANDOM = "getrandom";
-        public const string ITEM_GET_SPECIFIC = "getitem";
+        public const string ITEM_GET_RANDOM = "whatsthis";
+        public const string ITEM_GET_SPECIFIC = "freegift";
         public const string ITEM_FILL_INVENTORY = "hoarder";
         public const string ITEM_GET_EXOTIC = "exotic";
 

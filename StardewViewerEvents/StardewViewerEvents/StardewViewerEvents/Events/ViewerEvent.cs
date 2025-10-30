@@ -4,7 +4,7 @@ using StardewViewerEvents.Events.Constants;
 using StardewViewerEvents.EventsExecution;
 using StardewViewerEvents.EventsExecution.EventsImplementations;
 using StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents;
-using StardewViewerEvents.EventsExecution.EventsImplementations.Teleport;
+using StardewViewerEvents.EventsExecution.EventsImplementations.TeleportEvents;
 
 namespace StardewViewerEvents.Events
 {

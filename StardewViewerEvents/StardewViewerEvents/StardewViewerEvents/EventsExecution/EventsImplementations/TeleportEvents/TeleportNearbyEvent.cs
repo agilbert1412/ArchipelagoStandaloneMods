@@ -3,7 +3,7 @@ using StardewModdingAPI;
 using StardewValley;
 using StardewViewerEvents.Events;
 
-namespace StardewViewerEvents.EventsExecution.EventsImplementations.Teleport
+namespace StardewViewerEvents.EventsExecution.EventsImplementations.TeleportEvents
 {
     public class TeleportNearbyEvent : TeleportEvent
     {
