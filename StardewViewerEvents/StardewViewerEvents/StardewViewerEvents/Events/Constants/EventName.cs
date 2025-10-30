@@ -14,7 +14,7 @@
 
         public const string ITEM_GET_RANDOM = "getrandom";
         public const string ITEM_GET_SPECIFIC = "getitem";
-        public const string ITEM_FILL_INVENTORY = "fillinventory";
+        public const string ITEM_FILL_INVENTORY = "hoarder";
         public const string ITEM_GET_EXOTIC = "exotic";
 
         public const string TELEPORT_NEAR = "blink";

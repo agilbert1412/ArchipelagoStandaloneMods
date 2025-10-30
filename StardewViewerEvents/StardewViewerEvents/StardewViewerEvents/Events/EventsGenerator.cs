@@ -22,7 +22,7 @@ public class EventsGenerator
             CreateEvent(EventName.ITEM_SELL, Alignment.NEUTRAL, 15, "Instantly sell a random item", true),
             CreateEvent(EventName.ITEM_SHIP, Alignment.NEUTRAL, 20, "Instantly ship a random item", true),
             CreateEvent(EventName.ITEM_DELETE, Alignment.NEGATIVE, 30, "Instantly delete a random item", true),
-            CreateEvent(EventName.ITEM_DROP, Alignment.NEGATIVE, 5, "Drop a random item to the ground", true),
+            CreateEvent(EventName.ITEM_DROP, Alignment.NEGATIVE, 2, "Drop a random item to the ground", true),
             CreateEvent(EventName.ITEM_QUALITY_DOWN, Alignment.NEUTRAL, 20, "Lower the quality of a random item", true),
             CreateEvent(EventName.ITEM_QUALITY_UP, Alignment.POSITIVE, 10, "Increase the quality of a random item", true),
 

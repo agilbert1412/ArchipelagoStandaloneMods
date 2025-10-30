@@ -20,7 +20,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents
             }
 
             var desiredItem = string.Join(" ", QueuedEvent.parameters);
-            return ItemUtility.TryFindItem(desiredItem, out _);
+            return ItemUtility.ItemExists(desiredItem);
         }
 
         public override string GetItemId()
@@ -30,8 +30,8 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents
             {
                 return foundItem.QualifiedItemId;
             }
-        }
 
-        
+            return $"(O)390";
+        }
     }
 }

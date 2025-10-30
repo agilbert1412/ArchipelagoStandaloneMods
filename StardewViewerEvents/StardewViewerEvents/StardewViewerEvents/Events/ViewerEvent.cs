@@ -100,6 +100,12 @@ namespace StardewViewerEvents.Events
                     return new TeleportRandomEvent(logger, modHelper, queuedEvent);
                 case EventName.ITEM_GET_RANDOM:
                     return new GetRandomItemEvent(logger, modHelper, queuedEvent);
+                case EventName.ITEM_GET_SPECIFIC:
+                    return new GetSpecificItemEvent(logger, modHelper, queuedEvent);
+                case EventName.ITEM_GET_EXOTIC:
+                    return new GetExoticItemEvent(logger, modHelper, queuedEvent);
+                case EventName.ITEM_FILL_INVENTORY:
+                    return new FillInventoryEvent(logger, modHelper, queuedEvent);
             }
 
             throw new NotImplementedException($"No Executable event found for event '{queuedEvent.BaseEvent.name}'");

@@ -9,6 +9,11 @@ namespace StardewViewerEvents.Extensions
 {
     public static class ItemUtility
     {
+        public static bool ItemExists(string desiredItem)
+        {
+            return TryFindItem(desiredItem, out _);
+        }
+
         public static bool TryFindItem(string desiredItem, out Item item)
         {
             item = ItemRegistry.Create(desiredItem);
