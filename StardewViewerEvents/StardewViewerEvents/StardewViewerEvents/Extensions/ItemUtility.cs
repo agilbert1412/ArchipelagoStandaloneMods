@@ -16,14 +16,14 @@ namespace StardewViewerEvents.Extensions
 
         public static bool TryFindItem(string desiredItem, out Item item)
         {
-            item = ItemRegistry.Create(desiredItem);
+            item = ItemRegistry.Create(desiredItem, allowNull: true);
             if (item != null)
             {
                 return true;
             }
 
             desiredItem = desiredItem.SanitizeEntityName();
-            item = ItemRegistry.Create(desiredItem);
+            item = ItemRegistry.Create(desiredItem, allowNull: true);
             if (item != null)
             {
                 return true;

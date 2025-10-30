@@ -15,7 +15,7 @@ namespace StardewViewerEvents.Events
         {
             _eventsGenerator = new EventsGenerator();
             _events = new Dictionary<string, ViewerEvent>();
-            CurrentMultiplier = 0.1;
+            CurrentMultiplier = 1;
         }
 
         public int Count => _events.Count;
@@ -54,7 +54,7 @@ namespace StardewViewerEvents.Events
         {
             foreach (var eventKey in _events.Keys)
             {
-                if (eventKey.Equals(eventName, StringComparison.OrdinalIgnoreCase))
+                if (eventKey.Equals(eventName, StringComparison.InvariantCultureIgnoreCase))
                 {
                     return _events[eventKey];
                 }

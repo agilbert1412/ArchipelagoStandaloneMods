@@ -15,6 +15,10 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents
         {
             var item = Game1.player.Items[slotToModify];
             item.Quality--;
+            if (item.Quality == 3)
+            {
+                item.Quality--;
+            }
             item.FixQuality();
         }
     }

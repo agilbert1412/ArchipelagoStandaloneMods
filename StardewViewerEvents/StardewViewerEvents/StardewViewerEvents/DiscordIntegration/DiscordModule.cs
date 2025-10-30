@@ -58,7 +58,7 @@ namespace StardewViewerEvents.DiscordIntegration
 
         public async Task ExecuteViewerCommand(SocketUserMessage message)
         {
-            var messageText = message.Content.ToLower();
+            var messageText = message.Content;
             var sender = message.Author;
             var senderName = sender.Username;
 
@@ -77,7 +77,7 @@ namespace StardewViewerEvents.DiscordIntegration
                 return;
             }
 
-            if (messageText == "test")
+            if (messageText.Equals("test", StringComparison.InvariantCultureIgnoreCase))
             {
                 await message.ReplyAsync("Toast");
             }
@@ -85,7 +85,7 @@ namespace StardewViewerEvents.DiscordIntegration
             _creditsCommandsHandler.HandleCreditsAdminCommands(message, messageText, _accounts);
             _eventsCommandsHandler.HandleEventsAdminCommands(message, messageText, _eventsExecutor);
 
-            if (messageText.Equals("!help"))
+            if (messageText.Equals("!help", StringComparison.InvariantCultureIgnoreCase))
             {
                 _helpProvider.SendAllHelpMessages(_eventsExecutor.Events);
             }

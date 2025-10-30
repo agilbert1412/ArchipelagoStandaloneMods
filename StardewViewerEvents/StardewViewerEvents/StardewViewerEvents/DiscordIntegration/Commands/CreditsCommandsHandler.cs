@@ -37,7 +37,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
 
         private void HandleAddCredits(SocketUserMessage message, string messageText, CreditAccounts creditAccounts)
         {
-            if (!messageText.StartsWith("!addcredits "))
+            if (!messageText.StartsWith("!addcredits ", StringComparison.InvariantCultureIgnoreCase))
             {
                 return;
             }
@@ -53,7 +53,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
 
         private void HandleRemoveCredits(SocketUserMessage message, string messageText, CreditAccounts creditAccounts)
         {
-            if (!messageText.StartsWith("!removecredits "))
+            if (!messageText.StartsWith("!removecredits ", StringComparison.InvariantCultureIgnoreCase))
             {
                 return;
             }
@@ -69,7 +69,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
 
         private void HandleSetCredits(SocketUserMessage message, string messageText, CreditAccounts creditAccounts)
         {
-            if (!messageText.StartsWith("!setcredits "))
+            if (!messageText.StartsWith("!setcredits ", StringComparison.InvariantCultureIgnoreCase))
             {
                 return;
             }
@@ -85,7 +85,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
 
         private void HandleResetCredits(SocketUserMessage message, string messageText, CreditAccounts creditAccounts)
         {
-            if (!messageText.StartsWith("!resetcredits "))
+            if (!messageText.StartsWith("!resetcredits ", StringComparison.InvariantCultureIgnoreCase))
             {
                 return;
             }
@@ -121,7 +121,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
 
         private async Task HandleTransferCredits(SocketUserMessage message, string messageText, CreditAccounts creditAccounts)
         {
-            if (!messageText.StartsWith("!transfercredits "))
+            if (!messageText.StartsWith("!transfercredits ", StringComparison.InvariantCultureIgnoreCase))
             {
                 return;
             }
@@ -137,7 +137,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
 
         private async Task HandleShareCredits(SocketUserMessage message, string messageText, CreditAccounts creditAccounts)
         {
-            if (!messageText.StartsWith("!sharecredits"))
+            if (!messageText.StartsWith("!sharecredits", StringComparison.InvariantCultureIgnoreCase))
             {
                 return;
             }
@@ -153,7 +153,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
 
         private void HandleReadCreditsOfSomeone(SocketUserMessage message, string messageText, CreditAccounts creditAccounts)
         {
-            if (!messageText.StartsWith("!credits "))
+            if (!messageText.StartsWith("!credits ", StringComparison.InvariantCultureIgnoreCase))
             {
                 return;
             }

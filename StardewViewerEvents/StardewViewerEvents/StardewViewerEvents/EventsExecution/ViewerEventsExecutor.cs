@@ -51,7 +51,7 @@ namespace StardewViewerEvents.EventsExecution
                 if (!executableEvent.ValidateParameters())
                 {
                     var accountToRefund = accounts[eventToSend.userId];
-                    var refundAmount = baseEvent.cost * eventToSend.queueCount;
+                    var refundAmount = baseEvent.GetMultiplierCost(Events.CurrentMultiplier) * eventToSend.queueCount;
                     accountToRefund.AddCredits(refundAmount);
                     await communications.SendMessageAsync(channels.EventsChannel,
                         $"Cannot trigger {eventToSend.baseEventName} with these parameters [{string.Join(", ", eventToSend.parameters)}]. You have been refunded {refundAmount} credits. Current Balance: {accountToRefund.GetCredits()}");

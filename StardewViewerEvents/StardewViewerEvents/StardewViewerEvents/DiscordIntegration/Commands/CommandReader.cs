@@ -91,7 +91,7 @@
         public bool IsCommandValid(string messageText, out string arg1, out string[] parameters)
         {
             var numberParts = 2;
-            var lineparts = messageText.Split(" ", numberParts);
+            var lineparts = messageText.Split(" ");
 
             arg1 = "";
             parameters = Array.Empty<string>();

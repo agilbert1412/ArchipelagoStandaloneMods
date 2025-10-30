@@ -41,7 +41,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
 
         private void HandleQueueEvent(SocketUserMessage message, string messageText, ViewerEventsExecutor eventExecutor)
         {
-            if (!messageText.StartsWith("!queueevent "))
+            if (!messageText.StartsWith("!queueevent ", StringComparison.InvariantCultureIgnoreCase))
             {
                 return;
             }
@@ -67,7 +67,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
 
         private void HandleTriggerEvent(SocketUserMessage message, string messageText, ViewerEventsExecutor eventExecutor)
         {
-            if (!messageText.StartsWith("!triggerevent "))
+            if (!messageText.StartsWith("!triggerevent ", StringComparison.InvariantCultureIgnoreCase))
             {
                 return;
             }
@@ -103,7 +103,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
 
         private void HandleSetBank(SocketUserMessage message, string messageText, ViewerEventsExecutor eventExecutor)
         {
-            if (!messageText.StartsWith("!setbank "))
+            if (!messageText.StartsWith("!setbank ", StringComparison.InvariantCultureIgnoreCase))
             {
                 return;
             }
@@ -134,7 +134,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
 
         private void HandleSetGlobalPriceMultiplier(SocketUserMessage message, string messageText, ViewerEventsExecutor eventExecutor)
         {
-            if (!messageText.StartsWith("!setmultiplier "))
+            if (!messageText.StartsWith("!setmultiplier ", StringComparison.InvariantCultureIgnoreCase))
             {
                 return;
             }
@@ -153,14 +153,14 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
 
         private void HandleGlobalPause(SocketUserMessage message, string messageText, ViewerEventsExecutor eventExecutor)
         {
-            if (messageText.StartsWith("!pause"))
+            if (messageText.StartsWith("!pause", StringComparison.InvariantCultureIgnoreCase))
             {
                 eventExecutor.Queue.Pause();
                 _communications.ReplyTo(message, $"All eventExecutor.Events are now paused");
                 return;
             }
 
-            if (messageText.StartsWith("!unpause") || messageText.StartsWith("!resume"))
+            if (messageText.StartsWith("!unpause", StringComparison.InvariantCultureIgnoreCase) || messageText.StartsWith("!resume", StringComparison.InvariantCultureIgnoreCase))
             {
                 eventExecutor.Queue.Unpause();
                 _communications.ReplyTo(message, $"All eventExecutor.Events are now resumed");
@@ -170,7 +170,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
 
         private void HandleTestAllEvents(SocketUserMessage message, string messageText, ViewerEventsExecutor eventExecutor)
         {
-            if (!messageText.StartsWith("!testallevents"))
+            if (!messageText.StartsWith("!testallevents", StringComparison.InvariantCultureIgnoreCase))
             {
                 return;
             }
@@ -199,7 +199,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
 
         private void HandleCommandBank(SocketUserMessage message, string messageText, ViewerEventsExecutor eventExecutor)
         {
-            if (!messageText.StartsWith("!bank "))
+            if (!messageText.StartsWith("!bank ", StringComparison.InvariantCultureIgnoreCase))
             {
                 return;
             }
@@ -215,7 +215,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
 
         private async Task HandleCommandPurchase(SocketUserMessage message, string messageText, CreditAccounts creditAccounts, ViewerEventsExecutor eventExecutor)
         {
-            if (!messageText.StartsWith("!purchase "))
+            if (!messageText.StartsWith("!purchase ", StringComparison.InvariantCultureIgnoreCase))
             {
                 return;
             }
@@ -243,7 +243,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
 
         private async Task HandleCommandPay(SocketUserMessage message, string messageText, CreditAccounts creditAccounts, ViewerEventsExecutor eventExecutor)
         {
-            if (!messageText.StartsWith("!pay "))
+            if (!messageText.StartsWith("!pay ", StringComparison.InvariantCultureIgnoreCase))
             {
                 return;
             }
