@@ -106,6 +106,20 @@ namespace StardewViewerEvents.Events
                     return new GetExoticItemEvent(logger, modHelper, queuedEvent);
                 case EventName.ITEM_FILL_INVENTORY:
                     return new FillInventoryEvent(logger, modHelper, queuedEvent);
+                case EventName.ITEM_DROP:
+                    return new ItemDropEvent(logger, modHelper, queuedEvent);
+                case EventName.ITEM_HOME:
+                    return new ItemHomeEvent(logger, modHelper, queuedEvent);
+                case EventName.ITEM_SELL:
+                    return new ItemSellEvent(logger, modHelper, queuedEvent);
+                case EventName.ITEM_SHIP:
+                    return new ItemShipEvent(logger, modHelper, queuedEvent);
+                case EventName.ITEM_TRASH:
+                    return new ItemTrashEvent(logger, modHelper, queuedEvent);
+                case EventName.ITEM_QUALITY_DOWN:
+                    return new ItemQualityDownEvent(logger, modHelper, queuedEvent);
+                case EventName.ITEM_QUALITY_UP:
+                    return new ItemQualityUpEvent(logger, modHelper, queuedEvent);
             }
 
             throw new NotImplementedException($"No Executable event found for event '{queuedEvent.BaseEvent.name}'");

@@ -43,6 +43,6 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents
             return item.canBeShipped() && item.canBeTrashed() && item.canBeDropped() && item.CanBeLostOnDeath();
         }
 
-        protected abstract void ExecuteEvent(object slotToModify);
+        protected abstract void ExecuteEvent(int slotToModify);
     }
 }

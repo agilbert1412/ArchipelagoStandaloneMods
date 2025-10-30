@@ -7,7 +7,7 @@
         public const string ITEM_HOME = "itemhome";
         public const string ITEM_SELL = "itemsell";
         public const string ITEM_SHIP = "itemship";
-        public const string ITEM_DELETE = "itemdelete";
+        public const string ITEM_TRASH = "itemtrash";
         public const string ITEM_DROP = "itemdrop";
         public const string ITEM_QUALITY_DOWN = "itemqualitydown";
         public const string ITEM_QUALITY_UP = "itemqualityup";
