@@ -2,6 +2,7 @@
 using StardewModdingAPI;
 using StardewValley;
 using StardewViewerEvents.Events;
+using StardewViewerEvents.Extensions;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.Teleport
 {
@@ -44,10 +45,10 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.Teleport
 
         private bool TryGetDesiredMap(string desiredMapName, out GameLocation desiredMap)
         {
-            var sanitizedDesiredMapName = SanitizeMapName(desiredMapName);
+            var sanitizedDesiredMapName = desiredMapName.SanitizeEntityName();
             foreach (var gameLocation in Game1.locations)
             {
-                if (SanitizeMapName(gameLocation.Name) == desiredMapName)
+                if (gameLocation.Name.SanitizeEntityName() == sanitizedDesiredMapName)
                 {
 
                     desiredMap = gameLocation;
@@ -56,7 +57,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.Teleport
             }
             foreach (var gameLocation in Game1.locations)
             {
-                if (SanitizeMapName(gameLocation.DisplayName) == desiredMapName)
+                if (gameLocation.DisplayName.SanitizeEntityName() == sanitizedDesiredMapName)
                 {
 
                     desiredMap = gameLocation;
@@ -65,7 +66,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.Teleport
             }
             foreach (var gameLocation in Game1.locations)
             {
-                if (SanitizeMapName(gameLocation.NameOrUniqueName) == desiredMapName)
+                if (gameLocation.NameOrUniqueName.SanitizeEntityName() == sanitizedDesiredMapName)
                 {
 
                     desiredMap = gameLocation;
@@ -75,11 +76,6 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.Teleport
 
             desiredMap = Game1.currentLocation;
             return false;
-        }
-
-        public string SanitizeMapName(string mapName)
-        {
-            return mapName.Replace(" ", "").ToLower();
         }
     }
 }

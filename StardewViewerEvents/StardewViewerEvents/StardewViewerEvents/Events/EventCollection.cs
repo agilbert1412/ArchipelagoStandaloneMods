@@ -35,13 +35,13 @@ namespace StardewViewerEvents.Events
             foreach (JObject ttgEventString in jsonData)
             {
                 var ttgEvent = new ViewerEvent(ttgEventString);
-                this.Add(ttgEvent.name, ttgEvent);
+                Add(ttgEvent.name, ttgEvent);
             }
         }
 
         public void ExportTo(string eventsFile)
         {
-            var json = JsonConvert.SerializeObject(this.ToList(), Formatting.Indented);
+            var json = JsonConvert.SerializeObject(ToList(), Formatting.Indented);
             File.WriteAllText(eventsFile, json);
         }
 

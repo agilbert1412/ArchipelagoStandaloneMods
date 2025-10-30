@@ -27,7 +27,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents
             return 1;
         }
 
-        public virtual void GiveItemToPlayer(StardewValley.Item item)
+        public virtual void GiveItemToPlayer(Item item)
         {
             Game1.player.addItemByMenuIfNecessary(item);
         }

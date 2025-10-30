@@ -3,6 +3,8 @@ using StardewModdingAPI;
 using StardewViewerEvents.Events.Constants;
 using StardewViewerEvents.EventsExecution;
 using StardewViewerEvents.EventsExecution.EventsImplementations;
+using StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents;
+using StardewViewerEvents.EventsExecution.EventsImplementations.Teleport;
 
 namespace StardewViewerEvents.Events
 {
@@ -96,6 +98,8 @@ namespace StardewViewerEvents.Events
                     return new TeleportNearbyEvent(logger, modHelper, queuedEvent);
                 case EventName.TELEPORT_RANDOM:
                     return new TeleportRandomEvent(logger, modHelper, queuedEvent);
+                case EventName.ITEM_GET_RANDOM:
+                    return new GetRandomItemEvent(logger, modHelper, queuedEvent);
             }
 
             throw new NotImplementedException($"No Executable event found for event '{queuedEvent.BaseEvent.name}'");

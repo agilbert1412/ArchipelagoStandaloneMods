@@ -82,13 +82,13 @@ namespace StardewViewerEvents.Credits
             foreach (JObject creditAccountString in jsonData)
             {
                 var creditAccount = new CreditAccount(creditAccountString);
-                this.Add(creditAccount.discordId, creditAccount);
+                Add(creditAccount.discordId, creditAccount);
             }
         }
 
         public void ExportTo(string creditsFile)
         {
-            var json = JsonConvert.SerializeObject(this.ToList(), Formatting.Indented);
+            var json = JsonConvert.SerializeObject(ToList(), Formatting.Indented);
             File.WriteAllText(creditsFile, json);
         }
 
