@@ -3,9 +3,12 @@ using StardewModdingAPI;
 using StardewViewerEvents.Events.Constants;
 using StardewViewerEvents.EventsExecution;
 using StardewViewerEvents.EventsExecution.EventsImplementations;
+using StardewViewerEvents.EventsExecution.EventsImplementations.BombEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents;
+using StardewViewerEvents.EventsExecution.EventsImplementations.MenuEvents;
+using StardewViewerEvents.EventsExecution.EventsImplementations.SoundEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.TeleportEvents;
 
 namespace StardewViewerEvents.Events
@@ -88,6 +91,10 @@ namespace StardewViewerEvents.Events
             cost = (int)Math.Round(newCost / multiplier);
         }
 
+        
+        
+        
+        
         public ExecutableEvent GetExecutableEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent)
         {
             switch (queuedEvent.BaseEvent.name)
@@ -142,6 +149,20 @@ namespace StardewViewerEvents.Events
                     return new OShapeDebrisEvent(logger, modHelper, queuedEvent);
                 case EventName.DEBRIS_X_SHAPE:
                     return new XShapeDebrisEvent(logger, modHelper, queuedEvent);
+                case EventName.SMALL_BOMB:
+                    return new SmallBombEvent(logger, modHelper, queuedEvent);
+                case EventName.BOMB:
+                    return new MediumBombEvent(logger, modHelper, queuedEvent);
+                case EventName.BIG_BOMB:
+                    return new BigBombEvent(logger, modHelper, queuedEvent);
+                case EventName.SOUND_MEOW:
+                    return new PlayMeowEvent(logger, modHelper, queuedEvent);
+                case EventName.SOUND_BARK:
+                    return new PlayBarkEvent(logger, modHelper, queuedEvent);
+                case EventName.SOUND_SPECIFIC:
+                    return new PlaySpecificSoundEvent(logger, modHelper, queuedEvent);
+                case EventName.FISH_BITE:
+                    return new FishBiteEvent(logger, modHelper, queuedEvent);
             }
 
             throw new NotImplementedException($"No Executable event found for event '{queuedEvent.BaseEvent.name}'");

@@ -46,9 +46,7 @@
         public const string SLEEP_WEEK = "bigsleep";
         public const string SLEEP_MONTH = "sleepingbeauty";
 
-        public const string BITE_RANDOM = "biterandom";
-        public const string BITE_SPECIFIC = "bitespecific";
-        public const string BITE_CURRENT_AREA = "bitearea";
+        public const string FISH_BITE = "fishy";
 
         public const string WEATHER_SPECIFIC = "forecast";
         public const string WEATHER_RANDOM = "noforecast";

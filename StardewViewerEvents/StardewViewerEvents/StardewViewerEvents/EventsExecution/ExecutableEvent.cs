@@ -32,7 +32,7 @@ namespace StardewViewerEvents.EventsExecution
             return QueuedEvent.parameters is not { Length: > 0 };
         }
 
-        protected string GetSingleParameter()
+        protected virtual string GetSingleParameter()
         {
             return string.Join(" ", QueuedEvent.parameters);
         }
@@ -84,9 +84,15 @@ namespace StardewViewerEvents.EventsExecution
             Game1.chatBox.addMessage(message, color);
         }
 
-        private string GetChatMessage()
+        protected virtual string GetChatMessage()
         {
             var message = $"{QueuedEvent.username} sent {QueuedEvent.BaseEvent.name}";
+
+            if (QueuedEvent.parameters.Any())
+            {
+                message += $" {GetSingleParameter()}";
+            }
+
             if (QueuedEvent.queueCount > 1)
             {
                 message += $" (x{QueuedEvent.queueCount})";
