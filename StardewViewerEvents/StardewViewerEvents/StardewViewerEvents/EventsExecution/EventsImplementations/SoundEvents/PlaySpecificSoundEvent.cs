@@ -9,9 +9,11 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.SoundEvents
 {
     public class PlaySpecificSoundEvent : PlaySoundEvent
     {
+        private string _soundCue;
 
         public PlaySpecificSoundEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
+            _soundCue = null;
         }
 
         public override bool ValidateParameters()
@@ -22,6 +24,11 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.SoundEvents
 
         public override string GetSoundCue()
         {
+            if (!string.IsNullOrWhiteSpace(_soundCue))
+            {
+                return _soundCue;
+            }
+
             var desiredSoundCue = GetSingleParameter();
             if (desiredSoundCue.Equals("random", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -36,12 +43,28 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.SoundEvents
                 desiredSoundCue = cues[Game1.random.Next(cues.Length)];
             }
 
+            _soundCue = desiredSoundCue;
             return desiredSoundCue;
         }
 
         protected override int GetSoundCount()
         {
             return 1;
+        }
+
+        protected override string AppendParameters(string message)
+        {
+            if (QueuedEvent.parameters.Any())
+            {
+                var parameter = GetSingleParameter();
+                message += $" {parameter}";
+                if (parameter.Equals("random", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    message += $" [{GetSoundCue()}]";
+                }
+            }
+
+            return message;
         }
     }
 }

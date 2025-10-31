@@ -88,11 +88,25 @@ namespace StardewViewerEvents.EventsExecution
         {
             var message = $"{QueuedEvent.username} sent {QueuedEvent.BaseEvent.name}";
 
+            message = AppendParameters(message);
+
+            message = AppendQueueCount(message);
+
+            return message;
+        }
+
+        protected virtual string AppendParameters(string message)
+        {
             if (QueuedEvent.parameters.Any())
             {
                 message += $" {GetSingleParameter()}";
             }
 
+            return message;
+        }
+
+        private string AppendQueueCount(string message)
+        {
             if (QueuedEvent.queueCount > 1)
             {
                 message += $" (x{QueuedEvent.queueCount})";
