@@ -8,8 +8,11 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents
 {
     public class GetSpecificItemEvent : GetItemEvent
     {
+        private string _itemId;
+
         public GetSpecificItemEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
+            _itemId = null;
         }
 
         public override bool ValidateParameters()
@@ -25,13 +28,22 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents
 
         public override string GetItemId()
         {
+            if (!string.IsNullOrWhiteSpace(_itemId))
+            {
+                return _itemId;
+            }
+
             var desiredItem = GetSingleParameter();
             if (ItemUtility.TryFindItem(desiredItem, out var foundItem))
             {
-                return foundItem.QualifiedItemId;
+                _itemId = foundItem.QualifiedItemId;
+            }
+            else
+            {
+                _itemId = $"(O)390";
             }
 
-            return $"(O)390";
+            return _itemId;
         }
     }
 }

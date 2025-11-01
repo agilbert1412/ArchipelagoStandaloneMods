@@ -10,26 +10,46 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents
         {
         }
 
+        public override bool CanExecuteRightNow()
+        {
+            if (!base.CanExecuteRightNow())
+            {
+                return false;
+            }
+
+            if (AnyMenuActive())
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public override void Execute()
         {
             base.Execute();
 
-            var itemId = GetItemId();
             var itemAmount = GetItemAmount();
-            var item = ItemRegistry.Create(itemId, itemAmount);
-            GiveItemToPlayer(item);
+            var items = new List<Item>();
+            for (var i = 0; i < itemAmount; i++)
+            {
+                var itemId = GetItemId();
+                var item = ItemRegistry.Create(itemId);
+                items.Add(item);
+            }
+            GiveItemsToPlayer(items);
         }
 
         public abstract string GetItemId();
 
         public virtual int GetItemAmount()
         {
-            return 1;
+            return QueuedEvent.queueCount;
         }
 
-        public virtual void GiveItemToPlayer(Item item)
+        public virtual void GiveItemsToPlayer(List<Item> items)
         {
-            Game1.player.addItemByMenuIfNecessary(item);
+            Game1.player.addItemsByMenuIfNecessary(items);
         }
     }
 }

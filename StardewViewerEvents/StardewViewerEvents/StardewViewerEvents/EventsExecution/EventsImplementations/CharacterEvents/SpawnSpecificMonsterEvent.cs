@@ -22,7 +22,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
             base.Execute();
 
             var desiredMonster = GetSingleParameter();
-            _monsterSpawner.SpawnOneSpecificMonster(Game1.currentLocation, desiredMonster);
+            _monsterSpawner.SpawnManySpecificMonsters(Game1.currentLocation, desiredMonster, QueuedEvent.queueCount);
         }
     }
 }

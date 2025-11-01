@@ -52,14 +52,19 @@ namespace StardewViewerEvents.EventsExecution
             return true;
         }
 
-        private static bool AnyEventActive()
+        protected bool AnyEventActive()
         {
             return Game1.eventUp || Game1.CurrentEvent != null;
         }
 
-        private static bool AnyFadeActive()
+        protected bool AnyFadeActive()
         {
             return Game1.fadeIn || Game1.fadeToBlack || Game1.globalFade || Game1.nonWarpFade;
+        }
+
+        protected bool AnyMenuActive()
+        {
+            return Game1.activeClickableMenu != null || Game1.nextClickableMenu.Any();
         }
 
         public virtual void Execute()

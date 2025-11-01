@@ -12,7 +12,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents
         public override void Execute()
         {
             base.Execute();
-            _debrisSpawner.SpawnSingleTree();
+            _debrisSpawner.SpawnManyTrees(QueuedEvent.queueCount);
         }
     }
 }

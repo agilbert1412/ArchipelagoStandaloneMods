@@ -31,10 +31,27 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
 
         public static readonly string[] AllMonsterTypes = _easyMonsterTypes.Union(_mediumMonsterTypes).Union(_hardMonsterTypes).ToArray();
 
+        public void SpawnManyRandomMonster(GameLocation map, int count)
+        {
+            for (var i = 0; i < count; i++)
+            {
+                SpawnOneRandomMonster(map);
+            }
+        }
+
         public void SpawnOneRandomMonster(GameLocation map)
         {
             var monster = ChooseRandomMonster(map);
             SpawnOneMonster(map, monster);
+        }
+
+        public void SpawnManySpecificMonsters(GameLocation map, string monsterName, int count)
+        {
+            var monster = GetSpecificMonster(map, monsterName);
+            for (var i = 0; i < count; i++)
+            {
+                SpawnOneMonster(map, monster);
+            }
         }
 
         public void SpawnOneSpecificMonster(GameLocation map, string monsterName)

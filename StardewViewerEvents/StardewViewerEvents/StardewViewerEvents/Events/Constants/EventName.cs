@@ -41,6 +41,7 @@
         public const string SOUND_SPECIFIC = "sound";
         public const string SOUND_BARK = "bark";
         public const string SOUND_MEOW = "meow";
+        public const string SOUND_RANDOM = "noise";
 
         public const string SLEEP_ONCE = "sleepy";
         public const string SLEEP_WEEK = "bigsleep";
@@ -52,7 +53,7 @@
         public const string WEATHER_RANDOM = "noforecast";
 
         public const string SHOW_AD = "ad";
-        public const string SHOW_MAIL = "mail";
+        public const string SEND_CUSTOM_MAIL = "mail";
 
         public const string EMOTE_SPECIFIC = "emote";
         public const string EMOTE_RANDOM = "moodswing";

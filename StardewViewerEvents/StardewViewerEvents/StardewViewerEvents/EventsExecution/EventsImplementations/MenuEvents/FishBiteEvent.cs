@@ -29,7 +29,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.MenuEvents
                 return false;
             }
 
-            if (Game1.activeClickableMenu != null)
+            if (AnyMenuActive())
             {
                 return false;
             }

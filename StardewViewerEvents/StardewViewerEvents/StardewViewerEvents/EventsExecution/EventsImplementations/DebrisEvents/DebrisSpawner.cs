@@ -47,6 +47,14 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents
             SpawnSingleDebris(location, tile);
         }
 
+        public void SpawnManyTrees(int amount)
+        {
+            for (var i = 0; i < amount; i++)
+            {
+                SpawnSingleTree();
+            }
+        }
+
         public void SpawnSingleTree()
         {
             SpawnSingleTree(Game1.currentLocation);
@@ -60,6 +68,14 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents
             }
 
             SpawnSingleTree(location, tile);
+        }
+
+        public void SpawnManyBoulders(int amount)
+        {
+            for (var i = 0; i < amount; i++)
+            {
+                SpawnSingleBoulder();
+            }
         }
 
         public void SpawnSingleBoulder()

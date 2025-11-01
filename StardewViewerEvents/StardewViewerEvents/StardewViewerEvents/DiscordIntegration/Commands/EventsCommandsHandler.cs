@@ -267,7 +267,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             await PayForEvent(message, creditAccounts, eventExecutor, eventName, creditsToPay);
         }
 
-        private async Task PayForEvent(SocketUserMessage message, CreditAccounts creditAccounts, ViewerEventsExecutor eventExecutor, string eventName, int creditsToPay)
+        private async Task PayForEvent(SocketUserMessage message, CreditAccounts creditAccounts, ViewerEventsExecutor eventExecutor, string eventName, int creditsToPay, string[] args)
         {
             var chosenEvent = eventExecutor.Events.GetEvent(eventName);
             if (chosenEvent == null)
@@ -276,20 +276,14 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
                 return;
             }
 
-            if (chosenEvent.hasParameters)
-            {
-                _communications.ReplyTo(message, $"{eventName} requires parameters, so can only be purchased with !purchase");
-                return;
-            }
-
-            await PayForEvent(message, creditAccounts, eventExecutor, chosenEvent, creditsToPay, Array.Empty<string>());
+            await PayForEvent(message, creditAccounts, eventExecutor, chosenEvent, creditsToPay, args);
         }
 
         private async Task PayForEvent(SocketUserMessage message, CreditAccounts creditAccounts, ViewerEventsExecutor eventExecutor, ViewerEvent chosenEvent, int creditsToPay, string[] args)
         {
             var userAccount = creditAccounts[message.Author.Id];
 
-            if (!chosenEvent.IsStackable())
+            if (!chosenEvent.IsQueueable())
             {
                 var costToNextActivation = chosenEvent.GetCostToNextActivation(eventExecutor.Events.CurrentMultiplier);
                 if (creditsToPay > costToNextActivation)

@@ -18,7 +18,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
         {
             base.Execute();
 
-            _monsterSpawner.SpawnOneRandomMonster(Game1.currentLocation);
+            _monsterSpawner.SpawnManyRandomMonster(Game1.currentLocation, QueuedEvent.queueCount);
         }
     }
 }

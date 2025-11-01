@@ -29,16 +29,23 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
             }
         }
 
+        public void SpawnTemporaryBabies(string[] allValidNames, int count)
+        {
+            for (var i = 0; i < count; i++)
+            {
+                SpawnTemporaryBaby(allValidNames);
+            }
+        }
+
         public void SpawnTemporaryBaby(string[] allValidNames)
         {
-            var random = new Random();
-            var babyGender = random.NextDouble() < 0.5;
-            var babyColor = random.NextDouble() < 0.5;
-            var babyName = ChooseBabyName(random, allValidNames);
+            var babyGender = Game1.random.NextDouble() < 0.5;
+            var babyColor = Game1.random.NextDouble() < 0.5;
+            var babyName = ChooseBabyName(Game1.random, allValidNames);
 
             var currentMap = Game1.currentLocation;
             var tile = currentMap.getRandomTile() * 64f;
-            var age = random.Next(4);
+            var age = Game1.random.Next(4);
             var baby = new TemporaryBaby(babyName, babyGender, babyColor, Game1.player, age)
             {
                 Position = tile,

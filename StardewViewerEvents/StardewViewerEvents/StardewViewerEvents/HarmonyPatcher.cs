@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace StardewViewerEvents
 {
@@ -17,6 +18,7 @@ namespace StardewViewerEvents
         public void Initialize(IMonitor logger, IModHelper helper, Harmony harmony)
         {
             InitializeTemporaryBaby(logger, helper, harmony);
+            InitializeInvisibleCow(logger, helper, harmony);
         }
 
         private void InitializeTemporaryBaby(IMonitor logger, IModHelper helper, Harmony harmony)
@@ -31,6 +33,21 @@ namespace StardewViewerEvents
             harmony.Patch(
                 original: AccessTools.Method(typeof(GameLocation), nameof(GameLocation.performTenMinuteUpdate)),
                 prefix: new HarmonyMethod(typeof(TemporaryBaby), nameof(TemporaryBaby.GameLocationPerformTenMinuteUpdate_MoveBabiesAnywhere_Prefix))
+            );
+        }
+
+        private void InitializeInvisibleCow(IMonitor logger, IModHelper helper, Harmony harmony)
+        {
+            CowManager.Initialize(logger, helper);
+
+            harmony.Patch(
+                original: AccessTools.Method(typeof(FarmAnimal), nameof(FarmAnimal.draw), new []{typeof(SpriteBatch)}),
+                prefix: new HarmonyMethod(typeof(CowManager), nameof(CowManager.Draw_InvisibleCow_Prefix))
+            );
+
+            harmony.Patch(
+                original: AccessTools.Method(typeof(FarmAnimal), nameof(FarmAnimal.dayUpdate)),
+                prefix: new HarmonyMethod(typeof(CowManager), nameof(CowManager.DayUpdate_InvisibleCow_Prefix))
             );
         }
     }

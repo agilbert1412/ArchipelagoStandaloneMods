@@ -15,9 +15,8 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.SoundEvents
         {
             base.Execute();
 
-            var soundCue = GetSoundCue();
             var count = GetSoundCount() * QueuedEvent.queueCount;
-            PlaySoundsAsync(count, soundCue).FireAndForget();
+            PlaySoundsAsync(count).FireAndForget();
         }
 
         public abstract string GetSoundCue();
@@ -32,12 +31,13 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.SoundEvents
             return 1;
         }
 
-        private async Task PlaySoundsAsync(int numberOfSounds, string sound)
+        private async Task PlaySoundsAsync(int numberOfSounds)
         {
             for (var i = 0; i < numberOfSounds; i++)
             {
                 await Task.Run(() => Thread.Sleep(2000));
-                Game1.playSound(sound);
+                var soundCue = GetSoundCue();
+                Game1.playSound(soundCue);
             }
         }
     }

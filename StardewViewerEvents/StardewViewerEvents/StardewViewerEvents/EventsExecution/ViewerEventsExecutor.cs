@@ -82,7 +82,7 @@ namespace StardewViewerEvents.EventsExecution
 
         public void AddOrIncrementEventInQueue(SocketUser sender, ViewerEvent chosenEvent, string[] args)
         {
-            if (chosenEvent.IsStackable() && (args == null || args.Length == 0))
+            if (chosenEvent.IsStackable())
             {
                 foreach (var qe in Queue)
                 {

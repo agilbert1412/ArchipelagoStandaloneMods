@@ -14,7 +14,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents
         public override void Execute()
         {
             base.Execute();
-            _debrisSpawner.SpawnManyDebris(AMOUNT);
+            _debrisSpawner.SpawnManyDebris(AMOUNT * QueuedEvent.queueCount);
         }
     }
 }

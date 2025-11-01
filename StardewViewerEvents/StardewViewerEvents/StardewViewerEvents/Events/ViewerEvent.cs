@@ -7,9 +7,12 @@ using StardewViewerEvents.EventsExecution.EventsImplementations.BombEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents;
+using StardewViewerEvents.EventsExecution.EventsImplementations.MailEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.MenuEvents;
+using StardewViewerEvents.EventsExecution.EventsImplementations.PlayerEvents.EmoteEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.SoundEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.TeleportEvents;
+using StardewViewerEvents.EventsExecution.EventsImplementations.WeatherEvents;
 
 namespace StardewViewerEvents.Events
 {
@@ -19,6 +22,7 @@ namespace StardewViewerEvents.Events
         public int cost; // The current cost
         public int bank; // The currently donated credits contributing to the next activation
         public bool stackable;
+        public bool queueable;
         public bool hasParameters;
         public string alignment; // "positive", "negative" or "neutral"
         public string description;
@@ -34,6 +38,7 @@ namespace StardewViewerEvents.Events
             cost = int.Parse(data["cost"].ToString());
             bank = int.Parse(data["bank"].ToString());
             stackable = bool.Parse(data["stackable"].ToString());
+            queueable = bool.Parse(data["queueable"].ToString());
             hasParameters = bool.Parse(data["hasParameters"].ToString());
             alignment = data["alignment"].ToString();
             description = data["description"].ToString();
@@ -64,6 +69,11 @@ namespace StardewViewerEvents.Events
         public bool IsStackable()
         {
             return stackable;
+        }
+
+        public bool IsQueueable()
+        {
+            return queueable;
         }
 
         public void AddToBank(int amountToAdd)
@@ -161,8 +171,22 @@ namespace StardewViewerEvents.Events
                     return new PlayBarkEvent(logger, modHelper, queuedEvent);
                 case EventName.SOUND_SPECIFIC:
                     return new PlaySpecificSoundEvent(logger, modHelper, queuedEvent);
+                case EventName.SOUND_RANDOM:
+                    return new PlayRandomSoundEvent(logger, modHelper, queuedEvent);
                 case EventName.FISH_BITE:
                     return new FishBiteEvent(logger, modHelper, queuedEvent);
+                case EventName.WEATHER_RANDOM:
+                    return new RandomWeatherEvent(logger, modHelper, queuedEvent);
+                case EventName.WEATHER_SPECIFIC:
+                    return new SpecificWeatherEvent(logger, modHelper, queuedEvent);
+                case EventName.SEND_CUSTOM_MAIL:
+                    return new CustomMailEvent(logger, modHelper, queuedEvent);
+                case EventName.EMOTE_RANDOM:
+                    return new RandomEmoteEvent(logger, modHelper, queuedEvent);
+                case EventName.EMOTE_SPECIFIC:
+                    return new SpecificEmoteEvent(logger, modHelper, queuedEvent);
+                case EventName.INVISIBLE_COWS:
+                    return new SpawnInvisibleCowEvent(logger, modHelper, queuedEvent);
             }
 
             throw new NotImplementedException($"No Executable event found for event '{queuedEvent.BaseEvent.name}'");
