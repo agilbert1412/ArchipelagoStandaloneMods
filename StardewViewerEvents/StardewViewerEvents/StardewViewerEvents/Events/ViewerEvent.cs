@@ -10,6 +10,7 @@ using StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.MailEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.MenuEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.PlayerEvents.EmoteEvents;
+using StardewViewerEvents.EventsExecution.EventsImplementations.PlayerEvents.PlayerCharacterEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.SoundEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.TeleportEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.WeatherEvents;
@@ -187,6 +188,18 @@ namespace StardewViewerEvents.Events
                     return new SpecificEmoteEvent(logger, modHelper, queuedEvent);
                 case EventName.INVISIBLE_COWS:
                     return new SpawnInvisibleCowEvent(logger, modHelper, queuedEvent);
+                case EventName.THEMATIC_FULL_OUTFIT:
+                    return new ThemedOutfitEvent(logger, modHelper, queuedEvent);
+                case EventName.RANDOMIZE_FULL_OUTFIT:
+                    return new RandomizeFullOutfitEvent(logger, modHelper, queuedEvent);
+                case EventName.RANDOMIZE_ONE_OUTFIT_PART:
+                    return new RandomizeOutfitPartEvent(logger, modHelper, queuedEvent);
+                case EventName.CHANGE_GENDER:
+                    return new ChangeGenderEvent(logger, modHelper, queuedEvent);
+                case EventName.RANDOMIZE_PROFESSIONS:
+                    return new RandomizeProfessionsEvent(logger, modHelper, queuedEvent);
+                case EventName.CHANGE_FAVORITE_THING:
+                    return new ChangeFavoriteThingEvent(logger, modHelper, queuedEvent);
             }
 
             throw new NotImplementedException($"No Executable event found for event '{queuedEvent.BaseEvent.name}'");

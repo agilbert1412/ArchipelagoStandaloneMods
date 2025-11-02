@@ -47,7 +47,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
                 return;
             }
 
-            if (!_commandReader.IsCommandValid(messageText, out string eventName, out string[] args))
+            if (!_commandReader.IsCommandValid(messageText, out var eventName, out string[] args))
             {
                 _communications.ReplyTo(message, "Usage: !queueevent [eventName]");
                 return;
@@ -73,7 +73,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
                 return;
             }
 
-            if (!_commandReader.IsCommandValid(messageText, out string eventName, out string[] args))
+            if (!_commandReader.IsCommandValid(messageText, out var eventName, out string[] args))
             {
                 _communications.ReplyTo(message, "Usage: !triggerevent [eventName]");
                 return;
@@ -109,7 +109,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
                 return;
             }
 
-            if (!_commandReader.IsCommandValid(messageText, out string eventName, out int bankAmount))
+            if (!_commandReader.IsCommandValid(messageText, out string eventName, out int bankAmount, out _))
             {
                 _communications.ReplyTo(message, "Usage: !setbank [eventName] [bankAmount]");
                 return;
@@ -223,7 +223,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
 
             Console.WriteLine("Purchase: " + messageText);
 
-            if (!_commandReader.IsCommandValid(messageText, out string eventName, out string[] parameters))
+            if (!_commandReader.IsCommandValid(messageText, out var eventName, out string[] parameters))
             {
                 _communications.ReplyTo(message, "Usage: !purchase [eventName]");
                 return;
@@ -250,9 +250,9 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             }
 
             Console.WriteLine("Pay: " + messageText);
-            if (!_commandReader.IsCommandValid(messageText, out string eventName, out int creditsToPay))
+            if (!_commandReader.IsCommandValid(messageText, out var eventName, out var creditsToPay, out var args))
             {
-                _communications.ReplyTo(message, "Usage: !pay [eventName] [creditAmount]");
+                _communications.ReplyTo(message, "Usage: !pay [eventName] [creditAmount] [args]");
                 return;
             }
 
@@ -264,7 +264,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
                 return;
             }
 
-            await PayForEvent(message, creditAccounts, eventExecutor, eventName, creditsToPay);
+            await PayForEvent(message, creditAccounts, eventExecutor, eventName, creditsToPay, args);
         }
 
         private async Task PayForEvent(SocketUserMessage message, CreditAccounts creditAccounts, ViewerEventsExecutor eventExecutor, string eventName, int creditsToPay, string[] args)

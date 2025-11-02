@@ -52,7 +52,7 @@ public class EventsGenerator
             CreateUnstackableEvent(EventName.FISH_BITE, Alignment.NEUTRAL, 10, "Trigger an immediate fish bite, regardless of fishing or not"),
 
             CreateUnqueueableEvent(EventName.WEATHER_RANDOM, Alignment.NEUTRAL, 3, "Change to a random weather"),
-            CreateUnqueueableEvent(EventName.WEATHER_SPECIFIC, Alignment.NEUTRAL, 5, "Change to a specific weather"),
+            CreateParameterUnqueueableEvent(EventName.WEATHER_SPECIFIC, Alignment.NEUTRAL, 5, "Change to a specific weather"),
 
             CreateParameterUnstackableEvent(EventName.SEND_CUSTOM_MAIL, Alignment.NEUTRAL, 10, "Send a letter to the player, you specify the contents"),
 
@@ -60,6 +60,14 @@ public class EventsGenerator
             CreateParameterUnstackableEvent(EventName.EMOTE_SPECIFIC, Alignment.NEUTRAL, 2, "Trigger a specific emote. Must use stardew internal emote names"),
 
             CreateStackableEvent(EventName.INVISIBLE_COWS, Alignment.NEGATIVE, 2, $"Spawn {SpawnInvisibleCowEvent.NUMBER_COWS_PER_PURCHASE} invisible cows on the current map. They despawn slowly over days"),
+
+            CreateUnqueueableEvent(EventName.THEMATIC_FULL_OUTFIT, Alignment.NEUTRAL, 8, "Change the player's entire outfit, based on an Emily theme"),
+            CreateUnqueueableEvent(EventName.RANDOMIZE_FULL_OUTFIT, Alignment.NEUTRAL, 6, "Randomize the player's entire appearance"),
+            CreateParameterUnqueueableEvent(EventName.RANDOMIZE_ONE_OUTFIT_PART, Alignment.NEUTRAL, 2, "Randomize either pants, shirt, hair"),
+            CreateUnqueueableEvent(EventName.CHANGE_GENDER, Alignment.NEUTRAL, 4, "Switch the player's gender"),
+            CreateUnqueueableEvent(EventName.RANDOMIZE_PROFESSIONS, Alignment.NEUTRAL, 20, "Randomize all professions"),
+            CreateParameterUnqueueableEvent(EventName.CHANGE_FAVORITE_THING, Alignment.NEUTRAL, 8, "Change the player's favorite thing to a specific value"),
+            // CreateUnqueueableEvent(EventName.RANDOM_NAME, Alignment.NEUTRAL, 5, ""),
 
             //CreateEvent(EventName.SLEEP_ONCE, Alignment.NEUTRAL, 20, "Go to sleep", false),
             //CreateEvent(EventName.SLEEP_WEEK, Alignment.NEGATIVE, 200, "Sleep a whole week", false),

@@ -10,9 +10,11 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.SoundEvents
         {
         }
 
-        public override bool ValidateParameters()
+        public override bool ValidateParameters(out string errorMessage)
         {
             var desiredSoundCue = GetSingleParameter();
+            errorMessage =
+                $"Unrecognized sound cue [{desiredSoundCue}]. You must specify the exact cue of a sound in Stardew Valley.";
             return SoundCueIsValid(desiredSoundCue);
         }
 

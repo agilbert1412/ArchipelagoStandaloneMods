@@ -62,6 +62,7 @@
 
         // Jojapocalypse Check
 
+        public const string THEMATIC_FULL_OUTFIT = "outfitservices";
         public const string RANDOMIZE_FULL_OUTFIT = "fullmakeover";
         public const string RANDOMIZE_ONE_OUTFIT_PART = "makeover";
         public const string CHANGE_GENDER = "hrt";

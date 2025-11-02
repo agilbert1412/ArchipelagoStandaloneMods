@@ -37,9 +37,9 @@ namespace StardewViewerEvents.Events
             return BaseEvent.GetExecutableEvent(logger, modHelper, this);
         }
 
-        public bool ValidateParameters(IMonitor logger, IModHelper modHelper)
+        public bool ValidateParameters(IMonitor logger, IModHelper modHelper, out string errorMessage)
         {
-            return GetExecutableEvent(logger, modHelper).ValidateParameters();
+            return GetExecutableEvent(logger, modHelper).ValidateParameters(out errorMessage);
         }
     }
 }

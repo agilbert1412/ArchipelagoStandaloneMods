@@ -12,14 +12,16 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.WeatherEvent
         {
         }
 
-        public override bool ValidateParameters()
+        public override bool ValidateParameters(out string errorMessage)
         {
-            if (!base.ValidateParameters())
+            if (!base.ValidateParameters(out errorMessage))
             {
                 return false;
             }
 
             var desiredWeather = GetSingleParameter();
+            errorMessage =
+                $"Unrecognized weather [{desiredWeather}]. Must choose one of the following weathers: [{string.Join(",", _validWeathers)}]";
             return _validWeathers.Any(x => x.Equals(desiredWeather, StringComparison.InvariantCultureIgnoreCase));
         }
 

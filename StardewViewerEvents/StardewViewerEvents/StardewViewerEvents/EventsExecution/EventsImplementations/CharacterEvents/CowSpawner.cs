@@ -21,7 +21,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
 
             var currentMap = Game1.currentLocation;
             var tile = currentMap.getRandomTile() * 64f;
-            var cow = new FarmAnimal(cowType, Game1.Multiplayer.getNewID(), Game1.player.UniqueMultiplayerID)
+            var cow = new FarmAnimal(cowType, Game1.random.NextInt64(), Game1.player.UniqueMultiplayerID)
             {
                 Position = tile,
                 Name = cowName,

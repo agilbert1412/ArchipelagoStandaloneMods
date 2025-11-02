@@ -15,9 +15,10 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.MailEvents
         {
         }
 
-        public override bool ValidateParameters()
+        public override bool ValidateParameters(out string errorMessage)
         {
             var content = GetSingleParameter();
+            errorMessage = $"You must write something in the mail to send";
             return !string.IsNullOrWhiteSpace(content);
         }
 

@@ -22,13 +22,15 @@ namespace StardewViewerEvents.EventsExecution
             QueuedEvent = queuedEvent;
         }
 
-        public virtual bool ValidateParameters()
+        public virtual bool ValidateParameters(out string errorMessage)
         {
             if (BaseEvent.hasParameters)
             {
+                errorMessage = $"Event '{QueuedEvent.baseEventName}' requires parameters to be triggered.";
                 return QueuedEvent.parameters is { Length: >= 1 };
             }
 
+            errorMessage = $"Event '{QueuedEvent.baseEventName}' should not have parameters. [{string.Join(", ", QueuedEvent.parameters)}].";
             return QueuedEvent.parameters is not { Length: > 0 };
         }
 
@@ -44,10 +46,15 @@ namespace StardewViewerEvents.EventsExecution
                 return false;
             }
 
-            //if (AnyFadeActive())
-            //{
-            //    return false;
-            //}
+            if (AnyFadeActive())
+            {
+                return false;
+            }
+
+            if (AnyMenuActive())
+            {
+                return false;
+            }
 
             return true;
         }

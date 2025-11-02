@@ -14,19 +14,21 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.PlayerEvents
         {
         }
 
-        public override bool ValidateParameters()
+        public override bool ValidateParameters(out string errorMessage)
         {
-            if (!base.ValidateParameters())
+            if (!base.ValidateParameters(out errorMessage))
             {
                 return false;
             }
 
-            return TryGetDesiredEmote(out _);
+            var desiredEmote = GetSingleParameter();
+            errorMessage =
+                $"Unrecognized emote [{desiredEmote}]. You must specify either the name or the ID of an emote in Stardew Valley.";
+            return TryGetDesiredEmote(desiredEmote, out _);
         }
 
-        private bool TryGetDesiredEmote(out EmoteType emote)
+        private bool TryGetDesiredEmote(string desiredEmote, out EmoteType emote)
         {
-            var desiredEmote = GetSingleParameter();
             var lowerEmote = desiredEmote.SanitizeEntityName();
             foreach (var emoteType in EMOTES)
             {
@@ -49,7 +51,8 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.PlayerEvents
 
         protected override string GetEmoteName()
         {
-            TryGetDesiredEmote(out var emote);
+            var desiredEmote = GetSingleParameter();
+            TryGetDesiredEmote(desiredEmote, out var emote);
             return emote.emoteString;
         }
     }

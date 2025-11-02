@@ -2,10 +2,11 @@
 {
     internal class CommandReader
     {
-        public bool IsCommandValid(string messageText, out string arg1, out int arg2)
+        public bool IsCommandValid(string messageText, out string arg1, out int arg2, out string[] parameters)
         {
             var numberParts = 3;
-            var lineparts = messageText.Split(" ", numberParts);
+            var lineparts = messageText.Split(" ");
+            parameters = Array.Empty<string>();
 
             arg1 = "";
             arg2 = 0;
@@ -22,6 +23,7 @@
                 return false;
             }
 
+            parameters = lineparts.Skip(3).ToArray();
             return true;
         }
 

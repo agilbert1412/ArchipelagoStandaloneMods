@@ -11,10 +11,17 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
         {
         }
 
-        public override bool ValidateParameters()
+        public override bool ValidateParameters(out string errorMessage)
         {
             var desiredMonster = GetSingleParameter();
-            return _monsterSpawner.IsValidMonster(desiredMonster);
+            errorMessage = $"";
+            if (!_monsterSpawner.IsValidMonster(desiredMonster))
+            {
+                errorMessage = $"Unrecognized monster [{desiredMonster}]. Valid monsters: [{string.Join(',', MonsterSpawner.AllMonsterTypes)}]";
+                return false;
+            }
+
+            return true;
         }
 
         public override void Execute()

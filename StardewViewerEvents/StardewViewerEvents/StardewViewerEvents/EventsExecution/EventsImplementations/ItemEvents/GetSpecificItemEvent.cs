@@ -15,14 +15,16 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents
             _itemId = null;
         }
 
-        public override bool ValidateParameters()
+        public override bool ValidateParameters(out string errorMessage)
         {
             if (QueuedEvent.parameters == null || QueuedEvent.parameters.Length < 1)
             {
+                errorMessage = $"Must specify what item to give the player.";
                 return false;
             }
 
             var desiredItem = GetSingleParameter();
+            errorMessage = $"Unrecognized item [{desiredItem}]. You must specify an item name or item ID that exists in Stardew Valley.";
             return ItemUtility.ItemExists(desiredItem);
         }
 

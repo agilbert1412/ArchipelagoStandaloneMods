@@ -12,14 +12,17 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.TeleportEven
         {
         }
 
-        public override bool ValidateParameters()
+        public override bool ValidateParameters(out string errorMessage)
         {
             if (QueuedEvent.parameters == null || QueuedEvent.parameters.Length < 1)
             {
+                errorMessage = "You must specify a map to teleport to";
                 return false;
             }
 
             var desiredMapName = GetSingleParameter();
+            errorMessage =
+                $"Unrecognized map name [{desiredMapName}]. You must specify the internal name of a GameLocation in Stardew Valley";
             return TryGetDesiredMap(desiredMapName, out _);
         }
 
