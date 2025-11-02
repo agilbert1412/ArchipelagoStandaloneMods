@@ -49,6 +49,11 @@ namespace StardewViewerEvents
                 original: AccessTools.Method(typeof(FarmAnimal), nameof(FarmAnimal.dayUpdate)),
                 prefix: new HarmonyMethod(typeof(CowManager), nameof(CowManager.DayUpdate_InvisibleCow_Prefix))
             );
+
+            harmony.Patch(
+                original: AccessTools.Method(typeof(FarmAnimal), nameof(FarmAnimal.farmerPushing)),
+                prefix: new HarmonyMethod(typeof(CowManager), nameof(CowManager.FarmerPushing_TakeLongerToReact_Prefix))
+            );
         }
     }
 }

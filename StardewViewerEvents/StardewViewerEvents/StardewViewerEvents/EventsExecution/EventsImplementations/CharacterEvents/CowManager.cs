@@ -158,5 +158,41 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
             }
 
         }
+
+        // farmerPushing()
+        public static bool FarmerPushing_TakeLongerToReact_Prefix(FarmAnimal __instance)
+        {
+            try
+            {
+                if (!__instance.modData.ContainsKey(INVISIBLE_COW_KEY))
+                {
+                    return true;
+                }
+
+                ++__instance.pushAccumulator;
+                if (__instance.pushAccumulator <= 180)
+                {
+                    return false;
+                }
+
+                // __instance.doFarmerPushEvent.Fire(Game1.player.FacingDirection);
+                var cowBoundingBox = __instance.GetBoundingBox();
+                var farmerOppositeDirection = Utility.GetOppositeFacingDirection(Game1.player.FacingDirection);
+                var temporaryTile = Utility.ExpandRectangle(cowBoundingBox, farmerOppositeDirection, 6);
+                temporaryTile.Inflate(-(temporaryTile.Width/4), -(temporaryTile.Height / 4));
+                Game1.player.TemporaryPassableTiles.Add(temporaryTile);
+                __instance.pushAccumulator = 0;
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed in {nameof(FarmerPushing_TakeLongerToReact_Prefix)}:\n{ex}");
+                return true;
+            }
+
+        }
+
+        // public void doFarmerPush(int direction)
     }
 }
