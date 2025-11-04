@@ -6,7 +6,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.StatsChangeE
 {
     public class RemoveStaminaEvent : ExecutableEvent
     {
-        public const int AMOUNT_REMOVED = 3;
+        public const int AMOUNT_REMOVED = 30;
 
         public RemoveStaminaEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {

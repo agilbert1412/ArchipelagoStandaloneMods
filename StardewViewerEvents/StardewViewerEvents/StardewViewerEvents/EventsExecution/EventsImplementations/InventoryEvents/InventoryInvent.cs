@@ -111,6 +111,8 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.InventoryEve
             var (inventory2, index2) = itemMap[item2];
             inventory1[index1] = item2;
             inventory2[index2] = item1;
+            itemMap[item1] = new Tuple<Inventory, int>(inventory2, index2);
+            itemMap[item2] = new Tuple<Inventory, int>(inventory1, index1);
         }
     }
 }

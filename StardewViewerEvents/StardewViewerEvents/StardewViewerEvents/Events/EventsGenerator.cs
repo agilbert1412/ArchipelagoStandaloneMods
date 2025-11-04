@@ -72,12 +72,12 @@ public class EventsGenerator
             CreateParameterUnqueueableEvent(EventName.CHANGE_FAVORITE_THING, Alignment.NEUTRAL, 8, "Change the player's favorite thing to a specific value"),
             // CreateUnqueueableEvent(EventName.RANDOM_NAME, Alignment.NEUTRAL, 5, ""),
 
-            CreateStackableEvent(EventName.MONEY_ADD, Alignment.POSITIVE, 1, $"Gain {AddMoneyEvent.AMOUNT_ADDED}g"),
-            CreateStackableEvent(EventName.MONEY_REMOVE, Alignment.NEGATIVE, 1, $"Lose {RemoveMoneyEvent.AMOUNT_REMOVED}g"),
-            CreateUnstackableEvent(EventName.HEALTH_ADD, Alignment.POSITIVE, 1, $"Gain {AddHealthEvent.AMOUNT_ADDED} health"),
-            CreateUnstackableEvent(EventName.HEALTH_REMOVE, Alignment.NEGATIVE, 1, $"Lose {RemoveHealthEvent.AMOUNT_REMOVED} health"),
-            CreateUnstackableEvent(EventName.STAMINA_ADD, Alignment.POSITIVE, 1, $"Gain {AddStaminaEvent.AMOUNT_ADDED} stamina"),
-            CreateUnstackableEvent(EventName.STAMINA_REMOVE, Alignment.NEGATIVE, 1, $"Lose {RemoveStaminaEvent.AMOUNT_REMOVED} stamina"),
+            CreateStackableEvent(EventName.MONEY_ADD, Alignment.POSITIVE, 5, $"Gain {AddMoneyEvent.AMOUNT_ADDED}g"),
+            CreateStackableEvent(EventName.MONEY_REMOVE, Alignment.NEGATIVE, 5, $"Lose {RemoveMoneyEvent.AMOUNT_REMOVED}g"),
+            CreateUnstackableEvent(EventName.HEALTH_ADD, Alignment.POSITIVE, 10, $"Gain {AddHealthEvent.AMOUNT_ADDED} health"),
+            CreateUnstackableEvent(EventName.HEALTH_REMOVE, Alignment.NEGATIVE, 10, $"Lose {RemoveHealthEvent.AMOUNT_REMOVED} health"),
+            CreateUnstackableEvent(EventName.STAMINA_ADD, Alignment.POSITIVE, 10, $"Gain {AddStaminaEvent.AMOUNT_ADDED} stamina"),
+            CreateUnstackableEvent(EventName.STAMINA_REMOVE, Alignment.NEGATIVE, 10, $"Lose {RemoveStaminaEvent.AMOUNT_REMOVED} stamina"),
             CreateStackableEvent(EventName.TIME_FORWARD, Alignment.POSITIVE, 1, $"Advance time by {TimeForwardsEvent.MINUTES_FORWARD} minutes"),
             CreateStackableEvent(EventName.TIME_BACKWARDS, Alignment.NEGATIVE, 1, $"Move time backwards by {TimeBackwardsEvent.MINUTES_BACKWARDS} minutes"),
 

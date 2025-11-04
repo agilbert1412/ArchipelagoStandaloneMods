@@ -17,8 +17,16 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.StatsChangeE
             base.Execute();
 
             var timeBackwards = MINUTES_BACKWARDS * QueuedEvent.queueCount;
-            Game1.timeOfDay -= timeBackwards;
-            Game1.timeOfDay -= 10;
+            while (timeBackwards >= 0)
+            {
+                Game1.timeOfDay -= 10;
+                timeBackwards -= 10;
+                var minutes = Game1.timeOfDay % 100;
+                if (minutes > 60)
+                {
+                    Game1.timeOfDay = Game1.timeOfDay - minutes + 50;
+                }
+            }
             Game1.performTenMinuteClockUpdate();
         }
     }

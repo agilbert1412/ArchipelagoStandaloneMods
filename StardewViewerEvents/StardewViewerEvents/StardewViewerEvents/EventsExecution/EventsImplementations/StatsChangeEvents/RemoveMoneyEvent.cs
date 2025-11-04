@@ -6,7 +6,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.StatsChangeE
 {
     public class RemoveMoneyEvent : ExecutableEvent
     {
-        public const int AMOUNT_REMOVED = 100;
+        public const int AMOUNT_REMOVED = 500;
 
         public RemoveMoneyEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
