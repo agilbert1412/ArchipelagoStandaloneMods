@@ -6,6 +6,7 @@ using StardewViewerEvents.EventsExecution.EventsImplementations.BombEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.CropEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents;
+using StardewViewerEvents.EventsExecution.EventsImplementations.DurationEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.InventoryEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.MailEvents;
@@ -233,6 +234,8 @@ namespace StardewViewerEvents.Events
                     return new ShuffleInventoryEvent(logger, modHelper, queuedEvent);
                 case EventName.SHUFFLE_EVERYWHERE:
                     return new ShuffleEverywhereEvent(logger, modHelper, queuedEvent);
+                case EventName.REVERSE_CONTROLS:
+                    return new ReverseControlsEvent(logger, modHelper, queuedEvent);
             }
 
             throw new NotImplementedException($"No Executable event found for event '{queuedEvent.BaseEvent.name}'");

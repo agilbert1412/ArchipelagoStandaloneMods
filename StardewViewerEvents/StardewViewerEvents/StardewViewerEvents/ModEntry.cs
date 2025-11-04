@@ -86,6 +86,8 @@ namespace StardewViewerEvents
                 return;
             }
 
+            _viewerEventsExecutor.Update();
+
             var framesBetweenEvents = Config.EventsDelay * 60;
             if (e.IsMultipleOf(framesBetweenEvents))
             {

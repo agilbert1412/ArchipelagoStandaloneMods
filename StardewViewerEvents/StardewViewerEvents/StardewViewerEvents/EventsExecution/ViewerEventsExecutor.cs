@@ -14,12 +14,14 @@ namespace StardewViewerEvents.EventsExecution
 
         public EventCollection Events { get; }
         public EventQueue Queue { get; }
+        private List<ExecutableEvent> _activeEvents;
 
         public ViewerEventsExecutor(IMonitor logger)
         {
             _logger = logger;
             Events = new EventCollection();
             Queue = new EventQueue(logger);
+            _activeEvents = new List<ExecutableEvent>();
 
             _logger.LogInfo(Events.Count + " is the total events count.");
         }
@@ -58,7 +60,7 @@ namespace StardewViewerEvents.EventsExecution
                     return;
                 }
 
-                if (!executableEvent.CanExecuteRightNow())
+                if (_activeEvents.Any(x => x.GetType() == executableEvent.GetType()) || !executableEvent.CanExecuteRightNow())
                 {
                     Queue.QueueEvent(eventToSend);
                     return;
@@ -67,6 +69,7 @@ namespace StardewViewerEvents.EventsExecution
                 try
                 {
                     executableEvent.Execute();
+                    _activeEvents.Add(executableEvent);
                 }
                 catch (Exception ex)
                 {
@@ -114,6 +117,18 @@ namespace StardewViewerEvents.EventsExecution
             invokedEvent.userId = sender.Id;
             invokedEvent.queueCount = 1;
             return invokedEvent;
+        }
+
+        public void Update()
+        {
+            for (var i = _activeEvents.Count - 1; i >= 0; i--)
+            {
+                var activeEvent = _activeEvents[i];
+                if (activeEvent.UpdateAndTryFinish())
+                {
+                    _activeEvents.RemoveAt(i);
+                }
+            }
         }
     }
 }

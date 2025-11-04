@@ -2,6 +2,7 @@
 using StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.CropEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents;
+using StardewViewerEvents.EventsExecution.EventsImplementations.DurationEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.InventoryEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.StatsChangeEvents;
 
@@ -91,6 +92,7 @@ public class EventsGenerator
             CreateStackableEvent(EventName.SHUFFLE_INVENTORY, Alignment.NEGATIVE, 4, $"Perform {ShuffleInventoryEvent.NUMBER_SWAPS} swaps between two random inventory items"),
             CreateStackableEvent(EventName.SHUFFLE_EVERYWHERE, Alignment.NEGATIVE, 30, $"Perform {ShuffleEverywhereEvent.NUMBER_SWAPS} swaps between two random items anywhere in the world"),
 
+            CreateStackableEvent(EventName.REVERSE_CONTROLS, Alignment.NEGATIVE, 30, $"Invert the player controls for {ReverseControlsEvent.DURATION_SECONDS} seconds"),
             //CreateEvent(EventName.SLEEP_ONCE, Alignment.NEUTRAL, 20, "Go to sleep", false),
             //CreateEvent(EventName.SLEEP_WEEK, Alignment.NEGATIVE, 200, "Sleep a whole week", false),
             //CreateEvent(EventName.SLEEP_MONTH, Alignment.NEGATIVE, 1000, "Sleep a whole month", false),

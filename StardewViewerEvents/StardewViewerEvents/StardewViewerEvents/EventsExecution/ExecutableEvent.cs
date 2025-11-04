@@ -79,6 +79,15 @@ namespace StardewViewerEvents.EventsExecution
             ShowEventInChat();
         }
 
+        /// <summary>
+        /// Update this active event on every frame
+        /// </summary>
+        /// <returns>true if the event should finish, false if the event continue being active</returns>
+        public virtual bool UpdateAndTryFinish()
+        {
+            return true;
+        }
+
         private void ShowEventInChat()
         {
             var message = GetChatMessage();
@@ -117,7 +126,7 @@ namespace StardewViewerEvents.EventsExecution
             return message;
         }
 
-        private string AppendQueueCount(string message)
+        protected virtual string AppendQueueCount(string message)
         {
             if (QueuedEvent.queueCount > 1)
             {

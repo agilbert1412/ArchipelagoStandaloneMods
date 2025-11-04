@@ -8,7 +8,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.WeatherEvent
     {
         protected static readonly string[] _validWeathers = new[] { "Sun", "Rain", "Storm", "Snow", "GreenRain", "Wind", "Festival", "Wedding" };
 
-    protected WeatherEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        protected WeatherEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
         }
 
