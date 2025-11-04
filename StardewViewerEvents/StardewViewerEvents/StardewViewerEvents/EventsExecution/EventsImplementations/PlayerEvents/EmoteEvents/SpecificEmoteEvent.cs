@@ -1,7 +1,5 @@
 ﻿using StardewModdingAPI;
-using StardewValley;
 using StardewViewerEvents.Events;
-using StardewViewerEvents.EventsExecution.EventsImplementations.WeatherEvents;
 using StardewViewerEvents.Extensions;
 using static StardewValley.Farmer;
 

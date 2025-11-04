@@ -1,5 +1,4 @@
 ﻿using StardewModdingAPI;
-using StardewModdingAPI.Enums;
 using StardewValley;
 using StardewViewerEvents.Events;
 

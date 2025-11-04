@@ -1,9 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using StardewModdingAPI;
+﻿using StardewModdingAPI;
 using StardewValley;
-using StardewValley.Internal;
 using StardewValley.Menus;
-using StardewValley.Tools;
 using StardewViewerEvents.Events;
 using StardewViewerEvents.Extensions;
 

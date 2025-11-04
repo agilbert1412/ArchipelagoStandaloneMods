@@ -1,8 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using StardewModdingAPI;
-using StardewValley;
+﻿using StardewModdingAPI;
 using StardewViewerEvents.Events;
-using StardewViewerEvents.Extensions;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents
 {

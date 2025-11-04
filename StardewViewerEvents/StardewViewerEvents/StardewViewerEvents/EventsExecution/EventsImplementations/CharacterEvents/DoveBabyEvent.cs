@@ -2,7 +2,6 @@
 using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Characters;
-using StardewValley.Objects;
 using StardewViewerEvents.Events;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEvents

@@ -14,7 +14,7 @@
 
         public const string ITEM_GET_RANDOM = "whatsthis";
         public const string ITEM_GET_SPECIFIC = "freegift";
-        public const string ITEM_FILL_INVENTORY = "hoarder";
+        public const string ITEM_FILL_INVENTORY = "encumbered";
         public const string ITEM_GET_EXOTIC = "exotic";
 
         public const string TELEPORT_NEAR = "blink";
@@ -74,8 +74,8 @@
         public const string MONEY_REMOVE = "recession";
         public const string HEALTH_ADD = "healthy";
         public const string HEALTH_REMOVE = "hurty";
-        public const string ENERGY_ADD = "fresh";
-        public const string ENERGY_REMOVE = "tired";
+        public const string STAMINA_ADD = "fresh";
+        public const string STAMINA_REMOVE = "tired";
         public const string TIME_FORWARD = "timeflies";
         public const string TIME_BACKWARDS = "timetravel";
         // Add remove xp and friendship?
@@ -96,11 +96,12 @@
 
 
         public const string CROW = "cawcaw";
-        public const string NUDGE = "nudge";
-        public const string SHUFFLE_INVENTORY = "messy";
-        public const string SHUFFLE_ALL = "hoarder";
         public const string BENJAMIN_BUDTON = "benjamin";
         public const string DROUGHT = "dry";
+
+        public const string NUDGE = "nudge";
+        public const string SHUFFLE_INVENTORY = "messy";
+        public const string SHUFFLE_EVERYWHERE = "hoarder";
 
         // public const string  = "";
     }

@@ -2,13 +2,8 @@
 using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Internal;
-using StardewValley.Objects;
 using StardewValley.Tools;
 using StardewViewerEvents.Events;
-using StardewViewerEvents.Extensions;
-using System;
-using System.Linq;
-using xTile.Dimensions;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.MenuEvents
 {

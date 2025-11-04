@@ -1,6 +1,9 @@
 ﻿using StardewViewerEvents.Events.Constants;
 using StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEvents;
+using StardewViewerEvents.EventsExecution.EventsImplementations.CropEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents;
+using StardewViewerEvents.EventsExecution.EventsImplementations.InventoryEvents;
+using StardewViewerEvents.EventsExecution.EventsImplementations.StatsChangeEvents;
 
 namespace StardewViewerEvents.Events;
 
@@ -68,6 +71,25 @@ public class EventsGenerator
             CreateUnqueueableEvent(EventName.RANDOMIZE_PROFESSIONS, Alignment.NEUTRAL, 20, "Randomize all professions"),
             CreateParameterUnqueueableEvent(EventName.CHANGE_FAVORITE_THING, Alignment.NEUTRAL, 8, "Change the player's favorite thing to a specific value"),
             // CreateUnqueueableEvent(EventName.RANDOM_NAME, Alignment.NEUTRAL, 5, ""),
+
+            CreateStackableEvent(EventName.MONEY_ADD, Alignment.POSITIVE, 1, $"Gain {AddMoneyEvent.AMOUNT_ADDED}g"),
+            CreateStackableEvent(EventName.MONEY_REMOVE, Alignment.NEGATIVE, 1, $"Lose {RemoveMoneyEvent.AMOUNT_REMOVED}g"),
+            CreateUnstackableEvent(EventName.HEALTH_ADD, Alignment.POSITIVE, 1, $"Gain {AddHealthEvent.AMOUNT_ADDED} health"),
+            CreateUnstackableEvent(EventName.HEALTH_REMOVE, Alignment.NEGATIVE, 1, $"Lose {RemoveHealthEvent.AMOUNT_REMOVED} health"),
+            CreateUnstackableEvent(EventName.STAMINA_ADD, Alignment.POSITIVE, 1, $"Gain {AddStaminaEvent.AMOUNT_ADDED} stamina"),
+            CreateUnstackableEvent(EventName.STAMINA_REMOVE, Alignment.NEGATIVE, 1, $"Lose {RemoveStaminaEvent.AMOUNT_REMOVED} stamina"),
+            CreateStackableEvent(EventName.TIME_FORWARD, Alignment.POSITIVE, 1, $"Advance time by {TimeForwardsEvent.MINUTES_FORWARD} minutes"),
+            CreateStackableEvent(EventName.TIME_BACKWARDS, Alignment.NEGATIVE, 1, $"Move time backwards by {TimeBackwardsEvent.MINUTES_BACKWARDS} minutes"),
+
+            CreateUnstackableEvent(EventName.OPEN_MENU, Alignment.NEGATIVE, 1, $"Open a random menu"),
+
+            CreateStackableEvent(EventName.CROW, Alignment.NEGATIVE, 10, $"Instantly send {CrowEvent.NUMBER_CROWS} to try to eat crops. Each crow has a {(int)(CrowEvent.SCARECROW_EFFICIENCY * 100)}% chance of getting stopped by each scarecrow in range."),
+            CreateStackableEvent(EventName.BENJAMIN_BUDTON, Alignment.NEGATIVE, 10, $"Instantly degrow {UngrowEvent.NUMBER_CROPS} by {UngrowEvent.NUMBER_DAYS}"),
+            CreateStackableEvent(EventName.DROUGHT, Alignment.NEGATIVE, 5, $"Instantly unwater {DroughtEvent.NUMBER_UNWATER} crops and remove {DroughtEvent.AMOUNT_REMOVED_FROM_CAN} water from the watering can"),
+
+            CreateStackableEvent(EventName.NUDGE, Alignment.NEGATIVE, 5, $"Perform {NudgeEvent.NUMBER_NUDGES} nudges to random chests"),
+            CreateStackableEvent(EventName.SHUFFLE_INVENTORY, Alignment.NEGATIVE, 4, $"Perform {ShuffleInventoryEvent.NUMBER_SWAPS} swaps between two random inventory items"),
+            CreateStackableEvent(EventName.SHUFFLE_EVERYWHERE, Alignment.NEGATIVE, 30, $"Perform {ShuffleEverywhereEvent.NUMBER_SWAPS} swaps between two random items anywhere in the world"),
 
             //CreateEvent(EventName.SLEEP_ONCE, Alignment.NEUTRAL, 20, "Go to sleep", false),
             //CreateEvent(EventName.SLEEP_WEEK, Alignment.NEGATIVE, 200, "Sleep a whole week", false),

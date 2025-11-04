@@ -2,11 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using StardewModdingAPI;
 using StardewValley;
-using StardewValley.GameData.FarmAnimals;
-using StardewValley.Objects;
 using StardewViewerEvents.Extensions;
-using System;
-using static StardewValley.Minigames.CraneGame;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEvents
 {

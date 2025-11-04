@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using StardewValley;
-using StardewValley.Characters;
+﻿using StardewValley;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEvents
 {

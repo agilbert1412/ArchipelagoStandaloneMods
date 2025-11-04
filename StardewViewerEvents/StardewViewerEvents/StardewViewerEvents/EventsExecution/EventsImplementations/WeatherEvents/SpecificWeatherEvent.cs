@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using StardewModdingAPI;
-using StardewValley;
+﻿using StardewModdingAPI;
 using StardewViewerEvents.Events;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.WeatherEvents

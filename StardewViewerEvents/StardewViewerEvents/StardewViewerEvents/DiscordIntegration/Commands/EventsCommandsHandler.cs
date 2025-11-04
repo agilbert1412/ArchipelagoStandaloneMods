@@ -1,7 +1,5 @@
 ﻿using Discord;
 using Discord.WebSocket;
-using StardewModdingAPI;
-using StardewValley;
 using StardewViewerEvents.Credits;
 using StardewViewerEvents.Events;
 using StardewViewerEvents.EventsExecution;

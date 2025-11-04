@@ -1,7 +1,6 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using Microsoft.Extensions.DependencyInjection;
 using StardewModdingAPI;
 using StardewViewerEvents.Extensions;
 using IMessage = Discord.IMessage;

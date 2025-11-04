@@ -2,18 +2,21 @@
 using StardewModdingAPI;
 using StardewViewerEvents.Events.Constants;
 using StardewViewerEvents.EventsExecution;
-using StardewViewerEvents.EventsExecution.EventsImplementations;
 using StardewViewerEvents.EventsExecution.EventsImplementations.BombEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEvents;
+using StardewViewerEvents.EventsExecution.EventsImplementations.CropEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents;
+using StardewViewerEvents.EventsExecution.EventsImplementations.InventoryEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.MailEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.MenuEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.PlayerEvents.EmoteEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.PlayerEvents.PlayerCharacterEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.SoundEvents;
+using StardewViewerEvents.EventsExecution.EventsImplementations.StatsChangeEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.TeleportEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.WeatherEvents;
+using OpenMenuEvent = StardewViewerEvents.EventsExecution.EventsImplementations.MenuEvents.OpenMenuEvent;
 
 namespace StardewViewerEvents.Events
 {
@@ -200,6 +203,36 @@ namespace StardewViewerEvents.Events
                     return new RandomizeProfessionsEvent(logger, modHelper, queuedEvent);
                 case EventName.CHANGE_FAVORITE_THING:
                     return new ChangeFavoriteThingEvent(logger, modHelper, queuedEvent);
+                case EventName.MONEY_ADD:
+                    return new AddMoneyEvent(logger, modHelper, queuedEvent);
+                case EventName.MONEY_REMOVE:
+                    return new RemoveMoneyEvent(logger, modHelper, queuedEvent);
+                case EventName.HEALTH_ADD:
+                    return new AddHealthEvent(logger, modHelper, queuedEvent);
+                case EventName.HEALTH_REMOVE:
+                    return new RemoveHealthEvent(logger, modHelper, queuedEvent);
+                case EventName.STAMINA_ADD:
+                    return new AddStaminaEvent(logger, modHelper, queuedEvent);
+                case EventName.STAMINA_REMOVE:
+                    return new RemoveStaminaEvent(logger, modHelper, queuedEvent);
+                case EventName.TIME_FORWARD:
+                    return new TimeForwardsEvent(logger, modHelper, queuedEvent);
+                case EventName.TIME_BACKWARDS:
+                    return new TimeBackwardsEvent(logger, modHelper, queuedEvent);
+                case EventName.OPEN_MENU:
+                    return new OpenMenuEvent(logger, modHelper, queuedEvent);
+                case EventName.CROW:
+                    return new CrowEvent(logger, modHelper, queuedEvent);
+                case EventName.BENJAMIN_BUDTON:
+                    return new UngrowEvent(logger, modHelper, queuedEvent);
+                case EventName.DROUGHT:
+                    return new DroughtEvent(logger, modHelper, queuedEvent);
+                case EventName.NUDGE:
+                    return new NudgeEvent(logger, modHelper, queuedEvent);
+                case EventName.SHUFFLE_INVENTORY:
+                    return new ShuffleInventoryEvent(logger, modHelper, queuedEvent);
+                case EventName.SHUFFLE_EVERYWHERE:
+                    return new ShuffleEverywhereEvent(logger, modHelper, queuedEvent);
             }
 
             throw new NotImplementedException($"No Executable event found for event '{queuedEvent.BaseEvent.name}'");

@@ -1,5 +1,4 @@
-﻿using System.Text;
-using StardewModdingAPI;
+﻿using StardewModdingAPI;
 using StardewViewerEvents.Events;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.PlayerEvents.PlayerCharacterEvents

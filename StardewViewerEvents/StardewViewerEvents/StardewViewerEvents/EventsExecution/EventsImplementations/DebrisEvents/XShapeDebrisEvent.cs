@@ -2,7 +2,6 @@
 using StardewModdingAPI;
 using StardewValley;
 using StardewViewerEvents.Events;
-using static StardewValley.Debris;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents
 {

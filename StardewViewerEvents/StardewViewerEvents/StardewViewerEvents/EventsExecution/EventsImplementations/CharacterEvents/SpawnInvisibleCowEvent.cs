@@ -1,5 +1,4 @@
 ﻿using StardewModdingAPI;
-using StardewValley;
 using StardewViewerEvents.Events;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEvents

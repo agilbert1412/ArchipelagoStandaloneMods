@@ -3,11 +3,6 @@ using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Characters;
 using StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEvents;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace StardewViewerEvents

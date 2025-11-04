@@ -3,7 +3,6 @@ using StardewViewerEvents.Credits;
 using StardewViewerEvents.DiscordIntegration;
 using StardewViewerEvents.EventsExecution;
 using StardewViewerEvents.Extensions;
-using System.IO;
 
 namespace StardewViewerEvents
 {
