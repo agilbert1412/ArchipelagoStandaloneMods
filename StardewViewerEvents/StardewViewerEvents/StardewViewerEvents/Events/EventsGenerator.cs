@@ -39,7 +39,7 @@ public class EventsGenerator
             CreateUnstackableEvent(EventName.BYE_BABY, Alignment.NEUTRAL, 10, "Choose the childfree life, retroactively"),
 
             CreateStackableEvent(EventName.DEBRIS_RANDOM, Alignment.NEGATIVE, 5, $"Spawn {RandomDebrisEvent.AMOUNT} random pieces of debris nearby"),
-            CreateStackableEvent(EventName.DEBRIS_BOULDER, Alignment.NEGATIVE, 10, "Spawn a boulder nearby"),
+            CreateStackableEvent(EventName.DEBRIS_BOULDER, Alignment.NEGATIVE, 10, $"Spawn a boulder nearby. It will despawn after {BoulderEvent.DURATION_SECONDS} seconds"),
             CreateStackableEvent(EventName.DEBRIS_TREE, Alignment.NEGATIVE, 10, "Spawn a tree nearby"),
             CreateUnstackableEvent(EventName.DEBRIS_X_SHAPE, Alignment.NEGATIVE, 10, "Spawn debris in the shape of an X, centered on the player"),
             CreateUnstackableEvent(EventName.DEBRIS_O_SHAPE, Alignment.NEGATIVE, 10, "Spawn debris in the shape of an O, centered on the player"),

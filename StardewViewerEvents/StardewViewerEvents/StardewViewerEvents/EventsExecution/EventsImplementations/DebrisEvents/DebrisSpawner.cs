@@ -69,27 +69,34 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents
             SpawnSingleTree(location, tile);
         }
 
-        public void SpawnManyBoulders(int amount)
+        public List<ResourceClump> SpawnManyBoulders(int amount)
         {
+            var boulders = new List<ResourceClump>();
             for (var i = 0; i < amount; i++)
             {
-                SpawnSingleBoulder();
+                var boulder = SpawnSingleBoulder();
+                if (boulder != null)
+                {
+                    boulders.Add(boulder);
+                }
             }
+
+            return boulders;
         }
 
-        public void SpawnSingleBoulder()
+        public ResourceClump SpawnSingleBoulder()
         {
-            SpawnSingleBoulder(Game1.currentLocation);
+            return SpawnSingleBoulder(Game1.currentLocation);
         }
 
-        public static void SpawnSingleBoulder(GameLocation location)
+        public static ResourceClump SpawnSingleBoulder(GameLocation location)
         {
             if (!TryFindTileForDebris(location, true, out var tile))
             {
-                return;
+                return null;
             }
 
-            SpawnSingleBoulder(location, tile);
+            return SpawnSingleBoulder(location, tile);
         }
 
         public void SpawnSingleDebris(GameLocation location, Vector2 tile)
@@ -144,10 +151,12 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents
             location.terrainFeatures.Add(tile, new Tree(treeId.ToString(), growthStage));
         }
 
-        private static void SpawnSingleBoulder(GameLocation location, Vector2 tile)
+        private static ResourceClump SpawnSingleBoulder(GameLocation location, Vector2 tile)
         {
             // location.addResourceClumpAndRemoveUnderlyingTerrain(672, 2, 2, tile);
-            location.resourceClumps.Add(new ResourceClump(672, 2, 2, tile));
+            var boulder = new ResourceClump(672, 2, 2, tile);
+            location.resourceClumps.Add(boulder);
+            return boulder;
         }
 
         public string ChooseRandomDebris()

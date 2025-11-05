@@ -1,9 +1,10 @@
 ﻿using StardewModdingAPI;
 using StardewViewerEvents.Events;
+using StardewViewerEvents.EventsExecution.EventsImplementations.DurationEvents;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents
 {
-    public abstract class DebrisEvent : ExecutableEvent
+    public abstract class DebrisEvent : DurationEvent
     {
         protected DebrisSpawner _debrisSpawner;
 
