@@ -36,7 +36,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.DurationEven
         {
             if (QueuedEvent.queueCount > 1)
             {
-                message += $" for {secondsDuration}s";
+                message += $" for {SecondsDuration}s";
             }
 
             return message;
