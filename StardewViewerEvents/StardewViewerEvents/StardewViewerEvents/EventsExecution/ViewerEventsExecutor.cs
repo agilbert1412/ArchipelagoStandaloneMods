@@ -85,6 +85,26 @@ namespace StardewViewerEvents.EventsExecution
 
         public void AddOrIncrementEventInQueue(SocketUser sender, ViewerEvent chosenEvent, string[] args)
         {
+            if (TryIncrementEventInQueue(chosenEvent))
+            {
+                return;
+            }
+
+            AddEventToQueue(sender, chosenEvent, args);
+        }
+
+        public void AddOrIncrementEventInQueue(Author sender, ViewerEvent chosenEvent, string[] args)
+        {
+            if (TryIncrementEventInQueue(chosenEvent))
+            {
+                return;
+            }
+
+            AddEventToQueue(sender, chosenEvent, args);
+        }
+
+        private bool TryIncrementEventInQueue(ViewerEvent chosenEvent)
+        {
             if (chosenEvent.IsStackable())
             {
                 foreach (var qe in Queue)
@@ -93,20 +113,29 @@ namespace StardewViewerEvents.EventsExecution
                     {
                         qe.queueCount += 1;
                         Console.WriteLine($"Increased queue count of {chosenEvent.name} to {qe.queueCount}.");
-                        return;
+                        return true;
                     }
                 }
             }
 
-            AddEventToQueue(sender, chosenEvent, args);
+            return false;
         }
 
         public void AddEventToQueue(SocketUser sender, ViewerEvent chosenEvent, string[] args)
         {
             var invokedEvent = CreateQueuedEvent(sender, chosenEvent, args);
+            AddEventToQueue(invokedEvent);
+        }
 
+        public void AddEventToQueue(Author sender, ViewerEvent chosenEvent, string[] args)
+        {
+            var invokedEvent = CreateQueuedEvent(sender, chosenEvent, args);
+            AddEventToQueue(invokedEvent);
+        }
+
+        private void AddEventToQueue(QueuedEvent invokedEvent)
+        {
             Queue.QueueEvent(invokedEvent);
-
             Console.WriteLine($"Added {invokedEvent.baseEventName} to queue.");
         }
 
@@ -114,6 +143,15 @@ namespace StardewViewerEvents.EventsExecution
         {
             var invokedEvent = new QueuedEvent(chosenEvent, args);
             invokedEvent.username = sender.GetDisplayName();
+            invokedEvent.userId = sender.Id;
+            invokedEvent.queueCount = 1;
+            return invokedEvent;
+        }
+
+        public QueuedEvent CreateQueuedEvent(Author sender, ViewerEvent chosenEvent, string[] args)
+        {
+            var invokedEvent = new QueuedEvent(chosenEvent, args);
+            invokedEvent.username = sender.DisplayName;
             invokedEvent.userId = sender.Id;
             invokedEvent.queueCount = 1;
             return invokedEvent;

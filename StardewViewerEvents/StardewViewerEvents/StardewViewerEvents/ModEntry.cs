@@ -35,7 +35,7 @@ namespace StardewViewerEvents
             Config = Helper.ReadConfig<ModConfig>();
 
             _viewerEventsExecutor = new ViewerEventsExecutor(Monitor);
-            _viewerEventsService = new ViewerEventsService(Monitor, Config, _viewerEventsExecutor);
+            _viewerEventsService = new ViewerEventsService(Monitor, _harmony, Config, _viewerEventsExecutor);
 
             _helper.Events.GameLoop.GameLaunched += OnGameLaunched;
             _helper.Events.GameLoop.SaveCreating += OnSaveCreating;

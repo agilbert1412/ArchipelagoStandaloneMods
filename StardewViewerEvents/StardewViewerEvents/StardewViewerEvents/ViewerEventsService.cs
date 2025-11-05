@@ -1,4 +1,5 @@
-﻿using StardewModdingAPI;
+﻿using HarmonyLib;
+using StardewModdingAPI;
 using StardewViewerEvents.Credits;
 using StardewViewerEvents.DiscordIntegration;
 using StardewViewerEvents.EventsExecution;
@@ -11,6 +12,7 @@ namespace StardewViewerEvents
         public static ViewerEventsService Instance;
 
         private IMonitor _logger;
+        private Harmony _harmony;
         private ModConfig _config;
         private ViewerEventsExecutor _eventsExecutor;
         private DiscordBot _discordBot;
@@ -21,7 +23,7 @@ namespace StardewViewerEvents
         public IBotCommunicator DiscordCommunications => _discordBot.Communications;
         public bool IsInitialized { get; set; }
 
-        public ViewerEventsService(IMonitor logger, ModConfig config, ViewerEventsExecutor eventsExecutor)
+        public ViewerEventsService(IMonitor logger, Harmony harmony, ModConfig config, ViewerEventsExecutor eventsExecutor)
         {
             if (Instance != null)
             {
@@ -29,6 +31,7 @@ namespace StardewViewerEvents
             }
 
             _logger = logger;
+            _harmony = harmony;
             _config = config;
             _eventsExecutor = eventsExecutor;
             IsInitialized = false;
@@ -59,7 +62,7 @@ namespace StardewViewerEvents
             try
             {
                 _logger.LogInfo($"Initializing Discord Integration...");
-                _discordBot = new DiscordBot(_logger, _eventsExecutor, _creditAccounts, path);
+                _discordBot = new DiscordBot(_logger, _harmony, _eventsExecutor, _creditAccounts, path);
                 await _discordBot.InitializeAsync(_config.DiscordToken);
 
                 _logger.LogInfo($"Discord Integration Initialized!");

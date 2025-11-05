@@ -46,8 +46,7 @@ namespace StardewViewerEvents.DiscordIntegration
             _eventsCommandsHandler = new EventsCommandsHandler(_communications, _commandReader, _helpProvider);
             _donationsCommandsHandler = new DonationsCommandsHandler(_communications, ActiveChannels);
             _accounts = creditAccounts;
-            _stardewChat =
-                new StardewChatCommandsIntegration(logger, harmony, _helpProvider, _creditsCommandsHandler, _eventsCommandsHandler, _accounts, eventsExecutor);
+            _stardewChat = new StardewChatCommandsIntegration(logger, harmony, _helpProvider, _accounts, eventsExecutor, _commandReader);
 
             SetupData();
 

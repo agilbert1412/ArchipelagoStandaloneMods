@@ -175,7 +175,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
                 var cowBoundingBox = __instance.GetBoundingBox();
                 var farmerOppositeDirection = Utility.GetOppositeFacingDirection(Game1.player.FacingDirection);
                 var temporaryTile = Utility.ExpandRectangle(cowBoundingBox, farmerOppositeDirection, 6);
-                temporaryTile.Inflate(-(temporaryTile.Width/4), -(temporaryTile.Height / 4));
+                temporaryTile.Inflate(-(temporaryTile.Width/8), -(temporaryTile.Height / 8));
                 Game1.player.TemporaryPassableTiles.Add(temporaryTile);
                 __instance.pushAccumulator = 0;
 

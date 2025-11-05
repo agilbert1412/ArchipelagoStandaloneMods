@@ -8,6 +8,9 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents
     {
         protected DebrisSpawner _debrisSpawner;
 
+        protected override int TicksDuration => 0;
+        protected override int SecondsDuration => TicksDuration * 60;
+
         public DebrisEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
             _debrisSpawner = new DebrisSpawner();

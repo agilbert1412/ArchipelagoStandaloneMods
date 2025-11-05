@@ -193,9 +193,9 @@ namespace StardewViewerEvents.DiscordIntegration
             await _communications.SendMessageAsync(_channels.AdminHelpChannel, adminCommandsListString);
         }
 
-        public void HandleHelpCommand(string message, EventCollection eventsExecutorEvents)
+        public void HandleHelpCommand(string message, EventCollection eventsExecutorEvents, string prefix = "!")
         {
-            if (message.Equals("!help", StringComparison.InvariantCultureIgnoreCase))
+            if (message.Equals($"{prefix}help", StringComparison.InvariantCultureIgnoreCase))
             {
                 SendAllHelpMessages(eventsExecutorEvents);
             }
