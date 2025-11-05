@@ -1,6 +1,6 @@
 ﻿namespace StardewViewerEvents.DiscordIntegration.Commands
 {
-    internal class CommandReader
+    public class CommandReader
     {
         public bool IsCommandValid(string messageText, out string arg1, out int arg2, out string[] parameters)
         {

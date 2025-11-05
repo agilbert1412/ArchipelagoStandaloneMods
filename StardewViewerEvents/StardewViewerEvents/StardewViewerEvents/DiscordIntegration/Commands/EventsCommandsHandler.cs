@@ -7,7 +7,7 @@ using StardewViewerEvents.Extensions;
 
 namespace StardewViewerEvents.DiscordIntegration.Commands
 {
-    internal class EventsCommandsHandler
+    public class EventsCommandsHandler
     {
         private readonly IBotCommunicator _communications;
         private readonly CommandReader _commandReader;

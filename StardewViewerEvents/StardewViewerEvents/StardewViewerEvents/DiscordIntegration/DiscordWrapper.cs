@@ -93,16 +93,24 @@ namespace StardewViewerEvents.DiscordIntegration
 
         public async Task SendMessageAsync(ISocketMessageChannel channel, string text)
         {
+            if (channel is null)
+            {
+                return;
+            }
             await channel.SendMessageAsync(text);
         }
 
         public void ReplyTo(SocketUserMessage message, string text)
         {
-            message.ReplyAsync(text);
+            message?.ReplyAsync(text);
         }
 
         public async Task ReplyToAsync(SocketUserMessage message, string text)
         {
+            if (message is null)
+            {
+                return;
+            }
             await message.ReplyAsync(text);
         }
 

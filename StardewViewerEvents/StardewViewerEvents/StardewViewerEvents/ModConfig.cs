@@ -13,6 +13,11 @@
         public string DiscordToken { get; set; } = "";
 
         /// <summary>
+        /// Your own Discord ID, allowing you to use your credits account from in-game chat
+        /// </summary>
+        public string DiscordId { get; set; } = "";
+
+        /// <summary>
         /// Token to log in to Twitch
         /// </summary>
         public string TwitchToken { get; set; } = "";

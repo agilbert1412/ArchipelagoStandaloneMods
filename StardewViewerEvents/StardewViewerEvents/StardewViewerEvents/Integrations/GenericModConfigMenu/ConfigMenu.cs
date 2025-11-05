@@ -134,12 +134,20 @@ namespace StardewViewerEvents.Integrations.GenericModConfigMenu
                 setValue: (value) => Config.EventsDelay = (uint)value
             );
 
+            configMenu.AddTextOption(
+                mod: ModManifest,
+                name: () => "Discord Id",
+                tooltip: () => "Your own user id in Discord, allowing you to use commands from in-game",
+                getValue: () => Config.DiscordId,
+                setValue: (value) => Config.DiscordId = value
+            );
+
             configMenu.SetTitleScreenOnlyForNextOptions(ModManifest, true);
 
             configMenu.AddTextOption(
                 mod: ModManifest,
                 name: () => "Discord Token",
-                tooltip: () => "Token to log into Discord",
+                tooltip: () => "Token to log into Discord as the Events bot",
                 getValue: () => Config.DiscordToken,
                 setValue: (value) => Config.DiscordToken = value
             );

@@ -1,5 +1,6 @@
 ﻿using Discord;
 using Discord.WebSocket;
+using HarmonyLib;
 using StardewModdingAPI;
 using StardewViewerEvents.Credits;
 using StardewViewerEvents.DiscordIntegration.Commands;
@@ -23,6 +24,7 @@ namespace StardewViewerEvents.DiscordIntegration
         private readonly CommandReader _commandReader;
         private readonly HelpProvider _helpProvider;
         private readonly CreditAccounts _accounts;
+        private readonly StardewChatCommandsIntegration _stardewChat;
 
         public static Random random = new Random();
 
@@ -31,7 +33,7 @@ namespace StardewViewerEvents.DiscordIntegration
         public const string CREDITS_FILE = "Credits.json";
         public const string QUEUE_FILE = "Queue.json";
 
-        public DiscordModule(IMonitor logger, IBotCommunicator communications, ViewerEventsExecutor eventsExecutor, CreditAccounts creditAccounts, string path)
+        public DiscordModule(IMonitor logger, Harmony harmony, IBotCommunicator communications, ViewerEventsExecutor eventsExecutor, CreditAccounts creditAccounts, string path)
         {
             _logger = logger;
             _communications = communications;
@@ -44,6 +46,8 @@ namespace StardewViewerEvents.DiscordIntegration
             _eventsCommandsHandler = new EventsCommandsHandler(_communications, _commandReader, _helpProvider);
             _donationsCommandsHandler = new DonationsCommandsHandler(_communications, ActiveChannels);
             _accounts = creditAccounts;
+            _stardewChat =
+                new StardewChatCommandsIntegration(logger, harmony, _helpProvider, _creditsCommandsHandler, _eventsCommandsHandler, _accounts, eventsExecutor);
 
             SetupData();
 
@@ -83,11 +87,7 @@ namespace StardewViewerEvents.DiscordIntegration
 
             _creditsCommandsHandler.HandleCreditsAdminCommands(message, messageText, _accounts);
             _eventsCommandsHandler.HandleEventsAdminCommands(message, messageText, _eventsExecutor);
-
-            if (messageText.Equals("!help", StringComparison.InvariantCultureIgnoreCase))
-            {
-                _helpProvider.SendAllHelpMessages(_eventsExecutor.Events);
-            }
+            _helpProvider.HandleHelpCommand(messageText, _eventsExecutor.Events);
         }
 
         private async Task HandleUserCommands(SocketUserMessage message, string messageText, string senderName)

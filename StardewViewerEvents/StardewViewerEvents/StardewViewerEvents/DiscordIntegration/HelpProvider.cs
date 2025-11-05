@@ -2,7 +2,7 @@
 
 namespace StardewViewerEvents.DiscordIntegration
 {
-    internal class HelpProvider
+    public class HelpProvider
     {
         private readonly IBotCommunicator _communications;
         private readonly ChannelSet _channels;
@@ -191,6 +191,14 @@ namespace StardewViewerEvents.DiscordIntegration
             adminCommandsListString += "```";
 
             await _communications.SendMessageAsync(_channels.AdminHelpChannel, adminCommandsListString);
+        }
+
+        public void HandleHelpCommand(string message, EventCollection eventsExecutorEvents)
+        {
+            if (message.Equals("!help", StringComparison.InvariantCultureIgnoreCase))
+            {
+                SendAllHelpMessages(eventsExecutorEvents);
+            }
         }
     }
 }
