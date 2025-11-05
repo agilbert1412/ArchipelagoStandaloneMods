@@ -15,7 +15,7 @@ namespace StardewViewerEvents.DiscordIntegration
         private readonly ViewerEventsExecutor _eventsExecutor;
         private readonly string _directory;
 
-        public static readonly ChannelSet ActiveChannels = ChannelSet.TestMyBotsChannels;
+        public static readonly ChannelSet ActiveChannels = new();
 
         private readonly CreditsCommandsHandler _creditsCommandsHandler;
         private readonly EventsCommandsHandler _eventsCommandsHandler;
@@ -26,6 +26,7 @@ namespace StardewViewerEvents.DiscordIntegration
 
         public static Random random = new Random();
 
+        public const string CHANNELS_FILE = "ChannelSet.json";
         public const string EVENTS_FILE = "EventsList.json";
         public const string CREDITS_FILE = "Credits.json";
         public const string QUEUE_FILE = "Queue.json";
@@ -45,7 +46,6 @@ namespace StardewViewerEvents.DiscordIntegration
             _accounts = creditAccounts;
 
             SetupData();
-
 
             // ClearBankDEVONLY();
             //return;
@@ -113,6 +113,7 @@ namespace StardewViewerEvents.DiscordIntegration
 
         private void ExportData()
         {
+            ExportChannels();
             ExportEvents();
             ExportCredits();
             ExportQueue();
@@ -131,9 +132,15 @@ namespace StardewViewerEvents.DiscordIntegration
 
         private void SetupData()
         {
+            ImportChannelSet();
             ImportEvents();
             ImportCredits();
             ImportQueue();
+        }
+
+        private void ImportChannelSet()
+        {
+            ActiveChannels.ImportFrom(Path.Combine(_directory, CHANNELS_FILE));
         }
 
         private void ImportEvents()
@@ -149,6 +156,11 @@ namespace StardewViewerEvents.DiscordIntegration
         private void ImportQueue()
         {
             _eventsExecutor.Queue.ImportFrom(Path.Combine(_directory, QUEUE_FILE), _eventsExecutor.Events);
+        }
+
+        private void ExportChannels()
+        {
+            ActiveChannels.ExportTo(Path.Combine(CHANNELS_FILE));
         }
 
         private void ExportEvents()
