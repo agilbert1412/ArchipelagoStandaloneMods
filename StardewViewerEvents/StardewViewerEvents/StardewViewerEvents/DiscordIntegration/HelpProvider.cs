@@ -13,16 +13,16 @@ namespace StardewViewerEvents.DiscordIntegration
             _channels = channels;
         }
 
-        public async void SendAllHelpMessages(EventCollection events)
+        public async Task SendAllHelpMessages(EventCollection events)
         {
-            SendAllEventsHelpMessages(events);
+            await SendAllEventsHelpMessages(events);
             await SendUserCommandsListHelp();
             await SendAdminCommandsListHelp();
         }
 
-        public void SendAllEventsHelpMessages(EventCollection events)
+        public async Task SendAllEventsHelpMessages(EventCollection events)
         {
-            SendEventsHelp(events);
+            await SendEventsHelp(events);
         }
 
         public async Task SendEventsHelp(EventCollection events)
@@ -32,67 +32,105 @@ namespace StardewViewerEvents.DiscordIntegration
             await SendEventsListHelp(events.ToList(), _channels.HelpEventsChannel, events.CurrentMultiplier);
         }
 
-        private async Task SendEventsListHelp(IEnumerable<ViewerEvent> events, ulong channel, double priceMultiplier)
+        private async Task SendEventsListHelp(List<ViewerEvent> events, ulong channel, double priceMultiplier)
         {
-            var eventsListString = $"**Events available:**" + Environment.NewLine;
-            eventsListString = StartListString(eventsListString);
+            var eventsByCategory = GroupEventsByCategory(events);
+
+            var titleString = $"# Events available:" + Environment.NewLine;
+            await _communications.SendMessageAsync(channel, titleString);
 
             const string START_GREEN = "\u001b[2;36m";
             const string START_RED = "\u001b[2;31m";
             const string START_YELLOW = "\u001b[2;33m";
             const string END_COLOR = "\u001b[0m";
 
-            var foundAnyEvent = false;
-            var alreadySentMessage = false;
-
-            foreach (var eventToDocument in events.ToList())
+            foreach (var (category, categoryEvents) in eventsByCategory)
             {
-                foundAnyEvent = true;
-                alreadySentMessage = false;
+                var foundAnyEvent = false;
+                var alreadySentMessage = false;
 
-                eventsListString += $"{eventToDocument.name} - Cost: {eventToDocument.GetMultiplierCost(priceMultiplier)} credits" + Environment.NewLine;
+                var eventsListString = $"## {category}:" + Environment.NewLine;
+                eventsListString = StartListString(eventsListString);
 
-
-                if (eventToDocument.alignment == "positive")
+                foreach (var eventToDocument in categoryEvents.ToList())
                 {
-                    eventsListString += START_GREEN;
+                    foundAnyEvent = true;
+                    alreadySentMessage = false;
+
+                    eventsListString += $"{eventToDocument.name} - Cost: {eventToDocument.GetMultiplierCost(priceMultiplier)} credits" + Environment.NewLine;
+
+
+                    if (eventToDocument.alignment == "positive")
+                    {
+                        eventsListString += START_GREEN;
+                    }
+                    else if (eventToDocument.alignment == "negative")
+                    {
+                        eventsListString += START_RED;
+                    }
+                    else if (eventToDocument.alignment == "neutral")
+                    {
+                        eventsListString += START_YELLOW;
+                    }
+
+                    eventsListString += "    " + eventToDocument.descriptionAnsi + Environment.NewLine;
+                    eventsListString += END_COLOR;
+
+                    if (eventsListString.Length > 1600)
+                    {
+                        await FinishStringAndSend(channel, eventsListString);
+                        Thread.Sleep(200);
+                        eventsListString = StartListString("");
+                        alreadySentMessage = true;
+                    }
+                    else
+                    {
+                        eventsListString += Environment.NewLine;
+                    }
                 }
-                else if (eventToDocument.alignment == "negative")
+
+                if (alreadySentMessage)
                 {
-                    eventsListString += START_RED;
-                }
-                else if (eventToDocument.alignment == "neutral")
-                {
-                    eventsListString += START_YELLOW;
+                    return;
                 }
 
-                eventsListString += "    " + eventToDocument.descriptionAnsi + Environment.NewLine;
-                eventsListString += END_COLOR;
-
-                if (eventsListString.Length > 1600)
+                if (!foundAnyEvent)
                 {
-                    await FinishStringAndSend(channel, eventsListString);
-                    Thread.Sleep(200);
-                    eventsListString = StartListString("");
-                    alreadySentMessage = true;
+                    eventsListString += "None" + Environment.NewLine;
                 }
-                else
+
+                await FinishStringAndSend(channel, eventsListString);
+            }
+        }
+
+        private static Dictionary<string, List<ViewerEvent>> GroupEventsByCategory(List<ViewerEvent> events)
+        {
+            var eventsByCategory = new Dictionary<string, List<ViewerEvent>>();
+            foreach (var (category, eventNames) in EventCategory.CATEGORY_MAP)
+            {
+                eventsByCategory.Add(category, new List<ViewerEvent>());
+                foreach (var eventName in eventNames)
                 {
-                    eventsListString += Environment.NewLine;
+                    ViewerEvent foundEvent = null;
+                    foreach (var viewerEvent in events)
+                    {
+                        if (viewerEvent.name.Equals(eventName, StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            foundEvent = viewerEvent;
+                            break;
+                        }
+                    }
+                    eventsByCategory[category].Add(foundEvent);
+                    events.Remove(foundEvent);
                 }
             }
 
-            if (alreadySentMessage)
+            if (events.Any())
             {
-                return;
+                eventsByCategory.Add(EventCategory.OTHER, events.ToList());
             }
 
-            if (!foundAnyEvent)
-            {
-                eventsListString += "None" + Environment.NewLine;
-            }
-
-            await FinishStringAndSend(channel, eventsListString);
+            return eventsByCategory;
         }
 
         private static string StartListString(string eventsListString)

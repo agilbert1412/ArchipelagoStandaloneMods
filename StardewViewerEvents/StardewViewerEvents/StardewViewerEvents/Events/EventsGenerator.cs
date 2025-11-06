@@ -28,7 +28,7 @@ public class EventsGenerator
             CreateUnstackableEvent(EventName.ITEM_HOME, Alignment.NEUTRAL, 10, "Send a random item stack home"),
             CreateUnstackableEvent(EventName.ITEM_SELL, Alignment.NEUTRAL, 30, "Instantly sell a random item stack"),
             CreateUnstackableEvent(EventName.ITEM_SHIP, Alignment.NEUTRAL, 50, "Instantly ship a random item stack"),
-            CreateUnstackableEvent(EventName.ITEM_TRASH, Alignment.NEGATIVE, 100, "Instantly delete a random item stack"),
+            CreateUnstackableEvent(EventName.ITEM_TRASH, Alignment.NEGATIVE, 100, "Instantly trash a random item stack"),
             CreateUnstackableEvent(EventName.ITEM_QUALITY_DOWN, Alignment.NEUTRAL, 20, "Lower the quality of a random item"),
             CreateUnstackableEvent(EventName.ITEM_QUALITY_UP, Alignment.POSITIVE, 10, "Increase the quality of a random item"),
 
@@ -65,27 +65,27 @@ public class EventsGenerator
 
             CreateStackableEvent(EventName.INVISIBLE_COWS, Alignment.NEGATIVE, 2, $"Spawn {SpawnInvisibleCowEvent.NUMBER_COWS_PER_PURCHASE} invisible cows on the current map. They despawn slowly over days"),
 
-            CreateUnqueueableEvent(EventName.THEMATIC_FULL_OUTFIT, Alignment.NEUTRAL, 8, "Change the player's entire outfit, based on an Emily theme"),
-            CreateUnqueueableEvent(EventName.RANDOMIZE_FULL_OUTFIT, Alignment.NEUTRAL, 6, "Randomize the player's entire appearance"),
+            CreateUnqueueableEvent(EventName.THEMATIC_FULL_OUTFIT, Alignment.NEUTRAL, 5, "Change the player's entire outfit, based on an Emily theme"),
+            CreateUnqueueableEvent(EventName.RANDOMIZE_FULL_OUTFIT, Alignment.NEUTRAL, 5, "Randomize the player's entire appearance"),
             CreateParameterUnqueueableEvent(EventName.RANDOMIZE_ONE_OUTFIT_PART, Alignment.NEUTRAL, 2, "Randomize either pants, shirt, hair"),
             CreateUnqueueableEvent(EventName.CHANGE_GENDER, Alignment.NEUTRAL, 4, "Switch the player's gender"),
-            CreateUnqueueableEvent(EventName.RANDOMIZE_PROFESSIONS, Alignment.NEUTRAL, 20, "Randomize all professions"),
+            CreateUnqueueableEvent(EventName.RANDOMIZE_PROFESSIONS, Alignment.NEUTRAL, 10, "Randomize all professions"),
             CreateParameterUnqueueableEvent(EventName.CHANGE_FAVORITE_THING, Alignment.NEUTRAL, 8, "Change the player's favorite thing to a specific value"),
             // CreateUnqueueableEvent(EventName.RANDOM_NAME, Alignment.NEUTRAL, 5, ""),
 
-            CreateStackableEvent(EventName.MONEY_ADD, Alignment.POSITIVE, 5, $"Gain {AddMoneyEvent.AMOUNT_ADDED}g"),
+            CreateStackableEvent(EventName.MONEY_ADD, Alignment.POSITIVE, 4, $"Gain {AddMoneyEvent.AMOUNT_ADDED}g"),
             CreateStackableEvent(EventName.MONEY_REMOVE, Alignment.NEGATIVE, 5, $"Lose {RemoveMoneyEvent.AMOUNT_REMOVED}g"),
-            CreateUnstackableEvent(EventName.HEALTH_ADD, Alignment.POSITIVE, 10, $"Gain {AddHealthEvent.AMOUNT_ADDED} health"),
+            CreateUnstackableEvent(EventName.HEALTH_ADD, Alignment.POSITIVE, 8, $"Gain {AddHealthEvent.AMOUNT_ADDED} health"),
             CreateUnstackableEvent(EventName.HEALTH_REMOVE, Alignment.NEGATIVE, 10, $"Lose {RemoveHealthEvent.AMOUNT_REMOVED} health"),
-            CreateUnstackableEvent(EventName.STAMINA_ADD, Alignment.POSITIVE, 10, $"Gain {AddStaminaEvent.AMOUNT_ADDED} stamina"),
+            CreateUnstackableEvent(EventName.STAMINA_ADD, Alignment.POSITIVE, 8, $"Gain {AddStaminaEvent.AMOUNT_ADDED} stamina"),
             CreateUnstackableEvent(EventName.STAMINA_REMOVE, Alignment.NEGATIVE, 10, $"Lose {RemoveStaminaEvent.AMOUNT_REMOVED} stamina"),
-            CreateStackableEvent(EventName.TIME_FORWARD, Alignment.POSITIVE, 1, $"Advance time by {TimeForwardsEvent.MINUTES_FORWARD} minutes"),
-            CreateStackableEvent(EventName.TIME_BACKWARDS, Alignment.NEGATIVE, 1, $"Move time backwards by {TimeBackwardsEvent.MINUTES_BACKWARDS} minutes"),
+            CreateStackableEvent(EventName.TIME_FORWARD, Alignment.POSITIVE, 2, $"Advance time by {TimeForwardsEvent.MINUTES_FORWARD} minutes"),
+            CreateStackableEvent(EventName.TIME_BACKWARDS, Alignment.NEGATIVE, 2, $"Move time backwards by {TimeBackwardsEvent.MINUTES_BACKWARDS} minutes"),
 
             CreateUnstackableEvent(EventName.OPEN_MENU, Alignment.NEGATIVE, 1, $"Open a random menu"),
 
-            CreateStackableEvent(EventName.CROW, Alignment.NEGATIVE, 10, $"Instantly send {CrowEvent.NUMBER_CROWS} to try to eat crops. Each crow has a {(int)(CrowEvent.SCARECROW_EFFICIENCY * 100)}% chance of getting stopped by each scarecrow in range."),
-            CreateStackableEvent(EventName.BENJAMIN_BUDTON, Alignment.NEGATIVE, 10, $"Instantly degrow {UngrowEvent.NUMBER_CROPS} by {UngrowEvent.NUMBER_DAYS}"),
+            CreateStackableEvent(EventName.CROW, Alignment.NEGATIVE, 10, $"Instantly send {CrowEvent.NUMBER_CROWS} crows to try to eat crops. Each crow has a {(int)(CrowEvent.SCARECROW_EFFICIENCY * 100)}% chance of getting stopped by each scarecrow in range."),
+            CreateStackableEvent(EventName.BENJAMIN_BUDTON, Alignment.NEGATIVE, 10, $"Instantly degrow {UngrowEvent.NUMBER_CROPS} random crops by {UngrowEvent.NUMBER_DAYS} days"),
             CreateStackableEvent(EventName.DROUGHT, Alignment.NEGATIVE, 5, $"Instantly unwater {DroughtEvent.NUMBER_UNWATER} crops and remove {DroughtEvent.AMOUNT_REMOVED_FROM_CAN} water from the watering can"),
 
             CreateStackableEvent(EventName.NUDGE, Alignment.NEGATIVE, 5, $"Perform {NudgeEvent.NUMBER_NUDGES} nudges to random chests"),
@@ -96,6 +96,9 @@ public class EventsGenerator
             //CreateEvent(EventName.SLEEP_ONCE, Alignment.NEUTRAL, 20, "Go to sleep", false),
             //CreateEvent(EventName.SLEEP_WEEK, Alignment.NEGATIVE, 200, "Sleep a whole week", false),
             //CreateEvent(EventName.SLEEP_MONTH, Alignment.NEGATIVE, 1000, "Sleep a whole month", false),
+
+            //CreateUnstackableEvent(EventName.RANDOM_BUFF, Alignment.NEUTRAL, 5, $"Add a random buff to the player. Duration varies based on the buff"),
+            //CreateParameterUnstackableEvent(EventName.SPECIFIC_BUFF, Alignment.NEUTRAL, 15, $"Add a specific buff to the player. Must specify a buff ID or name from Stardew Valley"),
         };
 
         return events;

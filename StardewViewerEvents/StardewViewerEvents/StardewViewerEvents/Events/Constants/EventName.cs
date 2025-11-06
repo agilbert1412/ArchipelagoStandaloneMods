@@ -103,6 +103,9 @@
         public const string SHUFFLE_INVENTORY = "messy";
         public const string SHUFFLE_EVERYWHERE = "hoarder";
 
+        public const string RANDOM_BUFF = "compoundv";
+        public const string SPECIFIC_BUFF = "crispr";
+
         // public const string  = "";
     }
 }

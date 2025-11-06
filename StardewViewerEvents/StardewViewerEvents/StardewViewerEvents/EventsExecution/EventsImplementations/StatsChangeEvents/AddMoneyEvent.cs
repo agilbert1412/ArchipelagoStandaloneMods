@@ -6,7 +6,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.StatsChangeE
 {
     public class AddMoneyEvent : ExecutableEvent
     {
-        public const int AMOUNT_ADDED = RemoveMoneyEvent.AMOUNT_REMOVED * 125 / 100;
+        public const int AMOUNT_ADDED = RemoveMoneyEvent.AMOUNT_REMOVED;
 
         public AddMoneyEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {

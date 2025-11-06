@@ -12,12 +12,26 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
         {
         }
 
+        public override bool ValidateParameters(out string errorMessage)
+        {
+            var homeOfFarmer = Utility.getHomeOfFarmer(Game1.player);
+            for (var index = homeOfFarmer.characters.Count - 1; index >= 0; --index)
+            {
+                if (homeOfFarmer.characters[index] is Child character)
+                {
+                    errorMessage = "";
+                    return true;
+                }
+            }
+
+            errorMessage = $"{Game1.player} is not currently a parent";
+            return false;
+        }
+
         public override void Execute()
         {
             base.Execute();
 
-            var activeAccounts = ViewerEventsService.Instance.CreditAccounts.GetAccountsActiveInThePastMinutes(30);
-            var activeNames = activeAccounts.Select(x => x.discordName).ToArray();
             var homeOfFarmer = Utility.getHomeOfFarmer(Game1.player);
             for (var index = homeOfFarmer.characters.Count - 1; index >= 0; --index)
             {

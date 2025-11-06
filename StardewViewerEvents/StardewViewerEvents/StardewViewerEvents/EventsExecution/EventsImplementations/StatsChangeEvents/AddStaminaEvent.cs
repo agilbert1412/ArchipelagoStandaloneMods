@@ -6,7 +6,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.StatsChangeE
 {
     public class AddStaminaEvent : ExecutableEvent
     {
-        public const int AMOUNT_ADDED = RemoveStaminaEvent.AMOUNT_REMOVED * 125 / 100;
+        public const int AMOUNT_ADDED = RemoveStaminaEvent.AMOUNT_REMOVED;
 
         public AddStaminaEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
