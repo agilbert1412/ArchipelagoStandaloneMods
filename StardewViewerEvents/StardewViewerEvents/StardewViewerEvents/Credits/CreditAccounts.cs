@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Text;
+using StardewViewerEvents.DiscordIntegration;
 
 namespace StardewViewerEvents.Credits
 {
@@ -129,6 +130,19 @@ namespace StardewViewerEvents.Credits
                 .Where(kvp => (DateTime.Now - kvp.Value.lastActivityTime).TotalMinutes <= maxMinutesSinceLastActivity)
                 .OrderByDescending(kvp => kvp.Value.lastActivityTime);
             return activeAccounts.Select(x => x.Value).ToArray();
+        }
+
+        public Author GetAccountFromTwitchLink(string twitchName)
+        {
+            foreach (var account in _accounts.Values.Where(x => !string.IsNullOrWhiteSpace(x.twitchlink)))
+            {
+                if (account.twitchlink.Equals(twitchName, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return new Author(account.discordId, account.discordName, twitchName);
+                }
+            }
+
+            return null;
         }
     }
 }

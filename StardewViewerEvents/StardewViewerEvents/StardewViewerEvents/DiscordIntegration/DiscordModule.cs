@@ -33,14 +33,14 @@ namespace StardewViewerEvents.DiscordIntegration
         public const string CREDITS_FILE = "Credits.json";
         public const string QUEUE_FILE = "Queue.json";
 
-        public DiscordModule(IMonitor logger, Harmony harmony, IBotCommunicator communications, ViewerEventsExecutor eventsExecutor, CreditAccounts creditAccounts, string path)
+        public DiscordModule(IMonitor logger, Harmony harmony, IBotCommunicator communications, ViewerEventsExecutor eventsExecutor, CreditAccounts creditAccounts, CommandReader commandReader, string path)
         {
             _logger = logger;
             _communications = communications;
             _eventsExecutor = eventsExecutor;
             _directory = path;
+            _commandReader = commandReader;
 
-            _commandReader = new CommandReader();
             _helpProvider = new HelpProvider(_communications, ActiveChannels);
             _creditsCommandsHandler = new CreditsCommandsHandler(_communications, _commandReader);
             _eventsCommandsHandler = new EventsCommandsHandler(_communications, _commandReader, _helpProvider);

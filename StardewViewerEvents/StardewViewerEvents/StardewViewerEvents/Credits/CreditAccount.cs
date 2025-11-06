@@ -10,6 +10,7 @@ namespace StardewViewerEvents.Credits
         public ulong discordId;
         public int credits;
         public DateTime lastActivityTime;
+        public string twitchlink;
 
         public CreditAccount()
         {
@@ -22,6 +23,7 @@ namespace StardewViewerEvents.Credits
             discordId = ulong.Parse(data["discordId"].ToString());
             credits = Int32.Parse(data["credits"].ToString());
             lastActivityTime = data.ContainsKey("lastActivityTime") ? DateTime.Parse(data["lastActivityTime"].ToString()) : DateTime.Now;
+            twitchlink = data["twitchlink"]?.ToString();
         }
 
         public void Reset()
@@ -49,6 +51,31 @@ namespace StardewViewerEvents.Credits
         {
             lastActivityTime = DateTime.Now;
             credits = amount;
+        }
+
+        public void LinkTo(string twitchName)
+        {
+            if (HasTwitchLink())
+            {
+                return;
+            }
+
+            twitchlink = twitchName;
+        }
+
+        public void TwitchUnlink()
+        {
+            twitchlink = null;
+        }
+
+        public bool HasTwitchLink()
+        {
+            return !string.IsNullOrWhiteSpace(twitchlink);
+        }
+
+        public string GetTwitchLink()
+        {
+            return HasTwitchLink() ? twitchlink : null;
         }
     }
 }

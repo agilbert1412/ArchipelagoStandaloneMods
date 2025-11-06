@@ -151,6 +151,30 @@ namespace StardewViewerEvents.Integrations.GenericModConfigMenu
                 getValue: () => Config.DiscordToken,
                 setValue: (value) => Config.DiscordToken = value
             );
+
+            configMenu.AddTextOption(
+                mod: ModManifest,
+                name: () => "Twitch Bot Username",
+                tooltip: () => "Username of the Twitch Bot to log in as",
+                getValue: () => Config.TwitchBotUsername,
+                setValue: (value) => Config.TwitchBotUsername = value
+            );
+
+            configMenu.AddTextOption(
+                mod: ModManifest,
+                name: () => "Twitch Bot Token",
+                tooltip: () => "OAuth Token for the Twitch Bot to log in with",
+                getValue: () => Config.TwitchBotToken,
+                setValue: (value) => Config.TwitchBotToken = value
+            );
+
+            configMenu.AddTextOption(
+                mod: ModManifest,
+                name: () => "Twitch Channel",
+                tooltip: () => "Twitch Channel for the bot to join",
+                getValue: () => Config.TwitchChannel,
+                setValue: (value) => Config.TwitchChannel = value
+            );
         }
     }
 }

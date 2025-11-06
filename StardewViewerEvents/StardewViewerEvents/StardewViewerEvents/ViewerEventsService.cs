@@ -2,6 +2,7 @@
 using StardewModdingAPI;
 using StardewViewerEvents.Credits;
 using StardewViewerEvents.DiscordIntegration;
+using StardewViewerEvents.DiscordIntegration.Commands;
 using StardewViewerEvents.EventsExecution;
 using StardewViewerEvents.Extensions;
 
@@ -17,6 +18,7 @@ namespace StardewViewerEvents
         private ViewerEventsExecutor _eventsExecutor;
         private DiscordBot _discordBot;
         private CreditAccounts _creditAccounts;
+        private readonly CommandReader _commandReader;
 
         public CreditAccounts CreditAccounts => _creditAccounts;
 
@@ -34,6 +36,7 @@ namespace StardewViewerEvents
             _harmony = harmony;
             _config = config;
             _eventsExecutor = eventsExecutor;
+            _commandReader = new CommandReader();
             IsInitialized = false;
             Instance = this;
         }
@@ -47,7 +50,7 @@ namespace StardewViewerEvents
 
             _creditAccounts = new CreditAccounts(path);
             await InitializeDiscordIntegration(path);
-            await InitializeTwitchIntegration(path);
+            InitializeTwitchIntegration(path);
             _creditAccounts.SetCommunicator(_discordBot.Communications);
             IsInitialized = true;
         }
@@ -62,7 +65,7 @@ namespace StardewViewerEvents
             try
             {
                 _logger.LogInfo($"Initializing Discord Integration...");
-                _discordBot = new DiscordBot(_logger, _harmony, _eventsExecutor, _creditAccounts, path);
+                _discordBot = new DiscordBot(_logger, _harmony, _eventsExecutor, _creditAccounts, _commandReader, path);
                 await _discordBot.InitializeAsync(_config.DiscordToken);
 
                 _logger.LogInfo($"Discord Integration Initialized!");
@@ -73,24 +76,19 @@ namespace StardewViewerEvents
             }
         }
 
-        private async Task InitializeTwitchIntegration(string path)
+        private void InitializeTwitchIntegration(string path)
         {
-            if (string.IsNullOrWhiteSpace(_config.TwitchToken))
+            if (string.IsNullOrWhiteSpace(_config.TwitchBotUsername) || string.IsNullOrWhiteSpace(_config.TwitchBotToken) || string.IsNullOrWhiteSpace(_config.TwitchChannel))
             {
                 return;
             }
-
-
+            
             try
             {
-                throw new NotImplementedException($"Twitch Integration is not implemented at the moment");
+                _logger.LogInfo($"Initializing Twitch Integration...");
+                var bot = new TwitchBot(_logger, _config, _creditAccounts, _eventsExecutor, _commandReader);
 
-                //_logger.LogInfo($"Initializing Twitch Integration...");
-                //var bot = new TwitchBot();
-                //await bot.InitializeAsync();
-
-                //_logger.LogInfo($"Twitch Integration Initialized!");
-                //await Task.Delay(-1);
+                _logger.LogInfo($"Twitch Integration Initialized!");
             }
             catch (Exception e)
             {

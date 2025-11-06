@@ -33,6 +33,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             HandleReadCredits(message, messageText, creditAccounts);
             await HandleTransferCredits(message, messageText, creditAccounts);
             await HandleShareCredits(message, messageText, creditAccounts);
+            HandleLinkTwitch(message, messageText, creditAccounts);
         }
 
         private void HandleAddCredits(SocketUserMessage message, string messageText, CreditAccounts creditAccounts)
@@ -128,7 +129,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
 
             if (!_commandReader.IsCommandValid(message.Content, out string discordName))
             {
-                _communications.ReplyTo(message, $"Usage:{Environment.NewLine}!transfercredits [Username#Discriminator]{Environment.NewLine}!transfercredits random");
+                _communications.ReplyTo(message, $"Usage:{Environment.NewLine}!transfercredits [Username]{Environment.NewLine}!transfercredits random");
                 return;
             }
 
@@ -294,6 +295,70 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             }
 
             _communications.ReplyTo(message, replyText);
+        }
+
+        private void HandleLinkTwitch(SocketUserMessage message, string messageText, CreditAccounts creditAccounts)
+        {
+            HandleCheckLink(message, messageText, creditAccounts);
+            HandleLink(message, messageText, creditAccounts);
+            HandleUnlink(message, messageText, creditAccounts);
+        }
+
+        private void HandleCheckLink(SocketUserMessage message, string messageText, CreditAccounts creditAccounts)
+        {
+            if (!messageText.Equals("!twitch check", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return;
+            }
+
+            var account = creditAccounts[message.Author.Id];
+            var response = account.HasTwitchLink() ?
+                $"You are currently linked to the twitch account `{account.twitchlink}`" :
+                $"You don't have a Twitch link set up at the moment. Use `!tlink [username]` to link to your Twitch Account";
+            _communications.ReplyTo(message, response);
+        }
+
+        private void HandleLink(SocketUserMessage message, string messageText, CreditAccounts creditAccounts)
+        {
+            if (!messageText.StartsWith("!tlink ", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return;
+            }
+
+            var account = creditAccounts[message.Author.Id];
+            if (account.HasTwitchLink())
+            {
+                _communications.ReplyTo(message, $"You are currently linked to the twitch account `{account.twitchlink}`. You need to unlink first, before setting up a new link");
+                return;
+            }
+
+            if (!_commandReader.IsCommandValid(message.Content, out string twitchUsername))
+            {
+                _communications.ReplyTo(message, $"Usage:{Environment.NewLine}!tlink [username]");
+                return;
+            }
+
+            account.LinkTo(twitchUsername);
+            _communications.ReplyTo(message, $"Successfully linked to Twitch Account `{twitchUsername}`");
+        }
+
+        private void HandleUnlink(SocketUserMessage message, string messageText, CreditAccounts creditAccounts)
+        {
+            if (!messageText.Equals("!tunlink", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return;
+            }
+
+            var account = creditAccounts[message.Author.Id];
+            if (!account.HasTwitchLink())
+            {
+                _communications.ReplyTo(message, $"You do not have a Twitch Link active");
+                return;
+            }
+
+            var currentTwitch = account.GetTwitchLink();
+            account.TwitchUnlink();
+            _communications.ReplyTo(message, $"Successfully unlinked from Twitch Account `{currentTwitch}`");
         }
     }
 }
