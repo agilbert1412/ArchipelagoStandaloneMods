@@ -306,7 +306,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
 
         private void HandleCheckLink(SocketUserMessage message, string messageText, CreditAccounts creditAccounts)
         {
-            if (!messageText.Equals("!twitch check", StringComparison.InvariantCultureIgnoreCase))
+            if (!messageText.Equals("!tcheck", StringComparison.InvariantCultureIgnoreCase))
             {
                 return;
             }

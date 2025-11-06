@@ -130,6 +130,15 @@ namespace StardewViewerEvents.DiscordIntegration
             userCommandsListString += "!pay [eventName] [creditAmount]" + Environment.NewLine;
             userCommandsListString += "    Pay credits into an event's bank. If the cost threshold is reached, the event will activate. This can activate the event multiple times, if enough credits are paid." + Environment.NewLine + Environment.NewLine;
 
+            userCommandsListString += "!tcheck" + Environment.NewLine;
+            userCommandsListString += "    Check what Twitch account you are currently linked to" + Environment.NewLine + Environment.NewLine;
+
+            userCommandsListString += "!tlink [username]" + Environment.NewLine;
+            userCommandsListString += "    Link to a given twitch account. This will allow this account to purchase events using your credit wallet. Use carefully." + Environment.NewLine + Environment.NewLine;
+
+            userCommandsListString += "!tunlink" + Environment.NewLine;
+            userCommandsListString += "    Unlink from Twitch" + Environment.NewLine + Environment.NewLine;
+            
             userCommandsListString += "!transfercredits [discordFullUsername]" + Environment.NewLine;
             userCommandsListString += "    Transfer your entire credit balance to a specific user. Use with Caution" + Environment.NewLine + Environment.NewLine;
 

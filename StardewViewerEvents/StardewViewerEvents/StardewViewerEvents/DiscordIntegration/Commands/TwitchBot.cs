@@ -106,13 +106,13 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             return;
         }
 
-        private void Client_OnWhisperReceived(object sender, OnWhisperReceivedArgs e)
-        {
-            if (e.WhisperMessage.Username == "my_friend")
-            {
-                client.SendWhisper(e.WhisperMessage.Username, "Hey! Whispers are so cool!!");
-            }
-        }
+        //private void Client_OnWhisperReceived(object sender, OnWhisperReceivedArgs e)
+        //{
+        //    if (e.WhisperMessage.Username == "my_friend")
+        //    {
+        //        client.SendWhisper(e.WhisperMessage.Username, "Hey! Whispers are so cool!!");
+        //    }
+        //}
 
         //private void Client_OnNewSubscriber(object sender, OnNewSubscriberArgs e)
         //{
