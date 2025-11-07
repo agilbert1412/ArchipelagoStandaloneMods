@@ -58,7 +58,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.MenuEvents
             }
 
             // rod.lastUser = Game1.player;
-            Game1.chatBox.addMessage($"Fishy event trying to catch a {_currentFish.Name}", Color.Yellow);
+            // Game1.chatBox.addMessage($"Fishy event trying to catch a {_currentFish.Name}", Color.Yellow);
             // rod.startMinigameEndFunction(_currentFish);
             var waterPixel = new Vector2((int)waterTile.X * 64 + 32, (int)waterTile.Y * 64 + 32);
             rod.bobber.Set(waterPixel);
