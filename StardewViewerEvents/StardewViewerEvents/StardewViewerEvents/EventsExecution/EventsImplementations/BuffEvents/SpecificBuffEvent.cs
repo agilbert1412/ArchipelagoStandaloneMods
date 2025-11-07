@@ -1,5 +1,6 @@
 ﻿using StardewModdingAPI;
 using StardewValley;
+using StardewValley.TokenizableStrings;
 using StardewViewerEvents.Events;
 using StardewViewerEvents.Extensions;
 using System;
@@ -58,8 +59,12 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.BuffEvents
 
             foreach (var (buffKey, buffData) in buffs)
             {
+                var parsedDisplay = TokenParser.ParseText(buffData.DisplayName);
+                var parsedDescription = TokenParser.ParseText(buffData.Description);
                 if (buffData.DisplayName.SanitizeEntityName().Equals(sanitizedBuff, StringComparison.InvariantCultureIgnoreCase) ||
-                    buffData.Description.SanitizeEntityName().Equals(sanitizedBuff, StringComparison.InvariantCultureIgnoreCase))
+                    buffData.Description.SanitizeEntityName().Equals(sanitizedBuff, StringComparison.InvariantCultureIgnoreCase) ||
+                    parsedDisplay.SanitizeEntityName().Equals(sanitizedBuff, StringComparison.InvariantCultureIgnoreCase) ||
+                    parsedDescription.SanitizeEntityName().Equals(sanitizedBuff, StringComparison.InvariantCultureIgnoreCase))
                 {
                     desiredBuff = buffKey;
                     return true;
