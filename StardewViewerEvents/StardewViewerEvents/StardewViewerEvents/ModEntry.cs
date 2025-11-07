@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
+using StardewValley;
 using StardewViewerEvents.DiscordIntegration;
 using StardewViewerEvents.EventsExecution;
 using StardewViewerEvents.Integrations.GenericModConfigMenu;
@@ -80,6 +81,7 @@ namespace StardewViewerEvents
         }
 
         private void OnUpdateTicked(object? sender, UpdateTickedEventArgs e)
+
         {
             if (!_viewerEventsService.IsInitialized)
             {

@@ -107,6 +107,10 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents
 
         public void SpawnSingleDebris(GameLocation location, Vector2 tile, string itemIdToSpawn)
         {
+            if (location.objects.ContainsKey(tile))
+            {
+                return;
+            }
             var itemToSpawn = ItemRegistry.Create<Object>(itemIdToSpawn);
             location.objects.Add(tile, itemToSpawn);
         }
@@ -148,6 +152,10 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents
 
         private static void SpawnSingleTree(GameLocation location, Vector2 tile, int treeId, int growthStage)
         {
+            if (location.terrainFeatures.ContainsKey(tile))
+            {
+                return;
+            }
             location.terrainFeatures.Add(tile, new Tree(treeId.ToString(), growthStage));
         }
 
