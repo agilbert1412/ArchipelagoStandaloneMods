@@ -91,7 +91,7 @@ namespace StardewViewerEvents
             _viewerEventsExecutor.Update();
 
             var framesBetweenEvents = Config.EventsDelay * 60;
-            if (e.IsMultipleOf(framesBetweenEvents))
+            if (framesBetweenEvents == 0 || e.IsMultipleOf(framesBetweenEvents))
             {
                 _viewerEventsExecutor.DequeueEvent(Monitor, Helper, _viewerEventsService.DiscordCommunications, _viewerEventsService.CreditAccounts, DiscordModule.ActiveChannels);
             }
