@@ -92,6 +92,12 @@ namespace StardewViewerEvents.EventsExecution
                 return;
             }
 
+            if (Queue.All(x => x.GetType() != eventToSend.GetType()) ||
+                Queue.All(x => x.GetType() == eventToSend.GetType()))
+            {
+                return;
+            }
+
             var nextEvent = Queue.First;
             var counter = 0;
             while (counter < Queue.Count && nextEvent.GetType() == eventToSend.GetType())
