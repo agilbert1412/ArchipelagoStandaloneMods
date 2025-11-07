@@ -150,23 +150,27 @@ namespace StardewViewerEvents.DiscordIntegration
             await _communications.DeleteAllMessagesInChannel(_channels.HelpCommandsChannel);
             Thread.Sleep(200);
 
-            var userCommandsListString = "**Commands:**" + Environment.NewLine;
+            var userCommandsListString = "**Main Commands:**" + Environment.NewLine;
             userCommandsListString += "```" + Environment.NewLine;
 
             userCommandsListString += "!credits" + Environment.NewLine;
             userCommandsListString += "    Gets the current amount of credits in your wallet" + Environment.NewLine + Environment.NewLine;
-
-            userCommandsListString += "!prices" + Environment.NewLine;
-            userCommandsListString += "    Gets the current global price multiplier" + Environment.NewLine + Environment.NewLine;
-
-            userCommandsListString += "!bank [eventName]" + Environment.NewLine;
-            userCommandsListString += "    Gets the current bank of an event and the number of credits required to activate it" + Environment.NewLine + Environment.NewLine;
 
             userCommandsListString += "!purchase [eventName]" + Environment.NewLine;
             userCommandsListString += "    Pays however many credits are required to activate the chosen event exactly once. You can also do !buy for the same effect" + Environment.NewLine + Environment.NewLine;
 
             userCommandsListString += "!pay [eventName] [creditAmount]" + Environment.NewLine;
             userCommandsListString += "    Pay credits into an event's bank. If the cost threshold is reached, the event will activate. This can activate the event multiple times, if enough credits are paid." + Environment.NewLine + Environment.NewLine;
+            
+            userCommandsListString += "```" + Environment.NewLine;
+            userCommandsListString = "**Advanced Commands:**" + Environment.NewLine;
+            userCommandsListString += "```" + Environment.NewLine;
+
+            userCommandsListString += "!prices" + Environment.NewLine;
+            userCommandsListString += "    Gets the current global price multiplier" + Environment.NewLine + Environment.NewLine;
+
+            userCommandsListString += "!bank [eventName]" + Environment.NewLine;
+            userCommandsListString += "    Gets the current bank of an event and the number of credits required to activate it" + Environment.NewLine + Environment.NewLine;
 
             userCommandsListString += "!tcheck" + Environment.NewLine;
             userCommandsListString += "    Check what Twitch account you are currently linked to" + Environment.NewLine + Environment.NewLine;
