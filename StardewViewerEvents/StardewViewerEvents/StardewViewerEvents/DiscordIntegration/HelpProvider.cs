@@ -163,7 +163,7 @@ namespace StardewViewerEvents.DiscordIntegration
             userCommandsListString += "    Gets the current bank of an event and the number of credits required to activate it" + Environment.NewLine + Environment.NewLine;
 
             userCommandsListString += "!purchase [eventName]" + Environment.NewLine;
-            userCommandsListString += "    Pays however many credits are required to activate the chosen event exactly once" + Environment.NewLine + Environment.NewLine;
+            userCommandsListString += "    Pays however many credits are required to activate the chosen event exactly once. You can also do !buy for the same effect" + Environment.NewLine + Environment.NewLine;
 
             userCommandsListString += "!pay [eventName] [creditAmount]" + Environment.NewLine;
             userCommandsListString += "    Pay credits into an event's bank. If the cost threshold is reached, the event will activate. This can activate the event multiple times, if enough credits are paid." + Environment.NewLine + Environment.NewLine;

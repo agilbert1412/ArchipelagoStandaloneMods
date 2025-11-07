@@ -143,7 +143,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
 
         private bool HandleCommandPurchase(string messageText, CreditAccounts creditAccounts, ViewerEventsExecutor eventExecutor, Author sender, out string response)
         {
-            if (!messageText.StartsWith($"{_prefix}purchase ", StringComparison.InvariantCultureIgnoreCase))
+            if (!messageText.StartsWith($"{_prefix}purchase ", StringComparison.InvariantCultureIgnoreCase) && !messageText.StartsWith($"{_prefix}buy ", StringComparison.InvariantCultureIgnoreCase))
             {
                 response = "";
                 return false;

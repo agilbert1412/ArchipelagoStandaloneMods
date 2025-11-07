@@ -3,6 +3,7 @@ using StardewModdingAPI;
 using StardewViewerEvents.Events.Constants;
 using StardewViewerEvents.EventsExecution;
 using StardewViewerEvents.EventsExecution.EventsImplementations.BombEvents;
+using StardewViewerEvents.EventsExecution.EventsImplementations.BuffEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.CropEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents;
@@ -236,6 +237,10 @@ namespace StardewViewerEvents.Events
                     return new ShuffleEverywhereEvent(logger, modHelper, queuedEvent);
                 case EventName.REVERSE_CONTROLS:
                     return new ReverseControlsEvent(logger, modHelper, queuedEvent);
+                case EventName.RANDOM_BUFF:
+                    return new RandomBuffEvent(logger, modHelper, queuedEvent);
+                case EventName.SPECIFIC_BUFF:
+                    return new SpecificBuffEvent(logger, modHelper, queuedEvent);
             }
 
             throw new NotImplementedException($"No Executable event found for event '{queuedEvent.BaseEvent.name}'");

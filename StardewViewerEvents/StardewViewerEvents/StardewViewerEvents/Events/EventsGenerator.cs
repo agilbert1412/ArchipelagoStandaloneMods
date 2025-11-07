@@ -97,8 +97,8 @@ public class EventsGenerator
             //CreateEvent(EventName.SLEEP_WEEK, Alignment.NEGATIVE, 200, "Sleep a whole week", false),
             //CreateEvent(EventName.SLEEP_MONTH, Alignment.NEGATIVE, 1000, "Sleep a whole month", false),
 
-            //CreateUnstackableEvent(EventName.RANDOM_BUFF, Alignment.NEUTRAL, 5, $"Add a random buff to the player. Duration varies based on the buff"),
-            //CreateParameterUnstackableEvent(EventName.SPECIFIC_BUFF, Alignment.NEUTRAL, 15, $"Add a specific buff to the player. Must specify a buff ID or name from Stardew Valley"),
+            CreateUnstackableEvent(EventName.RANDOM_BUFF, Alignment.NEUTRAL, 5, $"Add a random buff to the player. Duration varies based on the buff"),
+            CreateParameterUnstackableEvent(EventName.SPECIFIC_BUFF, Alignment.NEUTRAL, 15, $"Add a specific buff to the player. Must specify a buff ID or name from Stardew Valley"),
         };
 
         return events;

@@ -214,7 +214,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
 
         private async Task HandleCommandPurchase(SocketUserMessage message, string messageText, CreditAccounts creditAccounts, ViewerEventsExecutor eventExecutor)
         {
-            if (!messageText.StartsWith("!purchase ", StringComparison.InvariantCultureIgnoreCase))
+            if (!messageText.StartsWith("!purchase ", StringComparison.InvariantCultureIgnoreCase) && !messageText.StartsWith("!buy ", StringComparison.InvariantCultureIgnoreCase))
             {
                 return;
             }

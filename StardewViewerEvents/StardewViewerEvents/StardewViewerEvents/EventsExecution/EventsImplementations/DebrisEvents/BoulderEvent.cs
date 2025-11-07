@@ -38,9 +38,12 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents
                 foreach (var boulder in _boulders)
                 {
                     var location = boulder.Location;
-                    location.playSound("boulderBreak", boulder.Tile);
+                    if (location != null)
+                    {
+                        location.playSound("boulderBreak", boulder.Tile);
+                        location.resourceClumps.Remove(boulder);
+                    }
                     boulder.health.Value = 0;
-                    location.resourceClumps.Remove(boulder);
                 }
                 return true;
             }
