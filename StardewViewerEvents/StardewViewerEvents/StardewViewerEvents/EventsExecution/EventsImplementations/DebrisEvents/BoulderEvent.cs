@@ -10,11 +10,12 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents
 {
     public class BoulderEvent : DebrisEvent
     {
+        protected int _tickStarted;
+
         public const int DURATION_SECONDS = 60;
         public const int DURATION_TICKS = DURATION_SECONDS * 60;
 
-        protected override int TicksDuration => DURATION_TICKS;
-        protected override int SecondsDuration => TicksDuration * 60;
+        protected int TicksDuration => DURATION_TICKS;
 
         private List<ResourceClump> _boulders;
 
@@ -26,6 +27,9 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents
         public override void Execute()
         {
             base.Execute();
+
+            _tickStarted = Game1.ticks;
+
             _boulders = _debrisSpawner.SpawnManyBoulders(QueuedEvent.queueCount);
         }
 
