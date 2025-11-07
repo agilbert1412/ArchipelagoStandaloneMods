@@ -32,8 +32,9 @@ public class EventsGenerator
             CreateUnstackableEvent(EventName.ITEM_QUALITY_DOWN, Alignment.NEUTRAL, 20, "Lower the quality of a random item"),
             CreateUnstackableEvent(EventName.ITEM_QUALITY_UP, Alignment.POSITIVE, 10, "Increase the quality of a random item"),
 
-            CreateStackableEvent(EventName.SPAWN_MONSTER_RANDOM, Alignment.NEGATIVE, 5, "Spawn a random monster nearby"),
-            CreateParameterStackableEvent(EventName.SPAWN_MONSTER_SPECIFIC, Alignment.NEGATIVE, 10, "Spawn specific monster"),
+            CreateStackableEvent(EventName.SPAWN_MONSTER_RANDOM, Alignment.NEGATIVE, 4, "Spawn a random monster nearby"),
+            CreateParameterStackableEvent(EventName.SPAWN_MONSTER_SPECIFIC, Alignment.NEGATIVE, 8, "Spawn specific monster"),
+            CreateParameterStackableEvent(EventName.SPAWN_MONSTER_BOOSTED, Alignment.NEGATIVE, 10, "Spawn specific speed-boosted monster. Send many stacks of this event at once. 2 stacks means x2 speed, 3 stacks is x3 speed, and so on."),
             CreateStackableEvent(EventName.TEMPORARY_BABY, Alignment.NEGATIVE, 4, $"Spawn {SpawnTemporaryBabyEvent.NUMBER_TEMPORARY_BABIES} temporary babies"),
             CreateStackableEvent(EventName.NEW_BABY, Alignment.NEUTRAL, 10, "Welcome a new child to the family"),
             CreateUnstackableEvent(EventName.BYE_BABY, Alignment.NEUTRAL, 10, "Choose the childfree life, retroactively"),

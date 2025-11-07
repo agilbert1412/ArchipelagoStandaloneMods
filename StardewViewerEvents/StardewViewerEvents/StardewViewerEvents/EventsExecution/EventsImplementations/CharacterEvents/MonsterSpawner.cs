@@ -59,6 +59,15 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
             }
         }
 
+        public void SpawnOneSpecificBoostedMonster(GameLocation map, string monsterName, int boostLevel)
+        {
+            var monster = CreateMonster(map, monsterName);
+            for (var i = 0; i < boostLevel; i++)
+            {
+                SpawnMonster(map, monster);
+            }
+        }
+
         public void SpawnOneSpecificMonster(GameLocation map, string monsterName)
         {
             var monster = CreateMonster(map, monsterName);

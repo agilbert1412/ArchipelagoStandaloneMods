@@ -149,6 +149,8 @@ namespace StardewViewerEvents.Events
                     return new SpawnRandomMonsterEvent(logger, modHelper, queuedEvent);
                 case EventName.SPAWN_MONSTER_SPECIFIC:
                     return new SpawnSpecificMonsterEvent(logger, modHelper, queuedEvent);
+                case EventName.SPAWN_MONSTER_BOOSTED:
+                    return new SpawnBoostedMonsterEvent(logger, modHelper, queuedEvent);
                 case EventName.TEMPORARY_BABY:
                     return new SpawnTemporaryBabyEvent(logger, modHelper, queuedEvent);
                 case EventName.NEW_BABY:

@@ -50,8 +50,8 @@ namespace StardewViewerEvents.Events
                 SPAWN,
                 new[]
                 {
-                    EventName.SPAWN_MONSTER_RANDOM, EventName.SPAWN_MONSTER_SPECIFIC, EventName.TEMPORARY_BABY,
-                    EventName.NEW_BABY, EventName.BYE_BABY, EventName.INVISIBLE_COWS,
+                    EventName.SPAWN_MONSTER_RANDOM, EventName.SPAWN_MONSTER_SPECIFIC, EventName.SPAWN_MONSTER_BOOSTED,
+                    EventName.TEMPORARY_BABY, EventName.NEW_BABY, EventName.BYE_BABY, EventName.INVISIBLE_COWS,
                 }
             },
             {

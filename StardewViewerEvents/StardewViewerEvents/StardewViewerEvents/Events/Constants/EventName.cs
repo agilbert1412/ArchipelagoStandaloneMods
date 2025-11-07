@@ -24,6 +24,7 @@
 
         public const string SPAWN_MONSTER_RANDOM = "encounter";
         public const string SPAWN_MONSTER_SPECIFIC = "monster";
+        public const string SPAWN_MONSTER_BOOSTED = "fastboi";
         public const string NEW_BABY = "newbaby";
         public const string BYE_BABY = "byebaby";
         public const string TEMPORARY_BABY = "tempbaby";
