@@ -94,7 +94,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
 
         public Monster GetSpecificMonster(GameLocation map, string monsterName)
         {
-            var spawnPosition = _tileChooser.GetRandomTileInboundsOffScreen(map);
+            var spawnPosition = _tileChooser.GetRandomTileInboundsOffScreen(map, true);
             return GetMonster(monsterName, spawnPosition);
         }
 

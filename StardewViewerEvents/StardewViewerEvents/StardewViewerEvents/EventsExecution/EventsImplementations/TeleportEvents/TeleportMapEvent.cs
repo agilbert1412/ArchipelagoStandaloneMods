@@ -36,7 +36,13 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.TeleportEven
                 return false;
             }
 
-            var chosenTile = _tileChooser.GetRandomTileInbounds(map);
+            var chosenTile = _tileChooser.GetRandomTileInbounds(map, true);
+            if (chosenTile == null)
+            {
+                return false;
+            }
+
+            chosenTile = _tileChooser.GetRandomTileInbounds(map, false);
             if (chosenTile == null)
             {
                 return false;

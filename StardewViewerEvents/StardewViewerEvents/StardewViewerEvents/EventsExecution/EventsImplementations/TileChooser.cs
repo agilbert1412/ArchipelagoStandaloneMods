@@ -11,20 +11,20 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations
     {
         private const int MAX_RETRIES = 20;
 
-        public Vector2? GetRandomTileInbounds(GameLocation area)
+        public Vector2? GetRandomTileInbounds(GameLocation area, bool needClearTile)
         {
-            return GetRandomTileInbounds(area, Point.Zero, int.MaxValue);
+            return GetRandomTileInbounds(area, Point.Zero, int.MaxValue, needClearTile);
         }
 
-        public Vector2? GetRandomTileInbounds(GameLocation area, Point origin, int maxDistance)
+        public Vector2? GetRandomTileInbounds(GameLocation area, Point origin, int maxDistance, bool needClearTile)
         {
             var triesRemaining = MAX_RETRIES;
             var tile = area.getRandomTile();
             var tilePoint = Utility.Vector2ToPoint(tile);
             var tileLocation = new Location(tilePoint.X, tilePoint.Y);
-            while (tilePoint.GetTotalDistance(origin) > maxDistance || area.IsTileOccupiedBy(tile) ||
-                   area.isWaterTile(tilePoint.X, tilePoint.Y) || !area.isTilePassable(tile) ||
-                   !area.isTilePlaceable(tile) || !CanPathFindToAnyWarp(area, tilePoint))
+            while (tilePoint.GetTotalDistance(origin) > maxDistance || area.isWaterTile(tilePoint.X, tilePoint.Y) ||
+                   (needClearTile && (area.IsTileOccupiedBy(tile) || !area.isTilePassable(tile) || !area.isTilePlaceable(tile))) ||
+                    !CanPathFindToAnyWarp(area, tilePoint))
             {
                 tile = area.getRandomTile();
                 tilePoint = Utility.Vector2ToPoint(tile);
@@ -39,10 +39,10 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations
             return tile;
         }
 
-        public Vector2 GetRandomTileInboundsOffScreen(GameLocation area)
+        public Vector2 GetRandomTileInboundsOffScreen(GameLocation area, bool needClearTile)
         {
-            var numberRetries = MAX_RETRIES;
-            var spawnPosition = GetRandomTileInbounds(area);
+            var numberRetries = 5;
+            var spawnPosition = GetRandomTileInbounds(area, needClearTile);
             if (spawnPosition == null)
             {
                 return area.getRandomTile();
@@ -51,7 +51,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations
             while (numberRetries > 0 && Utility.isOnScreen(Utility.Vector2ToPoint(spawnPosition.Value), 64, area))
             {
                 numberRetries--;
-                spawnPosition = GetRandomTileInbounds(area);
+                spawnPosition = GetRandomTileInbounds(area, needClearTile);
                 if (spawnPosition == null)
                 {
                     return area.getRandomTile();

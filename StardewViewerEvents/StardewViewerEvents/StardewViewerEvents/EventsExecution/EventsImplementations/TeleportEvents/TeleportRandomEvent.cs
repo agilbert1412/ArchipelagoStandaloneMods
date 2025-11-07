@@ -19,7 +19,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.TeleportEven
             while (chosenLocation == null || chosenTile == null)
             {
                 chosenLocation = validMaps[Game1.random.Next(validMaps.Count)];
-                chosenTile = _tileChooser.GetRandomTileInbounds(chosenLocation);
+                chosenTile = _tileChooser.GetRandomTileInbounds(chosenLocation, true);
             }
 
             map = chosenLocation;

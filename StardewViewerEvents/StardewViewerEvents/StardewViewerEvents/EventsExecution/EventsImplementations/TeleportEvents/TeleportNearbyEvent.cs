@@ -15,8 +15,19 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.TeleportEven
         {
             map = Game1.player.currentLocation;
             tile = Game1.player.Tile;
-            var destinationTile = _tileChooser.GetRandomTileInbounds(map, Game1.player.TilePoint, 20);
-            if (map == null || destinationTile == null)
+            if (map == null)
+            {
+                return false;
+            }
+
+            var destinationTile = _tileChooser.GetRandomTileInbounds(map, Game1.player.TilePoint, 20, true);
+            if (destinationTile == null)
+            {
+                return false;
+            }
+
+            destinationTile = _tileChooser.GetRandomTileInbounds(map, Game1.player.TilePoint, 20, false);
+            if (destinationTile == null)
             {
                 return false;
             }
