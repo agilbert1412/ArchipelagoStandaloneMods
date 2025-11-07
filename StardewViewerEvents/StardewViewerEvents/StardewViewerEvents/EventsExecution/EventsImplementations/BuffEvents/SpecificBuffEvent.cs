@@ -4,6 +4,7 @@ using StardewValley.TokenizableStrings;
 using StardewViewerEvents.Events;
 using StardewViewerEvents.Extensions;
 using System;
+using StardewValley.GameData.Buffs;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.BuffEvents
 {
@@ -46,32 +47,52 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.BuffEvents
 
         private bool TryGetDesiredBuff(string desiredBuffName, out string desiredBuff)
         {
-            var sanitizedBuff = desiredBuffName.SanitizeEntityName();
+            var sanitizedBuffName = desiredBuffName.SanitizeEntityName();
             var buffs = DataLoader.Buffs(Game1.content);
             foreach (var (buffKey, _) in buffs)
             {
-                if (buffKey.SanitizeEntityName().Equals(sanitizedBuff, StringComparison.InvariantCultureIgnoreCase))
+                if (buffKey.SanitizeEntityName().Equals(sanitizedBuffName, StringComparison.InvariantCultureIgnoreCase))
                 {
                     desiredBuff = buffKey;
                     return true;
                 }
             }
 
+            const string buffSuffix = "buff";
+            var alternateBuffName = sanitizedBuffName.EndsWith(buffSuffix, StringComparison.InvariantCultureIgnoreCase)
+                ? sanitizedBuffName.Substring(0, sanitizedBuffName.Length - buffSuffix.Length)
+                : $"{sanitizedBuffName}{buffSuffix}";
+
+            if (TryGetNamedBuff(buffs, sanitizedBuffName, out desiredBuff))
+            {
+                return true;
+            }
+
+            if (TryGetNamedBuff(buffs, alternateBuffName, out desiredBuff))
+            {
+                return true;
+            }
+
+            desiredBuff = "";
+            return false;
+        }
+
+        private static bool TryGetNamedBuff(Dictionary<string, BuffData> buffs, string sanitizedBuffName, out string desiredBuff)
+        {
             foreach (var (buffKey, buffData) in buffs)
             {
                 var parsedDisplay = TokenParser.ParseText(buffData.DisplayName);
                 var parsedDescription = TokenParser.ParseText(buffData.Description);
-                if (buffData.DisplayName.SanitizeEntityName().Equals(sanitizedBuff, StringComparison.InvariantCultureIgnoreCase) ||
-                    buffData.Description.SanitizeEntityName().Equals(sanitizedBuff, StringComparison.InvariantCultureIgnoreCase) ||
-                    parsedDisplay.SanitizeEntityName().Equals(sanitizedBuff, StringComparison.InvariantCultureIgnoreCase) ||
-                    parsedDescription.SanitizeEntityName().Equals(sanitizedBuff, StringComparison.InvariantCultureIgnoreCase))
+                if (buffData.DisplayName.SanitizeEntityName().Equals(sanitizedBuffName, StringComparison.InvariantCultureIgnoreCase) ||
+                    buffData.Description.SanitizeEntityName().Equals(sanitizedBuffName, StringComparison.InvariantCultureIgnoreCase) ||
+                    parsedDisplay.SanitizeEntityName().Equals(sanitizedBuffName, StringComparison.InvariantCultureIgnoreCase) ||
+                    parsedDescription.SanitizeEntityName().Equals(sanitizedBuffName, StringComparison.InvariantCultureIgnoreCase))
                 {
                     desiredBuff = buffKey;
                     return true;
                 }
             }
 
-            desiredBuff = "";
             return false;
         }
     }
