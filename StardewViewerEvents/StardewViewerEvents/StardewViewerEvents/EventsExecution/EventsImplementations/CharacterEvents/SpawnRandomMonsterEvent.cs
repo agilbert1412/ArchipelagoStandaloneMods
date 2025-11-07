@@ -4,13 +4,11 @@ using StardewViewerEvents.Events;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEvents
 {
-    public class SpawnRandomMonsterEvent : ExecutableEvent
+    public class SpawnRandomMonsterEvent : SpawnMonsterEvent
     {
-        protected MonsterSpawner _monsterSpawner;
 
         public SpawnRandomMonsterEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
-            _monsterSpawner = new MonsterSpawner(_tileChooser);
         }
 
         public override void Execute()

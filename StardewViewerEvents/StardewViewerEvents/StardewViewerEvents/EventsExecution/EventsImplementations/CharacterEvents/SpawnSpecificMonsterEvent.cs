@@ -4,7 +4,7 @@ using StardewViewerEvents.Events;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEvents
 {
-    public class SpawnSpecificMonsterEvent : SpawnRandomMonsterEvent
+    public class SpawnSpecificMonsterEvent : SpawnMonsterEvent
     {
         public SpawnSpecificMonsterEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
@@ -16,7 +16,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
             errorMessage = $"";
             if (!_monsterSpawner.IsValidMonster(desiredMonster))
             {
-                errorMessage = $"Unrecognized monster [{desiredMonster}]. Valid monsters: [{string.Join(',', MonsterSpawner.AllMonsterTypes)}]";
+                errorMessage = $"Unrecognized monster [{desiredMonster}]. Valid monsters: [{string.Join(", ", MonsterSpawner.AllMonsterTypes)}]";
                 return false;
             }
 
