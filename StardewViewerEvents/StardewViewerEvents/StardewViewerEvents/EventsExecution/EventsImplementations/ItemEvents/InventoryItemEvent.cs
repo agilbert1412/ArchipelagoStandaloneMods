@@ -10,6 +10,17 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents
         {
         }
 
+        public override bool CanExecuteRightNow()
+        {
+            if (!base.CanExecuteRightNow())
+            {
+                return false;
+            }
+
+            var potentialSlots = GetPotentialSlots();
+            return potentialSlots != null && potentialSlots.Any();
+        }
+
         public override void Execute()
         {
             base.Execute();
@@ -19,6 +30,13 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents
         }
 
         private int GetSlotToEvent()
+        {
+            var potentialSlots = GetPotentialSlots();
+
+            return potentialSlots[Game1.random.Next(potentialSlots.Count)];
+        }
+
+        private List<int> GetPotentialSlots()
         {
             var potentialSlots = new List<int>();
             for (var i = 0; i < Game1.player.MaxItems; i++)
@@ -35,7 +53,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents
                 }
             }
 
-            return potentialSlots[Game1.random.Next(potentialSlots.Count)];
+            return potentialSlots;
         }
 
         protected virtual bool IsItemValid(Item item)

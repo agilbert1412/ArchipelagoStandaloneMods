@@ -18,11 +18,6 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.DurationEven
         {
         }
 
-        public override bool CanExecuteRightNow()
-        {
-            return base.CanExecuteRightNow();
-        }
-
         public override void Execute()
         {
             base.Execute();
