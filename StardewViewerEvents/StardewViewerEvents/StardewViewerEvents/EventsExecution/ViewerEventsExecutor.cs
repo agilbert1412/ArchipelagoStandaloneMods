@@ -46,6 +46,14 @@ namespace StardewViewerEvents.EventsExecution
             Queue.RemoveFirst();
             Queue.PrintToConsole();
 
+            var nextEvent = Queue.First;
+            while (nextEvent.GetType() == eventToSend.GetType())
+            {
+                Queue.QueueEvent(nextEvent);
+                Queue.RemoveFirst();
+                nextEvent = Queue.First;
+            }
+
             try
             {
                 var executableEvent = eventToSend.GetExecutableEvent(logger, modHelper);
