@@ -16,7 +16,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.SoundEvents
 
         public override string GetSoundCue()
         {
-            if (!string.IsNullOrWhiteSpace(_soundCue))
+            if (!string.IsNullOrWhiteSpace(_soundCue) && QueuedEvent.queueCount == 1)
             {
                 return _soundCue;
             }
@@ -40,7 +40,11 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.SoundEvents
 
         protected override string AppendParameters(string message)
         {
-            message += $" [{GetSoundCue()}]";
+            if (QueuedEvent.queueCount == 1)
+            {
+                message += $" [{GetSoundCue()}]";
+            }
+
             return message;
         }
     }
