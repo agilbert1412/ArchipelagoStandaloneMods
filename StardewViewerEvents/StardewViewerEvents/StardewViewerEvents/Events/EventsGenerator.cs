@@ -35,7 +35,7 @@ public class EventsGenerator
             CreateStackableEvent(EventName.SPAWN_MONSTER_RANDOM, Alignment.NEGATIVE, 5, "Spawn a random monster nearby"),
             CreateParameterStackableEvent(EventName.SPAWN_MONSTER_SPECIFIC, Alignment.NEGATIVE, 10, "Spawn specific monster"),
             CreateStackableEvent(EventName.TEMPORARY_BABY, Alignment.NEGATIVE, 4, $"Spawn {SpawnTemporaryBabyEvent.NUMBER_TEMPORARY_BABIES} temporary babies"),
-            CreateUnstackableEvent(EventName.NEW_BABY, Alignment.NEUTRAL, 10, "Welcome a new child to the family"),
+            CreateStackableEvent(EventName.NEW_BABY, Alignment.NEUTRAL, 10, "Welcome a new child to the family"),
             CreateUnstackableEvent(EventName.BYE_BABY, Alignment.NEUTRAL, 10, "Choose the childfree life, retroactively"),
 
             CreateStackableEvent(EventName.DEBRIS_RANDOM, Alignment.NEGATIVE, 5, $"Spawn {RandomDebrisEvent.AMOUNT} random pieces of debris nearby"),

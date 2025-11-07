@@ -13,9 +13,14 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
         {
             base.Execute();
 
+            var numberBabies = QueuedEvent.queueCount;
             var activeAccounts = ViewerEventsService.Instance.CreditAccounts.GetAccountsActiveInThePastMinutes(30);
             var activeNames = activeAccounts.Select(x => x.discordName).ToArray();
-            _babyBirther.SpawnNewBaby(activeNames);
+
+            for (var i = 0; i < numberBabies; i++)
+            {
+                _babyBirther.SpawnNewBaby(activeNames);
+            }
         }
     }
 }
