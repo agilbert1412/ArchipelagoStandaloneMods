@@ -79,8 +79,8 @@ public class EventsGenerator
             CreateUnstackableEvent(EventName.HEALTH_REMOVE, Alignment.NEGATIVE, 10, $"Lose {RemoveHealthEvent.AMOUNT_REMOVED} health"),
             CreateUnstackableEvent(EventName.STAMINA_ADD, Alignment.POSITIVE, 8, $"Gain {AddStaminaEvent.AMOUNT_ADDED} stamina"),
             CreateUnstackableEvent(EventName.STAMINA_REMOVE, Alignment.NEGATIVE, 10, $"Lose {RemoveStaminaEvent.AMOUNT_REMOVED} stamina"),
-            CreateStackableEvent(EventName.TIME_FORWARD, Alignment.POSITIVE, 2, $"Advance time by {TimeForwardsEvent.MINUTES_FORWARD} minutes"),
-            CreateStackableEvent(EventName.TIME_BACKWARDS, Alignment.NEGATIVE, 2, $"Move time backwards by {TimeBackwardsEvent.MINUTES_BACKWARDS} minutes"),
+            CreateStackableEvent(EventName.TIME_FORWARD, Alignment.NEUTRAL, 2, $"Advance time by {TimeForwardsEvent.MINUTES_FORWARD} minutes"),
+            CreateStackableEvent(EventName.TIME_BACKWARDS, Alignment.NEUTRAL, 2, $"Move time backwards by {TimeBackwardsEvent.MINUTES_BACKWARDS} minutes"),
 
             CreateUnstackableEvent(EventName.OPEN_MENU, Alignment.NEGATIVE, 1, $"Open a random menu"),
 
