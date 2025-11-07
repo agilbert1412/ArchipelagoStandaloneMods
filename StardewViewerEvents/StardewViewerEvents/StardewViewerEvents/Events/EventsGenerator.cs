@@ -15,9 +15,9 @@ public class EventsGenerator
         var events = new List<ViewerEvent>
         {
             CreateUnstackableEvent(EventName.TELEPORT_HOME, Alignment.NEUTRAL, 10, "Teleport home"),
-            CreateUnstackableEvent(EventName.TELEPORT_NEAR, Alignment.NEGATIVE, 5, "Teleport to a random tile on the current map"),
+            CreateUnstackableEvent(EventName.TELEPORT_NEAR, Alignment.NEGATIVE, 4, "Teleport to a random tile on the current map"),
             CreateUnstackableEvent(EventName.TELEPORT_RANDOM, Alignment.NEUTRAL, 15, "Teleport to a random map"),
-            CreateParameterUnstackableEvent(EventName.TELEPORT_MAP, Alignment.NEUTRAL, 25, "Teleport to a specific map. Must use stardew internal map names"),
+            CreateParameterUnstackableEvent(EventName.TELEPORT_MAP, Alignment.NEUTRAL, 50, "Teleport to a specific map. Must use stardew internal map names"),
 
             CreateStackableEvent(EventName.ITEM_GET_RANDOM, Alignment.POSITIVE, 10, "Give a random item"),
             CreateParameterStackableEvent(EventName.ITEM_GET_SPECIFIC, Alignment.POSITIVE, 25, "Give a specific item. Can use either an item ID, a Qualified item ID, or an item name"),
