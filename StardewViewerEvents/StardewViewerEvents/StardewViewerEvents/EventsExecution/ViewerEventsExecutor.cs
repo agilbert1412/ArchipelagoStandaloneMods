@@ -87,20 +87,20 @@ namespace StardewViewerEvents.EventsExecution
 
         private void SendSameTypeEventsToBackOfQueue(QueuedEvent eventToSend)
         {
-            if (Queue.IsEmpty)
+            if (Queue.IsEmpty || Queue.Count < 2)
             {
                 return;
             }
 
-            if (Queue.All(x => x.GetType() != eventToSend.GetType()) ||
-                Queue.All(x => x.GetType() == eventToSend.GetType()))
+            if (Queue.All(x => x.baseEventName != eventToSend.baseEventName) ||
+                Queue.All(x => x.baseEventName == eventToSend.baseEventName))
             {
                 return;
             }
 
             var nextEvent = Queue.First;
             var counter = 0;
-            while (counter < Queue.Count && nextEvent.GetType() == eventToSend.GetType())
+            while (counter < Queue.Count && nextEvent.baseEventName == eventToSend.baseEventName)
             {
                 counter++;
                 Queue.QueueEvent(nextEvent);
