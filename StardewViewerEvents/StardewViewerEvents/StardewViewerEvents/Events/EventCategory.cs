@@ -19,12 +19,13 @@ namespace StardewViewerEvents.Events
         public const string MENU = "Menu Events";
         public const string EMOTE = "Emote Events";
         public const string CUSTOMIZATION = "Customization Events";
-        public const string STATS = "Stats Events";
+        public const string STATE = "State Events";
         public const string TIME = "Time Events";
         public const string CROPS = "Crop Events";
         public const string INVENTORY = "Inventory Events";
         public const string CONTROLS = "Controls Events";
         public const string WEATHER = "Weather Events";
+        public const string BUFF = "Buff Events";
 
         public static readonly Dictionary<string, string[]> CATEGORY_MAP = new()
         {
@@ -106,7 +107,7 @@ namespace StardewViewerEvents.Events
                 }
             },
             {
-                STATS,
+                STATE,
                 new[]
                 {
                     EventName.MONEY_ADD, EventName.MONEY_REMOVE, EventName.HEALTH_ADD, EventName.HEALTH_REMOVE,
@@ -139,6 +140,13 @@ namespace StardewViewerEvents.Events
                 new[]
                 {
                     EventName.REVERSE_CONTROLS, 
+                }
+            },
+            {
+                BUFF,
+                new[]
+                {
+                    EventName.RANDOM_BUFF, EventName.SPECIFIC_BUFF,
                 }
             },
         };
