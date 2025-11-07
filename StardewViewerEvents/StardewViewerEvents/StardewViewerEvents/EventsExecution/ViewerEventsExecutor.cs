@@ -46,13 +46,7 @@ namespace StardewViewerEvents.EventsExecution
             Queue.RemoveFirst();
             Queue.PrintToConsole();
 
-            var nextEvent = Queue.First;
-            while (nextEvent.GetType() == eventToSend.GetType())
-            {
-                Queue.QueueEvent(nextEvent);
-                Queue.RemoveFirst();
-                nextEvent = Queue.First;
-            }
+            SendSameTypeEventsToBackOfQueue(eventToSend);
 
             try
             {
@@ -88,6 +82,24 @@ namespace StardewViewerEvents.EventsExecution
             {
                 _logger.LogError(ex.Message);
                 await communications.SendMessageAsync(channels.AdminChannel, ex.Message);
+            }
+        }
+
+        private void SendSameTypeEventsToBackOfQueue(QueuedEvent eventToSend)
+        {
+            if (Queue.IsEmpty)
+            {
+                return;
+            }
+
+            var nextEvent = Queue.First;
+            var counter = 0;
+            while (counter < Queue.Count && nextEvent.GetType() == eventToSend.GetType())
+            {
+                counter++;
+                Queue.QueueEvent(nextEvent);
+                Queue.RemoveFirst();
+                nextEvent = Queue.First;
             }
         }
 

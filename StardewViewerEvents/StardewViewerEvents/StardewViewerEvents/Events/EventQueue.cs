@@ -21,6 +21,8 @@ namespace StardewViewerEvents.Events
         }
 
         public bool IsEmpty => !_eventQueue.Any();
+        public bool Any => _eventQueue.Any();
+        public int Count => _eventQueue.Count;
 
         public QueuedEvent First => _eventQueue.First();
 
