@@ -17,6 +17,25 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.MenuEvents
             _currentFish = null;
         }
 
+        public override bool ValidateParameters(out string errorMessage)
+        {
+            errorMessage = "";
+            var rodAnywhere = false;
+            Utility.ForEachItem(x =>
+            {
+                if (x is FishingRod rod)
+                {
+                    rodAnywhere = true;
+                    return false;
+                }
+
+                return true;
+            });
+
+            errorMessage = $"The player does not have a fishing rod yet!";
+            return rodAnywhere;
+        }
+
         public override bool CanExecuteRightNow()
         {
             if (!base.CanExecuteRightNow())
