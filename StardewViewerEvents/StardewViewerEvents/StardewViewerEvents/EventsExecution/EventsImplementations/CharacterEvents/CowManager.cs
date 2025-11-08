@@ -92,6 +92,11 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
                     transparencyThisFrame += minTransparency;
                 }
 
+                if (transparencyThisFrame == 0)
+                {
+                    SetRandomPosition(__instance, __instance.currentLocation);
+                }
+
                 transparencyThisFrame = Math.Max(0, transparencyThisFrame - 20);
                 var tone = Math.Min(64, transparencyThisFrame * 2);
                 
@@ -190,5 +195,24 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
         }
 
         // public void doFarmerPush(int direction)
+
+        private static void SetRandomPosition(FarmAnimal cow, GameLocation location)
+        {
+            cow.StopAllActions();
+            Rectangle parsed;
+            //if (!location.TryGetMapPropertyAs("ProduceArea", out parsed, true))
+            //    return;
+            var tile = location.getRandomTile();
+            cow.Position = new Vector2(tile.X * 64f, tile.Y * 64f);
+            int num = 0;
+            while (cow.Position.Equals(Vector2.Zero) || location.Objects.ContainsKey(cow.Position) || location.isCollidingPosition(cow.GetBoundingBox(), Game1.viewport, false, 0, false, cow))
+            {
+                tile = location.getRandomTile();
+                cow.Position = new Vector2(tile.X * 64f, tile.Y * 64f); ++num;
+                if (num > 64)
+                    break;
+            }
+            // cow.SleepIfNecessary();
+        }
     }
 }

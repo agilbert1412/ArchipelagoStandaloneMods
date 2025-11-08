@@ -21,9 +21,20 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.TeleportEven
             }
 
             var desiredMapName = GetSingleParameter();
-            errorMessage =
-                $"Unrecognized map name [{desiredMapName}]. You must specify the internal name of a GameLocation in Stardew Valley";
-            return TryGetDesiredMap(desiredMapName, out _);
+            if (!TryGetDesiredMap(desiredMapName, out _))
+            {
+                errorMessage = $"Unrecognized map name [{desiredMapName}]. You must specify the internal name of a GameLocation in Stardew Valley";
+                return false;
+            }
+
+            if (!TryGetDestination(out _, out _))
+            {
+                errorMessage = $"Map [{desiredMapName}] exits, but no valid tile could be found to teleport the player to.";
+                return false;
+            }
+
+            errorMessage = "";
+            return true;
         }
 
         public override bool TryGetDestination(out GameLocation map, out Vector2 tile)
@@ -39,14 +50,13 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.TeleportEven
             var chosenTile = _tileChooser.GetRandomTileInbounds(map, true);
             if (chosenTile == null)
             {
-                return false;
+                chosenTile = _tileChooser.GetRandomTileInbounds(map, false);
+                if (chosenTile == null)
+                {
+                    return false;
+                }
             }
 
-            chosenTile = _tileChooser.GetRandomTileInbounds(map, false);
-            if (chosenTile == null)
-            {
-                return false;
-            }
 
             tile = chosenTile.Value;
             return true;

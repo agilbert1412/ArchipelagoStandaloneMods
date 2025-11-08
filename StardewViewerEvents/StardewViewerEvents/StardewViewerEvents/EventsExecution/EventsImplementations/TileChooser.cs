@@ -22,9 +22,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations
             var tile = area.getRandomTile();
             var tilePoint = Utility.Vector2ToPoint(tile);
             var tileLocation = new Location(tilePoint.X, tilePoint.Y);
-            while (tilePoint.GetTotalDistance(origin) > maxDistance || area.isWaterTile(tilePoint.X, tilePoint.Y) ||
-                   (needClearTile && (area.IsTileOccupiedBy(tile) || !area.isTilePassable(tile) || !area.isTilePlaceable(tile))) ||
-                    !CanPathFindToAnyWarp(area, tilePoint))
+            while (IsTileInvalid(area, origin, maxDistance, tilePoint, tile, needClearTile))
             {
                 tile = area.getRandomTile();
                 tilePoint = Utility.Vector2ToPoint(tile);
@@ -37,6 +35,39 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations
             }
 
             return tile;
+        }
+
+        private bool IsTileInvalid(GameLocation area, Point origin, int maxDistance, Point tilePoint, Vector2 tile, bool needClearTile)
+        {
+            if (tilePoint.GetTotalDistance(origin) > maxDistance)
+            {
+                return true;
+            }
+            if (area.isWaterTile(tilePoint.X, tilePoint.Y))
+            {
+                return true;
+            }
+            if (needClearTile)
+            {
+                if (area.IsTileOccupiedBy(tile))
+                {
+                    return true;
+                }
+                if (!area.isTilePassable(tile))
+                {
+                    return true;
+                }
+                if (!area.isTilePlaceable(tile))
+                {
+                    return true;
+                }
+            }
+            if (!CanPathFindToAnyWarp(area, tilePoint, needClearTile: needClearTile))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public Vector2 GetRandomTileInboundsOffScreen(GameLocation area, bool needClearTile)
@@ -61,14 +92,14 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations
             return spawnPosition.Value;
         }
 
-        public bool CanPathFindToAnyWarp(GameLocation location, Point startPoint, int minimumDistance = 0, int maximumDistance = 500)
+        public bool CanPathFindToAnyWarp(GameLocation location, Point startPoint, int minimumDistance = 0, int maximumDistance = 500, bool needClearTile = true)
         {
             if (location.warps == null || location.warps.Count < 1)
             {
                 return true;
             }
 
-            if (location.isCollidingPosition(new Rectangle(startPoint.X * 64 + 1, startPoint.Y * 64 + 1, 62, 62),
+            if (needClearTile && location.isCollidingPosition(new Rectangle(startPoint.X * 64 + 1, startPoint.Y * 64 + 1, 62, 62),
                     Game1.viewport, true, 0, false, Game1.player, true))
             {
                 return false;

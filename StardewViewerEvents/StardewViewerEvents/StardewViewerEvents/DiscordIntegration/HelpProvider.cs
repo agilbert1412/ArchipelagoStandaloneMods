@@ -162,7 +162,9 @@ namespace StardewViewerEvents.DiscordIntegration
             userCommandsListString += "!pay [eventName] [creditAmount]" + Environment.NewLine;
             userCommandsListString += "    Pay credits into an event's bank. If the cost threshold is reached, the event will activate. This can activate the event multiple times, if enough credits are paid." + Environment.NewLine + Environment.NewLine;
             
-            userCommandsListString += "```" + Environment.NewLine;
+            userCommandsListString += "```";
+            await _communications.SendMessageAsync(_channels.HelpCommandsChannel, userCommandsListString);
+
             userCommandsListString = "**Advanced Commands:**" + Environment.NewLine;
             userCommandsListString += "```" + Environment.NewLine;
 

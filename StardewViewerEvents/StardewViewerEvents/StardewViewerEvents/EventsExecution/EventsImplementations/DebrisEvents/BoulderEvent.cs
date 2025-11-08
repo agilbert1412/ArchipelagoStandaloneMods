@@ -18,6 +18,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents
         protected int TicksDuration => DURATION_TICKS;
 
         private List<ResourceClump> _boulders;
+        public override bool CanBeSimultaneous => true;
 
         public BoulderEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {

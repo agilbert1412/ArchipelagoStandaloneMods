@@ -41,7 +41,12 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.BuffEvents
             var desiredBuffName = GetSingleParameter();
             if (TryGetDesiredBuff(desiredBuffName, out var buffKey))
             {
-                Game1.player.applyBuff(buffKey);
+                var buff = new Buff(buffKey);
+                if (buff.millisecondsDuration < 1000 * 10)
+                {
+                    buff.millisecondsDuration *= 10;
+                }
+                Game1.player.applyBuff(buff);
             }
         }
 
@@ -82,6 +87,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.BuffEvents
             foreach (var (buffKey, buffData) in buffs)
             {
                 var parsedDisplay = TokenParser.ParseText(buffData.DisplayName);
+
                 var parsedDescription = TokenParser.ParseText(buffData.Description);
                 if (buffData.DisplayName.SanitizeEntityName().Equals(sanitizedBuffName, StringComparison.InvariantCultureIgnoreCase) ||
                     buffData.Description.SanitizeEntityName().Equals(sanitizedBuffName, StringComparison.InvariantCultureIgnoreCase) ||
@@ -93,6 +99,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.BuffEvents
                 }
             }
 
+            desiredBuff = "";
             return false;
         }
     }

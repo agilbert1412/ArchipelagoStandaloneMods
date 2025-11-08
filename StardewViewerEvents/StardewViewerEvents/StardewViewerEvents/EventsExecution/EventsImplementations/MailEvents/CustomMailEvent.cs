@@ -45,5 +45,10 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.MailEvents
             Game1.player.mailReceived.Add(mailKey);
             Game1.activeClickableMenu = new LetterViewerMenu(formattedContent, mailKey);
         }
+
+        protected override string AppendParameters(string message)
+        {
+            return message;
+        }
     }
 }

@@ -1,9 +1,12 @@
-﻿using StardewModdingAPI;
+﻿using Discord;
+using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Extensions;
 using StardewValley.GameData.MakeoverOutfits;
 using StardewValley.Objects;
 using StardewViewerEvents.Events;
+using StardewViewerEvents.Extensions;
+using Color = Microsoft.Xna.Framework.Color;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.PlayerEvents.PlayerCharacterEvents
 {
@@ -17,7 +20,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.PlayerEvents
         {
             chosenMakeoverOutfit = null;
             var random = Game1.random;
-            var makeoverOutfits = DataLoader.MakeoverOutfits(Game1.content);
+            var makeoverOutfits = DataLoader.MakeoverOutfits(Game1.content).ToList();
             if (makeoverOutfits == null)
             {
                 return false;
@@ -55,8 +58,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.PlayerEvents
             }
 
             chosenMakeoverOutfit = random.ChooseFrom(makeoverOutfits);
-            var daySaveRandom = Utility.CreateDaySaveRandom();
-            if (daySaveRandom.NextDouble() < 0.03)
+            if (random.NextDouble() < 0.03)
             {
                 chosenMakeoverOutfit = new MakeoverOutfit()
                 {
@@ -156,7 +158,9 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.PlayerEvents
             var pants = DataLoader.Pants(Game1.content);
             var pantKeys = pants.Keys.ToArray();
             var chosenPantKey = pantKeys[Game1.random.Next(pantKeys.Length)];
-            var chosenPant = ItemRegistry.Create<Clothing>($"(P){chosenPantKey}");
+            var pantsId = $"(P){chosenPantKey}";
+            _logger.LogDebug($"Equipping Pants: {pantsId}");
+            var chosenPant = ItemRegistry.Create<Clothing>(pantsId);
             Game1.player.Equip(chosenPant, Game1.player.pantsItem);
         }
 
@@ -165,7 +169,9 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.PlayerEvents
             var shirts = DataLoader.Shirts(Game1.content);
             var shirtKeys = shirts.Keys.ToArray();
             var chosenShirtKey = shirtKeys[Game1.random.Next(shirtKeys.Length)];
-            var chosenShirt = ItemRegistry.Create<Clothing>($"(S){chosenShirtKey}");
+            var shirtId = $"(S){chosenShirtKey}";
+            _logger.LogDebug($"Equipping Shirt: {shirtId}");
+            var chosenShirt = ItemRegistry.Create<Clothing>(shirtId);
             Game1.player.Equip(chosenShirt, Game1.player.shirtItem);
         }
 
@@ -174,7 +180,9 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.PlayerEvents
             var hairs = DataLoader.HairData(Game1.content);
             var hairKeys = hairs.Keys.ToArray();
             var chosenHairKey = hairKeys[Game1.random.Next(hairKeys.Length)];
+            _logger.LogDebug($"Equipping Hair: {chosenHairKey}");
             Game1.player.changeHairStyle(chosenHairKey);
+            Game1.player.changeHairColor(new Color(Game1.random.Next(256), Game1.random.Next(256), Game1.random.Next(256)));
         }
 
         public void RandomizeHat()
@@ -182,7 +190,9 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.PlayerEvents
             var hats = DataLoader.Hats(Game1.content);
             var hatKeys = hats.Keys.ToArray();
             var chosenHatKey = hatKeys[Game1.random.Next(hatKeys.Length)];
-            var chosenHat = ItemRegistry.Create<Hat>($"(H){chosenHatKey}");
+            var hatId = $"(H){chosenHatKey}";
+            _logger.LogDebug($"Equipping Hat: {hatId}");
+            var chosenHat = ItemRegistry.Create<Hat>(hatId);
             Game1.player.Equip(chosenHat, Game1.player.hat);
         }
     }

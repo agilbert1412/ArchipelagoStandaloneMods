@@ -62,10 +62,13 @@ namespace StardewViewerEvents.EventsExecution
                     return;
                 }
 
-                if (_activeEvents.Any(x => x.GetType() == executableEvent.GetType()) || !executableEvent.CanExecuteRightNow())
+                if (!executableEvent.CanBeSimultaneous)
                 {
-                    Queue.QueueEvent(eventToSend);
-                    return;
+                    if (_activeEvents.Any(x => x.GetType() == executableEvent.GetType()) || !executableEvent.CanExecuteRightNow())
+                    {
+                        Queue.QueueEvent(eventToSend);
+                        return;
+                    }
                 }
 
                 try

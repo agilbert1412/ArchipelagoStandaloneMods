@@ -15,6 +15,8 @@ namespace StardewViewerEvents.EventsExecution
         protected QueuedEvent QueuedEvent { get; }
         private ViewerEvent BaseEvent => QueuedEvent.BaseEvent;
 
+        public virtual bool CanBeSimultaneous => false;
+
         protected ExecutableEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent)
         {
             _logger = logger;
