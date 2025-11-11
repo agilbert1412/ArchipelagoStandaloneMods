@@ -1,4 +1,6 @@
-﻿using StardewModdingAPI;
+﻿using Discord;
+using Microsoft.Xna.Framework.Audio;
+using StardewModdingAPI;
 using StardewValley;
 using StardewViewerEvents.Events;
 using StardewViewerEvents.Extensions;
@@ -37,8 +39,15 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.SoundEvents
             {
                 await Task.Run(() => Thread.Sleep(2000));
                 var soundCue = GetSoundCue();
-                Game1.playSound(soundCue);
+                Game1.playSound(soundCue, out var cue);
+                StopSoundAsync(cue).FireAndForget();
             }
+        }
+
+        private async Task StopSoundAsync(ICue soundCue)
+        {
+            await Task.Run(() => Thread.Sleep(60 * 1000));
+            soundCue.Stop(AudioStopOptions.Immediate);
         }
     }
 }

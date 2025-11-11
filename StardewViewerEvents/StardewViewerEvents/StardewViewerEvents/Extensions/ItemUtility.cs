@@ -1,4 +1,5 @@
 ﻿using StardewValley;
+using StardewValley.GameData.Pants;
 
 namespace StardewViewerEvents.Extensions
 {
@@ -54,12 +55,32 @@ namespace StardewViewerEvents.Extensions
                 }
             }
 
-            var hats = DataLoader.Furniture(Game1.content);
+            var hats = DataLoader.Hats(Game1.content);
             foreach (var (id, data) in hats)
             {
                 if (data.Split("/").First().SanitizeEntityName() == desiredItem)
                 {
                     item = ItemRegistry.Create($"(H){id}");
+                    return true;
+                }
+            }
+
+            var pants = DataLoader.Pants(Game1.content);
+            foreach (var (id, data) in pants)
+            {
+                if (data.Name.SanitizeEntityName() == desiredItem)
+                {
+                    item = ItemRegistry.Create($"(P){id}");
+                    return true;
+                }
+            }
+
+            var shirts = DataLoader.Shirts(Game1.content);
+            foreach (var (id, data) in shirts)
+            {
+                if (data.Name.SanitizeEntityName() == desiredItem)
+                {
+                    item = ItemRegistry.Create($"(S){id}");
                     return true;
                 }
             }
