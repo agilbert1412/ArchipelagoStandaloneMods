@@ -85,6 +85,7 @@ namespace StardewViewerEvents.Events
                 printedQueue += (GetPrintableEvent(queuedEvent)) + Environment.NewLine;
             }
 
+            printedQueue += $"Number of queue events: {_eventQueue.Count}" + Environment.NewLine;
             return printedQueue;
         }
 
