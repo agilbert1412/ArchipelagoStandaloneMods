@@ -54,6 +54,8 @@ namespace MultiSleep
             _helper.WriteConfig(Config);
         }
 
+        //EventPriority needs to be super low. We need to run this after all other DayStarteds, because this one also might trigger a DayEnding and we want other mods to run in their expected order.
+        [EventPriority((EventPriority)((int)EventPriority.Low * 10))] 
         private void OnDayStarted(object sender, DayStartedEventArgs e)
         {
             if (MultiSleepManager.TryDoMultiSleepOnDayStarted())
