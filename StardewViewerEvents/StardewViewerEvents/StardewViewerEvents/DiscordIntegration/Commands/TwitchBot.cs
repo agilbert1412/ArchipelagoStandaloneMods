@@ -1,15 +1,9 @@
-﻿using HarmonyLib;
-using StardewModdingAPI;
-using StardewValley;
-using StardewValley.Network;
+﻿using StardewModdingAPI;
 using StardewViewerEvents.Credits;
 using StardewViewerEvents.EventsExecution;
 using StardewViewerEvents.Extensions;
-using System.Net.Sockets;
-using Microsoft.Xna.Framework;
 using TwitchLib.Client;
 using TwitchLib.Client.Events;
-using TwitchLib.Client.Extensions;
 using TwitchLib.Client.Models;
 using TwitchLib.Communication.Clients;
 using TwitchLib.Communication.Models;

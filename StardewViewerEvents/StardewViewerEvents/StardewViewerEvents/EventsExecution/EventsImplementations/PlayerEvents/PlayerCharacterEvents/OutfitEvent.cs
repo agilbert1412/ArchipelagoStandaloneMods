@@ -1,5 +1,4 @@
-﻿using Discord;
-using StardewModdingAPI;
+﻿using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Extensions;
 using StardewValley.GameData.MakeoverOutfits;

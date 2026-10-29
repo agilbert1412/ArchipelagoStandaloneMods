@@ -1,8 +1,6 @@
 ﻿using HarmonyLib;
-using Microsoft.Xna.Framework.Media;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
-using StardewValley;
 using StardewViewerEvents.DiscordIntegration;
 using StardewViewerEvents.EventsExecution;
 using StardewViewerEvents.Integrations.GenericModConfigMenu;

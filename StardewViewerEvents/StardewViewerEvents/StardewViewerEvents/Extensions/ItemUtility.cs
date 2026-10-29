@@ -1,5 +1,4 @@
 ﻿using StardewValley;
-using StardewValley.GameData.Pants;
 
 namespace StardewViewerEvents.Extensions
 {

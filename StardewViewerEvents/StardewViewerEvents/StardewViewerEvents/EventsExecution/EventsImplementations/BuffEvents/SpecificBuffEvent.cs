@@ -3,7 +3,6 @@ using StardewValley;
 using StardewValley.TokenizableStrings;
 using StardewViewerEvents.Events;
 using StardewViewerEvents.Extensions;
-using System;
 using StardewValley.GameData.Buffs;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.BuffEvents

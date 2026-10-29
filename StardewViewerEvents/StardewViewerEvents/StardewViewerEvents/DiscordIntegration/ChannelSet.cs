@@ -1,6 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using StardewViewerEvents.Events;
 using System.Text;
 
 namespace StardewViewerEvents.DiscordIntegration

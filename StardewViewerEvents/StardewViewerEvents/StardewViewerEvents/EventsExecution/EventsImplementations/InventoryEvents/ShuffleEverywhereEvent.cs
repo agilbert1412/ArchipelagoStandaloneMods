@@ -1,8 +1,4 @@
 ﻿using StardewModdingAPI;
-using StardewValley;
-using StardewValley.Inventories;
-using StardewValley.Network.ChestHit;
-using StardewValley.Objects;
 using StardewViewerEvents.Events;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.InventoryEvents
