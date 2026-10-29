@@ -1,5 +1,6 @@
 ﻿using Discord.WebSocket;
-using StardewViewerEvents.Credits;
+using ViewerEventsLibrary;
+using ViewerEventsLibrary.Credits;
 
 namespace StardewViewerEvents.DiscordIntegration.Commands
 {

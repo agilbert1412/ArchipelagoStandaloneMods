@@ -1,4 +1,6 @@
 ﻿using StardewViewerEvents.Events;
+using ViewerEventsLibrary;
+using ViewerEventsLibrary.DiscordIntegration;
 
 namespace StardewViewerEvents.DiscordIntegration
 {

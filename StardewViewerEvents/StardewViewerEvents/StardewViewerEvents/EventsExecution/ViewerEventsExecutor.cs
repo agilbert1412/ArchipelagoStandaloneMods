@@ -1,10 +1,12 @@
 ﻿using Discord.WebSocket;
 using StardewModdingAPI;
 using StardewValley;
-using StardewViewerEvents.Credits;
 using StardewViewerEvents.DiscordIntegration;
 using StardewViewerEvents.Events;
 using StardewViewerEvents.Extensions;
+using ViewerEventsLibrary;
+using ViewerEventsLibrary.Credits;
+using ViewerEventsLibrary.DiscordIntegration;
 
 namespace StardewViewerEvents.EventsExecution
 {

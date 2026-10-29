@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace StardewViewerEvents.Credits
+namespace ViewerEventsLibrary.Credits
 {
     public class CreditAccount
     {

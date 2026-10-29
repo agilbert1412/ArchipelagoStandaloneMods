@@ -1,7 +1,7 @@
 ﻿using Discord;
 using Discord.WebSocket;
 
-namespace StardewViewerEvents
+namespace ViewerEventsLibrary
 {
     public interface IBotCommunicator
     {

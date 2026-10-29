@@ -1,6 +1,7 @@
-﻿using StardewViewerEvents.Credits;
-using StardewViewerEvents.Events;
+﻿using StardewViewerEvents.Events;
 using StardewViewerEvents.EventsExecution;
+using ViewerEventsLibrary.Credits;
+using ViewerEventsLibrary.DiscordIntegration;
 
 namespace StardewViewerEvents.DiscordIntegration.Commands
 {

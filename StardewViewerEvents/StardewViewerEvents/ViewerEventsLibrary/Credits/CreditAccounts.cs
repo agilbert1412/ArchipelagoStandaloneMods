@@ -1,9 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Text;
-using StardewViewerEvents.DiscordIntegration;
+using ViewerEventsLibrary.DiscordIntegration;
 
-namespace StardewViewerEvents.Credits
+namespace ViewerEventsLibrary.Credits
 {
     public class CreditAccounts
     {

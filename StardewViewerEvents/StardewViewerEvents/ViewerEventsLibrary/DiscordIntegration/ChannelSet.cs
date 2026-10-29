@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
-using System.Text;
+﻿using System.Text;
+using Newtonsoft.Json;
 
-namespace StardewViewerEvents.DiscordIntegration
+namespace ViewerEventsLibrary.DiscordIntegration
 {
     public class ChannelSet
     {

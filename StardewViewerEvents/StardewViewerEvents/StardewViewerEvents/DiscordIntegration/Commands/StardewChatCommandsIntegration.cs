@@ -3,9 +3,10 @@ using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Menus;
 using Microsoft.Xna.Framework;
-using StardewViewerEvents.Credits;
 using StardewViewerEvents.EventsExecution;
 using StardewViewerEvents.Extensions;
+using ViewerEventsLibrary.Credits;
+using ViewerEventsLibrary.DiscordIntegration;
 
 namespace StardewViewerEvents.DiscordIntegration.Commands
 {

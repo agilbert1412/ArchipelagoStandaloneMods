@@ -1,10 +1,11 @@
 ﻿using HarmonyLib;
 using StardewModdingAPI;
-using StardewViewerEvents.Credits;
 using StardewViewerEvents.DiscordIntegration;
 using StardewViewerEvents.DiscordIntegration.Commands;
 using StardewViewerEvents.EventsExecution;
 using StardewViewerEvents.Extensions;
+using ViewerEventsLibrary;
+using ViewerEventsLibrary.Credits;
 
 namespace StardewViewerEvents
 {

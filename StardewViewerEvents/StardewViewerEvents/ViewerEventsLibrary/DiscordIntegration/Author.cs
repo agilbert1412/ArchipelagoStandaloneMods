@@ -1,4 +1,4 @@
-﻿namespace StardewViewerEvents.DiscordIntegration
+﻿namespace ViewerEventsLibrary.DiscordIntegration
 {
     public class Author
     {

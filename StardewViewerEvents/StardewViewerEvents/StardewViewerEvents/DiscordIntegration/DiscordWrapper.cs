@@ -3,6 +3,7 @@ using Discord.Commands;
 using Discord.WebSocket;
 using StardewModdingAPI;
 using StardewViewerEvents.Extensions;
+using ViewerEventsLibrary;
 using IMessage = Discord.IMessage;
 
 namespace StardewViewerEvents.DiscordIntegration

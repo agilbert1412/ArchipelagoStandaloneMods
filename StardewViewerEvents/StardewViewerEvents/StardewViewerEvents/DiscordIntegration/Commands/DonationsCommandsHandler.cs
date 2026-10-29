@@ -1,7 +1,9 @@
 ﻿using System.Text.RegularExpressions;
 using Discord;
 using Discord.WebSocket;
-using StardewViewerEvents.Credits;
+using ViewerEventsLibrary;
+using ViewerEventsLibrary.Credits;
+using ViewerEventsLibrary.DiscordIntegration;
 
 namespace StardewViewerEvents.DiscordIntegration.Commands
 {

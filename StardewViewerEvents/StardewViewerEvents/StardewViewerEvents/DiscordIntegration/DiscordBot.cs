@@ -1,9 +1,10 @@
 ﻿using Discord.WebSocket;
 using HarmonyLib;
 using StardewModdingAPI;
-using StardewViewerEvents.Credits;
 using StardewViewerEvents.DiscordIntegration.Commands;
 using StardewViewerEvents.EventsExecution;
+using ViewerEventsLibrary;
+using ViewerEventsLibrary.Credits;
 
 namespace StardewViewerEvents.DiscordIntegration
 {
