@@ -1,34 +1,35 @@
 ﻿using Discord.WebSocket;
 using StardewModdingAPI;
 using StardewValley;
-using StardewViewerEvents.DiscordIntegration;
 using StardewViewerEvents.Events;
-using StardewViewerEvents.Extensions;
 using ViewerEventsLibrary;
 using ViewerEventsLibrary.Credits;
 using ViewerEventsLibrary.DiscordIntegration;
+using ViewerEventsLibrary.Events;
+using ViewerEventsLibrary.Extensions;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution
 {
-    public class ViewerEventsExecutor
+    public class ViewerEventsExecutor : IEventsExecutor<QueuedEvent>
     {
-        private readonly IMonitor _logger;
+        private readonly IViewerEventsLogger _logger;
 
         public EventCollection Events { get; }
-        public EventQueue Queue { get; }
+        public IEventQueue<QueuedEvent> Queue { get; }
         private List<ExecutableEvent> _activeEvents;
 
-        public ViewerEventsExecutor(IMonitor logger)
+        public ViewerEventsExecutor(IViewerEventsLogger logger)
         {
             _logger = logger;
-            Events = new EventCollection();
+            Events = new EventCollection(new EventsGenerator());
             Queue = new EventQueue(logger);
             _activeEvents = new List<ExecutableEvent>();
 
             _logger.LogInfo(Events.Count + " is the total events count.");
         }
 
-        public async Task DequeueEvent(IMonitor logger, IModHelper modHelper, IBotCommunicator communications, CreditAccounts accounts, ChannelSet channels)
+        public async Task DequeueEvent(IViewerEventsLogger logger, IModHelper modHelper, IBotCommunicator communications, CreditAccounts accounts, ChannelSet channels)
         {
             if (Queue.IsEmpty || Queue.IsPaused())
             {

@@ -9,6 +9,7 @@ namespace ViewerEventsLibrary.Credits
         public string discordName;
         public ulong discordId;
         public int credits;
+        public int spentSoFar;
         public DateTime lastActivityTime;
         public string twitchlink;
 
@@ -22,6 +23,7 @@ namespace ViewerEventsLibrary.Credits
             discordName = data["discordName"].ToString();
             discordId = ulong.Parse(data["discordId"].ToString());
             credits = Int32.Parse(data["credits"].ToString());
+            credits = data.ContainsKey("spentSoFar") ? Int32.Parse(data["spentSoFar"].ToString()) : 0;
             lastActivityTime = data.ContainsKey("lastActivityTime") ? DateTime.Parse(data["lastActivityTime"].ToString()) : DateTime.Now;
             twitchlink = data["twitchlink"]?.ToString();
         }
@@ -29,6 +31,7 @@ namespace ViewerEventsLibrary.Credits
         public void Reset()
         {
             credits = CREDITS_STARTING_AMOUNT;
+            spentSoFar = 0;
         }
 
         public int GetCredits()
@@ -45,6 +48,12 @@ namespace ViewerEventsLibrary.Credits
         public void RemoveCredits(int amount)
         {
             SetCredits(credits - amount);
+        }
+
+        public void SpendCredits(int amount)
+        {
+            RemoveCredits(amount);
+            spentSoFar += amount;
         }
 
         public void SetCredits(int amount)

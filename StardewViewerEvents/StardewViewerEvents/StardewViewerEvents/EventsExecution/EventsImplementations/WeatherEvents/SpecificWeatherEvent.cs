@@ -1,12 +1,13 @@
 ﻿using StardewModdingAPI;
 using StardewViewerEvents.Events;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.WeatherEvents
 {
     public class SpecificWeatherEvent : WeatherEvent
     {
 
-        public SpecificWeatherEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public SpecificWeatherEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
         }
 

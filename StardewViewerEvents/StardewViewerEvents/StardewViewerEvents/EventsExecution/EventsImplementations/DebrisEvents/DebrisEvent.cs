@@ -1,5 +1,6 @@
 ﻿using StardewModdingAPI;
 using StardewViewerEvents.Events;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents
 {
@@ -7,7 +8,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents
     {
         protected DebrisSpawner _debrisSpawner;
 
-        public DebrisEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public DebrisEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
             _debrisSpawner = new DebrisSpawner();
         }

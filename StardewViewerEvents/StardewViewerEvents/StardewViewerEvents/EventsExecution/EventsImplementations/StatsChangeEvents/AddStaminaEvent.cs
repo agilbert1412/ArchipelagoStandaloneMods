@@ -1,6 +1,7 @@
 ﻿using StardewModdingAPI;
 using StardewValley;
 using StardewViewerEvents.Events;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.StatsChangeEvents
 {
@@ -8,7 +9,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.StatsChangeE
     {
         public const int AMOUNT_ADDED = RemoveStaminaEvent.AMOUNT_REMOVED;
 
-        public AddStaminaEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public AddStaminaEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
         }
 

@@ -2,6 +2,7 @@
 using StardewModdingAPI;
 using StardewValley;
 using StardewViewerEvents.Events;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.SoundEvents
 {
@@ -9,7 +10,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.SoundEvents
     {
         private string _soundCue;
 
-        public PlayRandomSoundEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public PlayRandomSoundEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
             _soundCue = null;
         }

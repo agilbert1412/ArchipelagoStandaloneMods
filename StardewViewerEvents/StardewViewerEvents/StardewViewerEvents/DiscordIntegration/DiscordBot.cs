@@ -1,10 +1,11 @@
 ﻿using Discord.WebSocket;
 using HarmonyLib;
-using StardewModdingAPI;
-using StardewViewerEvents.DiscordIntegration.Commands;
 using StardewViewerEvents.EventsExecution;
 using ViewerEventsLibrary;
 using ViewerEventsLibrary.Credits;
+using ViewerEventsLibrary.DiscordIntegration;
+using ViewerEventsLibrary.DiscordIntegration.Commands;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.DiscordIntegration
 {
@@ -13,7 +14,7 @@ namespace StardewViewerEvents.DiscordIntegration
         private IBotCommunicator _discord;
         private DiscordModule _discordModule;
 
-        public DiscordBot(IMonitor logger, Harmony harmony, ViewerEventsExecutor eventsExecutor, CreditAccounts creditAccounts, CommandReader commandReader, string path)
+        public DiscordBot(IViewerEventsLogger logger, Harmony harmony, ViewerEventsExecutor eventsExecutor, CreditAccounts creditAccounts, CommandReader commandReader, string path)
         {
             _discord = new DiscordWrapper(logger);
             _discordModule = new DiscordModule(logger, harmony, _discord, eventsExecutor, creditAccounts, commandReader, path);

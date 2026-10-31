@@ -1,18 +1,18 @@
-﻿using StardewViewerEvents.Events;
-using ViewerEventsLibrary;
-using ViewerEventsLibrary.DiscordIntegration;
+﻿using ViewerEventsLibrary.Events;
 
-namespace StardewViewerEvents.DiscordIntegration
+namespace ViewerEventsLibrary.DiscordIntegration
 {
     public class HelpProvider
     {
         private readonly IBotCommunicator _communications;
         private readonly ChannelSet _channels;
+        private readonly Dictionary<string, string[]> _categoryMap;
 
-        public HelpProvider(IBotCommunicator communications, ChannelSet channels)
+        public HelpProvider(IBotCommunicator communications, ChannelSet channels, Dictionary<string, string[]> categoryMap)
         {
             _communications = communications;
             _channels = channels;
+            _categoryMap = categoryMap;
         }
 
         public async Task SendAllHelpMessages(EventCollection events)
@@ -105,10 +105,10 @@ namespace StardewViewerEvents.DiscordIntegration
             }
         }
 
-        private static Dictionary<string, List<ViewerEvent>> GroupEventsByCategory(List<ViewerEvent> events)
+        private Dictionary<string, List<ViewerEvent>> GroupEventsByCategory(List<ViewerEvent> events)
         {
             var eventsByCategory = new Dictionary<string, List<ViewerEvent>>();
-            foreach (var (category, eventNames) in EventCategory.CATEGORY_MAP)
+            foreach (var (category, eventNames) in _categoryMap)
             {
                 eventsByCategory.Add(category, new List<ViewerEvent>());
                 foreach (var eventName in eventNames)
@@ -129,7 +129,7 @@ namespace StardewViewerEvents.DiscordIntegration
 
             if (events.Any())
             {
-                eventsByCategory.Add(EventCategory.OTHER, events.ToList());
+                eventsByCategory.Add(Constants.CATEGORY_OTHER, events.ToList());
             }
 
             return eventsByCategory;

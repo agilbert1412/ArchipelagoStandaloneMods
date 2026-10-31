@@ -1,19 +1,22 @@
-﻿using System.Collections;
-using System.Text;
+﻿using Discord.WebSocket;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using StardewModdingAPI;
-using StardewViewerEvents.Extensions;
+using System.Collections;
+using System.Text;
+using ViewerEventsLibrary;
+using ViewerEventsLibrary.Events;
+using ViewerEventsLibrary.Extensions;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.Events
 {
-    public class EventQueue : IEnumerable<QueuedEvent>
+    public class EventQueue : IEventQueue<QueuedEvent>
     {
-        private readonly IMonitor _logger;
+        private readonly IViewerEventsLogger _logger;
         public List<QueuedEvent> _eventQueue;
         private bool _globalPause;
 
-        public EventQueue(IMonitor logger)
+        public EventQueue(IViewerEventsLogger logger)
         {
             _logger = logger;
             _eventQueue = new List<QueuedEvent>();
@@ -47,6 +50,15 @@ namespace StardewViewerEvents.Events
         {
             var json = JsonConvert.SerializeObject(_eventQueue, Formatting.Indented);
             File.WriteAllText(eventsQueueFile, json);
+        }
+
+        public void PushAtBeginning(ViewerEvent forcedEvent, string[] parameters, SocketUserMessage message, int count)
+        {
+            var queuedForcedEvent = new QueuedEvent(forcedEvent, parameters);
+            queuedForcedEvent.queueCount = 1;
+            queuedForcedEvent.username = message.Author.GetDisplayName();
+            queuedForcedEvent.userId = message.Author.Id;
+            PushAtBeginning(queuedForcedEvent);
         }
 
         public void PushAtBeginning(QueuedEvent eventQueued)

@@ -1,11 +1,12 @@
 ﻿using StardewModdingAPI;
 using StardewViewerEvents.Events;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.SoundEvents
 {
     public class PlayMeowEvent : PlaySoundEvent
     {
-        public PlayMeowEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public PlayMeowEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
         }
 

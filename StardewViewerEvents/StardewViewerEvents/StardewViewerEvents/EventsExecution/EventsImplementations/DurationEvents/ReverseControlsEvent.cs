@@ -2,6 +2,7 @@
 using StardewModdingAPI;
 using StardewValley;
 using StardewViewerEvents.Events;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.DurationEvents
 {
@@ -16,7 +17,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.DurationEven
 
         private Options _originalBindings;
 
-        public ReverseControlsEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public ReverseControlsEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
         }
 

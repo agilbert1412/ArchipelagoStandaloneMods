@@ -1,5 +1,8 @@
-﻿using ViewerEventsLibrary;
+﻿using RealLifeViewerEvents.DiscordIntegration;
+using RealLifeViewerEvents.EventsExecution;
+using ViewerEventsLibrary;
 using ViewerEventsLibrary.Credits;
+using ViewerEventsLibrary.DiscordIntegration.Commands;
 
 namespace RealLifeViewerEvents
 {
@@ -7,6 +10,7 @@ namespace RealLifeViewerEvents
     {
         public static ViewerEventsService Instance;
 
+        private readonly RealLifeLogger _logger;
         private Config _config;
         private ViewerEventsExecutor _eventsExecutor;
         private DiscordBot _discordBot;
@@ -18,13 +22,14 @@ namespace RealLifeViewerEvents
         public IBotCommunicator DiscordCommunications => _discordBot.Communications;
         public bool IsInitialized { get; set; }
 
-        public ViewerEventsService(Config config, ViewerEventsExecutor eventsExecutor)
+        public ViewerEventsService(RealLifeLogger logger, Config config, ViewerEventsExecutor eventsExecutor)
         {
             if (Instance != null)
             {
                 throw new Exception($"Cannot initialize the service more than once");
             }
 
+            _logger = logger;
             _config = config;
             _eventsExecutor = eventsExecutor;
             _commandReader = new CommandReader();
@@ -56,7 +61,7 @@ namespace RealLifeViewerEvents
             try
             {
                 _logger.LogInfo($"Initializing Discord Integration...");
-                _discordBot = new DiscordBot(_logger, _harmony, _eventsExecutor, _creditAccounts, _commandReader, path);
+                _discordBot = new DiscordBot(_logger, _eventsExecutor, _creditAccounts, _commandReader, path);
                 await _discordBot.InitializeAsync(_config.DiscordToken);
 
                 _logger.LogInfo($"Discord Integration Initialized!");

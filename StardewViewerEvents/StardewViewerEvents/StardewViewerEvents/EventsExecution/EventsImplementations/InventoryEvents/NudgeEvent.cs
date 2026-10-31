@@ -3,6 +3,7 @@ using StardewValley;
 using StardewValley.Network.ChestHit;
 using StardewValley.Objects;
 using StardewViewerEvents.Events;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.InventoryEvents
 {
@@ -10,7 +11,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.InventoryEve
     {
         public const int NUMBER_NUDGES = 4;
 
-        public NudgeEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public NudgeEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
         }
 

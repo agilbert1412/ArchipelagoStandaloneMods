@@ -4,13 +4,14 @@ using StardewValley.Inventories;
 using StardewValley.Locations;
 using StardewValley.Objects;
 using StardewViewerEvents.Events;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.InventoryEvents
 {
     public class InventoryEvent : ExecutableEvent
     {
 
-        public InventoryEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public InventoryEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
         }
 

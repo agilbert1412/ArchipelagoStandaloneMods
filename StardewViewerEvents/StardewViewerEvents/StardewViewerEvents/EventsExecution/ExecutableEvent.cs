@@ -4,12 +4,15 @@ using StardewValley;
 using StardewViewerEvents.Events;
 using StardewViewerEvents.Events.Constants;
 using StardewViewerEvents.EventsExecution.EventsImplementations;
+using ViewerEventsLibrary.Events;
+using ViewerEventsLibrary.Events.Constants;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution
 {
     public abstract class ExecutableEvent
     {
-        protected readonly IMonitor _logger;
+        protected readonly IViewerEventsLogger _logger;
         protected readonly IModHelper _modHelper;
         protected static readonly TileChooser _tileChooser = new();
         protected QueuedEvent QueuedEvent { get; }
@@ -17,7 +20,7 @@ namespace StardewViewerEvents.EventsExecution
 
         public virtual bool CanBeSimultaneous => false;
 
-        protected ExecutableEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent)
+        protected ExecutableEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent)
         {
             _logger = logger;
             _modHelper = modHelper;

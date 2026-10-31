@@ -1,6 +1,7 @@
 ﻿using StardewModdingAPI;
 using StardewViewerEvents.Events;
 using StardewViewerEvents.Extensions;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents
 {
@@ -8,7 +9,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents
     {
         private string _itemId;
 
-        public GetSpecificItemEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public GetSpecificItemEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
             _itemId = null;
         }

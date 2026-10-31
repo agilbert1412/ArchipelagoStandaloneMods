@@ -5,6 +5,7 @@ using StardewValley.BellsAndWhistles;
 using StardewValley.Objects;
 using StardewValley.TerrainFeatures;
 using StardewViewerEvents.Events;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.CropEvents
 {
@@ -13,7 +14,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CropEvents
         public const int NUMBER_CROWS = 10;
         public const double SCARECROW_EFFICIENCY = 0.4;
 
-        public CrowEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public CrowEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
         }
 

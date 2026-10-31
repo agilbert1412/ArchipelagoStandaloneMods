@@ -1,12 +1,13 @@
 ﻿using StardewModdingAPI;
 using StardewValley;
 using StardewViewerEvents.Events;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents
 {
     public class ItemQualityDownEvent : InventoryItemEvent
     {
-        public ItemQualityDownEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public ItemQualityDownEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
         }
 

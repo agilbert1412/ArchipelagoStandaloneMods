@@ -1,5 +1,6 @@
 ﻿using StardewModdingAPI;
 using StardewViewerEvents.Events;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEvents
 {
@@ -7,7 +8,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
     {
         protected MonsterSpawner _monsterSpawner;
 
-        public SpawnMonsterEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public SpawnMonsterEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
             _monsterSpawner = new MonsterSpawner(_tileChooser);
         }

@@ -1,12 +1,13 @@
 ﻿using StardewModdingAPI;
 using StardewViewerEvents.Events;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.SoundEvents
 {
     public class PlaySpecificSoundEvent : PlaySoundEvent
     {
 
-        public PlaySpecificSoundEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public PlaySpecificSoundEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
         }
 

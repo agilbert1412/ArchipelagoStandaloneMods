@@ -1,12 +1,13 @@
 ﻿using StardewModdingAPI;
 using StardewValley;
 using StardewViewerEvents.Events;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents
 {
     public class ItemDropEvent : InventoryItemEvent
     {
-        public ItemDropEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public ItemDropEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
         }
 

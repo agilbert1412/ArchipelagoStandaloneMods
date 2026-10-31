@@ -1,4 +1,4 @@
-﻿namespace StardewViewerEvents.Extensions
+﻿namespace ViewerEventsLibrary.Extensions
 {
     public static class StringExtensions
     { 

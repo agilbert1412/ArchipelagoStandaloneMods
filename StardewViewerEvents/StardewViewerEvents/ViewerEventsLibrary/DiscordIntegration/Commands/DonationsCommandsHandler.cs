@@ -1,13 +1,11 @@
 ﻿using System.Text.RegularExpressions;
 using Discord;
 using Discord.WebSocket;
-using ViewerEventsLibrary;
 using ViewerEventsLibrary.Credits;
-using ViewerEventsLibrary.DiscordIntegration;
 
-namespace StardewViewerEvents.DiscordIntegration.Commands
+namespace ViewerEventsLibrary.DiscordIntegration.Commands
 {
-    internal class DonationsCommandsHandler
+    public class DonationsCommandsHandler
     {
         private readonly IBotCommunicator _communications;
         private readonly ChannelSet _channels;

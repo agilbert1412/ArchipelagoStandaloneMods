@@ -3,6 +3,7 @@ using StardewModdingAPI;
 using StardewValley;
 using StardewValley.TerrainFeatures;
 using StardewViewerEvents.Events;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.CropEvents
 {
@@ -11,7 +12,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CropEvents
         public const int NUMBER_CROPS = 10;
         public const int NUMBER_DAYS = 2;
 
-        public UngrowEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public UngrowEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
         }
 

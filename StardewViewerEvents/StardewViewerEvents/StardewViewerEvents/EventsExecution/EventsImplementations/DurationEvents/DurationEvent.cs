@@ -1,6 +1,7 @@
 ﻿using StardewModdingAPI;
 using StardewValley;
 using StardewViewerEvents.Events;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.DurationEvents
 {
@@ -13,7 +14,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.DurationEven
         protected abstract int TicksDuration { get; }
         protected abstract int SecondsDuration { get; }
 
-        protected DurationEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        protected DurationEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
         }
 

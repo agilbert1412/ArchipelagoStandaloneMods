@@ -1,19 +1,20 @@
 ﻿using Discord;
 using Discord.WebSocket;
 using HarmonyLib;
-using StardewModdingAPI;
 using StardewViewerEvents.DiscordIntegration.Commands;
+using StardewViewerEvents.Events;
 using StardewViewerEvents.EventsExecution;
-using StardewViewerEvents.Extensions;
 using ViewerEventsLibrary;
 using ViewerEventsLibrary.Credits;
 using ViewerEventsLibrary.DiscordIntegration;
+using ViewerEventsLibrary.DiscordIntegration.Commands;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.DiscordIntegration
 {
     internal class DiscordModule
     {
-        private readonly IMonitor _logger;
+        private readonly IViewerEventsLogger _logger;
         private readonly IBotCommunicator _communications;
         private readonly ViewerEventsExecutor _eventsExecutor;
         private readonly string _directory;
@@ -21,7 +22,7 @@ namespace StardewViewerEvents.DiscordIntegration
         public static readonly ChannelSet ActiveChannels = new();
 
         private readonly CreditsCommandsHandler _creditsCommandsHandler;
-        private readonly EventsCommandsHandler _eventsCommandsHandler;
+        private readonly EventsCommandsHandler<QueuedEvent> _eventsCommandsHandler;
         private readonly DonationsCommandsHandler _donationsCommandsHandler;
         private readonly CommandReader _commandReader;
         private readonly HelpProvider _helpProvider;
@@ -35,7 +36,7 @@ namespace StardewViewerEvents.DiscordIntegration
         public const string CREDITS_FILE = "Credits.json";
         public const string QUEUE_FILE = "Queue.json";
 
-        public DiscordModule(IMonitor logger, Harmony harmony, IBotCommunicator communications, ViewerEventsExecutor eventsExecutor, CreditAccounts creditAccounts, CommandReader commandReader, string path)
+        public DiscordModule(IViewerEventsLogger logger, Harmony harmony, IBotCommunicator communications, ViewerEventsExecutor eventsExecutor, CreditAccounts creditAccounts, CommandReader commandReader, string path)
         {
             _logger = logger;
             _communications = communications;
@@ -43,9 +44,9 @@ namespace StardewViewerEvents.DiscordIntegration
             _directory = path;
             _commandReader = commandReader;
 
-            _helpProvider = new HelpProvider(_communications, ActiveChannels);
+            _helpProvider = new HelpProvider(_communications, ActiveChannels, EventCategory.CATEGORY_MAP);
             _creditsCommandsHandler = new CreditsCommandsHandler(_communications, _commandReader);
-            _eventsCommandsHandler = new EventsCommandsHandler(_communications, _commandReader, _helpProvider);
+            _eventsCommandsHandler = new EventsCommandsHandler<QueuedEvent>(_communications, _commandReader, _helpProvider);
             _donationsCommandsHandler = new DonationsCommandsHandler(_communications, ActiveChannels);
             _accounts = creditAccounts;
             _stardewChat = new StardewChatCommandsIntegration(logger, harmony, _helpProvider, _accounts, eventsExecutor, _commandReader);

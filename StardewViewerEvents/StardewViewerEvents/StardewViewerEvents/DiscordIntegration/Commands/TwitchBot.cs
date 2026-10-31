@@ -1,12 +1,12 @@
-﻿using StardewModdingAPI;
-using StardewViewerEvents.EventsExecution;
-using StardewViewerEvents.Extensions;
+﻿using StardewViewerEvents.EventsExecution;
 using TwitchLib.Client;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Models;
 using TwitchLib.Communication.Clients;
 using TwitchLib.Communication.Models;
 using ViewerEventsLibrary.Credits;
+using ViewerEventsLibrary.DiscordIntegration.Commands;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.DiscordIntegration.Commands
 {
@@ -14,14 +14,14 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
     {
         private const string COMMAND_PREFIX = "!";
 
-        private IMonitor _logger;
+        private IViewerEventsLogger _logger;
         private static SimplifiedCommandsHandler _simplifiedCommandsHandler;
         private static CreditAccounts _accounts;
         private static ViewerEventsExecutor _eventsExecutor;
 
         TwitchClient client;
 
-        public TwitchBot(IMonitor logger, ModConfig config, CreditAccounts accounts, ViewerEventsExecutor eventsExecutor, CommandReader commandReader)
+        public TwitchBot(IViewerEventsLogger logger, ModConfig config, CreditAccounts accounts, ViewerEventsExecutor eventsExecutor, CommandReader commandReader)
         {
             _logger = logger;
             _accounts = accounts;

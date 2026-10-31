@@ -1,6 +1,7 @@
 ﻿using StardewModdingAPI;
 using StardewValley;
 using StardewViewerEvents.Events;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.StatsChangeEvents
 {
@@ -8,7 +9,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.StatsChangeE
     {
         public const int MINUTES_BACKWARDS = 10;
 
-        public TimeBackwardsEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public TimeBackwardsEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
         }
 

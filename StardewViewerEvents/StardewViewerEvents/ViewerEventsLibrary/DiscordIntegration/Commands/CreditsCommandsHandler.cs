@@ -1,10 +1,9 @@
 ﻿using Discord.WebSocket;
-using ViewerEventsLibrary;
 using ViewerEventsLibrary.Credits;
 
-namespace StardewViewerEvents.DiscordIntegration.Commands
+namespace ViewerEventsLibrary.DiscordIntegration.Commands
 {
-    internal class CreditsCommandsHandler
+    public class CreditsCommandsHandler
     {
         private readonly IBotCommunicator _communications;
         private readonly CommandReader _commandReader;

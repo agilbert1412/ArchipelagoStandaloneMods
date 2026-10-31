@@ -2,6 +2,7 @@
 using StardewValley;
 using StardewValley.TerrainFeatures;
 using StardewViewerEvents.Events;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents
 {
@@ -17,7 +18,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents
         private List<ResourceClump> _boulders;
         public override bool CanBeSimultaneous => true;
 
-        public BoulderEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public BoulderEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
             _boulders = new List<ResourceClump>();
         }

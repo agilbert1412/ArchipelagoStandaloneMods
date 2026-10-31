@@ -16,4 +16,8 @@
     <ProjectReference Include="..\ViewerEventsLibrary\ViewerEventsLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+
 </Project>

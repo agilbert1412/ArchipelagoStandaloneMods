@@ -1,12 +1,14 @@
 ﻿using HarmonyLib;
+using Microsoft.Xna.Framework;
 using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Menus;
-using Microsoft.Xna.Framework;
 using StardewViewerEvents.EventsExecution;
 using StardewViewerEvents.Extensions;
 using ViewerEventsLibrary.Credits;
 using ViewerEventsLibrary.DiscordIntegration;
+using ViewerEventsLibrary.DiscordIntegration.Commands;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.DiscordIntegration.Commands
 {
@@ -14,7 +16,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
     {
         public const string COMMAND_PREFIX = "|";
 
-        private static IMonitor _logger;
+        private static IViewerEventsLogger _logger;
         private static Harmony _harmony;
         private static HelpProvider _helpProvider;
         private static SimplifiedCommandsHandler _simplifiedCommandsHandler;
@@ -23,7 +25,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
 
         private static string _lastCommand;
 
-        public StardewChatCommandsIntegration(IMonitor logger, Harmony harmony, HelpProvider helpProvider,
+        public StardewChatCommandsIntegration(IViewerEventsLogger logger, Harmony harmony, HelpProvider helpProvider,
             CreditAccounts accounts, ViewerEventsExecutor eventsExecutor, CommandReader commandReader)
         {
             _logger = logger;

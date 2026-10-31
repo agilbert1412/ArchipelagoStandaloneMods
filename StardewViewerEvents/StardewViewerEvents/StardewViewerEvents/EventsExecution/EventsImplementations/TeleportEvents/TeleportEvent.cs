@@ -2,6 +2,7 @@
 using StardewModdingAPI;
 using StardewValley;
 using StardewViewerEvents.Events;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.TeleportEvents
 {
@@ -10,7 +11,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.TeleportEven
         private GameLocation _destinationMap;
         private Vector2 _destinationTile;
 
-        protected TeleportEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        protected TeleportEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
         }
 

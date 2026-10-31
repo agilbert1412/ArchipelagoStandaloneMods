@@ -1,6 +1,7 @@
 ﻿using StardewModdingAPI;
 using StardewValley;
 using StardewViewerEvents.Events;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.StatsChangeEvents
 {
@@ -8,7 +9,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.StatsChangeE
     {
         public const int AMOUNT_ADDED = RemoveMoneyEvent.AMOUNT_REMOVED;
 
-        public AddMoneyEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public AddMoneyEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
         }
 

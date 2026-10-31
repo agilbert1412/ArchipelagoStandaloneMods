@@ -1,5 +1,6 @@
 ﻿using StardewModdingAPI;
 using StardewViewerEvents.Events;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.InventoryEvents
 {
@@ -7,7 +8,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.InventoryEve
     {
         public const int NUMBER_SWAPS = 10;
 
-        public ShuffleEverywhereEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public ShuffleEverywhereEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
         }
 

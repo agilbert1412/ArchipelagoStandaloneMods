@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
 using StardewModdingAPI;
 using StardewViewerEvents.EventsExecution;
+using ViewerEventsLibrary.Events;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.Events
 {
@@ -32,12 +34,12 @@ namespace StardewViewerEvents.Events
 
         public ViewerEvent BaseEvent => _baseEvent;
 
-        public ExecutableEvent GetExecutableEvent(IMonitor logger, IModHelper modHelper)
+        public ExecutableEvent GetExecutableEvent(IViewerEventsLogger logger, IModHelper modHelper)
         {
-            return BaseEvent.GetExecutableEvent(logger, modHelper, this);
+            return new EventsFactory().GetExecutableEvent(logger, modHelper, this);
         }
 
-        public bool ValidateParameters(IMonitor logger, IModHelper modHelper, out string errorMessage)
+        public bool ValidateParameters(IViewerEventsLogger logger, IModHelper modHelper, out string errorMessage)
         {
             return GetExecutableEvent(logger, modHelper).ValidateParameters(out errorMessage);
         }

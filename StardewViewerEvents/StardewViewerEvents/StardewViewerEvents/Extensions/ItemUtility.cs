@@ -1,4 +1,5 @@
 ﻿using StardewValley;
+using ViewerEventsLibrary.Extensions;
 
 namespace StardewViewerEvents.Extensions
 {

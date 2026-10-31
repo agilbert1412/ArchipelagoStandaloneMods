@@ -1,12 +1,14 @@
 ﻿using System.Reflection;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
-using RealLifeViewerEvents.Extensions;
+using RealLifeViewerEvents.EventsExecution;
+using ViewerEventsLibrary.Extensions;
 
 namespace RealLifeViewerEvents
 {
     public class Program
     {
+        private RealLifeLogger _logger;
         private Config _config;
         private ViewerEventsService _viewerEventsService;
         private ViewerEventsExecutor _viewerEventsExecutor;
@@ -15,9 +17,10 @@ namespace RealLifeViewerEvents
         {
             try
             {
+                _logger = new RealLifeLogger();
                 _config = ReadConfig();
-                _viewerEventsExecutor = new ViewerEventsExecutor();
-                _viewerEventsService = new ViewerEventsService(_config, _viewerEventsExecutor);
+                _viewerEventsExecutor = new ViewerEventsExecutor(_logger);
+                _viewerEventsService = new ViewerEventsService(_logger, _config, _viewerEventsExecutor);
 
                 InitializePersistentData();
                 StartQueueProcessAsync().FireAndForget();

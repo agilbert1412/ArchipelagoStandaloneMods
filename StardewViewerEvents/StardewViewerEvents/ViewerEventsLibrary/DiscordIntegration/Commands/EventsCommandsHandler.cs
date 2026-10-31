@@ -1,14 +1,11 @@
 ﻿using Discord;
 using Discord.WebSocket;
-using StardewViewerEvents.Events;
-using StardewViewerEvents.EventsExecution;
-using StardewViewerEvents.Extensions;
-using ViewerEventsLibrary;
 using ViewerEventsLibrary.Credits;
+using ViewerEventsLibrary.Events;
 
-namespace StardewViewerEvents.DiscordIntegration.Commands
+namespace ViewerEventsLibrary.DiscordIntegration.Commands
 {
-    public class EventsCommandsHandler
+    public class EventsCommandsHandler<TQueuedEvent>
     {
         private readonly IBotCommunicator _communications;
         private readonly CommandReader _commandReader;
@@ -21,7 +18,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             _helpProvider = helpProvider;
         }
 
-        public void HandleEventsAdminCommands(SocketUserMessage message, string messageText, ViewerEventsExecutor eventExecutor)
+        public void HandleEventsAdminCommands(SocketUserMessage message, string messageText, IEventsExecutor<TQueuedEvent> eventExecutor)
         {
             HandleQueueEvent(message, messageText, eventExecutor);
             HandleTriggerEvent(message, messageText, eventExecutor);
@@ -31,7 +28,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             HandleTestAllEvents(message, messageText, eventExecutor);
         }
 
-        public async Task HandleEventsUserCommands(SocketUserMessage message, string messageText, CreditAccounts creditAccounts, ViewerEventsExecutor eventExecutor)
+        public async Task HandleEventsUserCommands(SocketUserMessage message, string messageText, CreditAccounts creditAccounts, IEventsExecutor<TQueuedEvent> eventExecutor)
         {
             HandleCommandBank(message, messageText, eventExecutor);
             await HandleCommandPurchase(message, messageText, creditAccounts, eventExecutor);
@@ -39,7 +36,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             HandleGetGlobalPriceMultiplier(message, messageText, eventExecutor);
         }
 
-        private void HandleQueueEvent(SocketUserMessage message, string messageText, ViewerEventsExecutor eventExecutor)
+        private void HandleQueueEvent(SocketUserMessage message, string messageText, IEventsExecutor<TQueuedEvent> eventExecutor)
         {
             if (!messageText.StartsWith("!queueevent ", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -65,7 +62,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             eventExecutor.Queue.PrintToConsole();
         }
 
-        private void HandleTriggerEvent(SocketUserMessage message, string messageText, ViewerEventsExecutor eventExecutor)
+        private void HandleTriggerEvent(SocketUserMessage message, string messageText, IEventsExecutor<TQueuedEvent> eventExecutor)
         {
             if (!messageText.StartsWith("!triggerevent ", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -90,18 +87,13 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             forcedEvent.name = eventName;
             forcedEvent.SetBank(1);
             forcedEvent.SetCost(1);
-            var queuedForcedEvent = new QueuedEvent(forcedEvent, args);
-
-            queuedForcedEvent.queueCount = 1;
-            queuedForcedEvent.username = message.Author.GetDisplayName();
-            queuedForcedEvent.userId = message.Author.Id;
-            eventExecutor.Queue.PushAtBeginning(queuedForcedEvent);
+            eventExecutor.Queue.PushAtBeginning(forcedEvent, args, message, 1);
             _communications.ReplyTo(message, $"Forced {forcedEvent.name} immediately.");
 
             eventExecutor.Queue.PrintToConsole();
         }
 
-        private void HandleSetBank(SocketUserMessage message, string messageText, ViewerEventsExecutor eventExecutor)
+        private void HandleSetBank(SocketUserMessage message, string messageText, IEventsExecutor<TQueuedEvent> eventExecutor)
         {
             if (!messageText.StartsWith("!setbank ", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -132,7 +124,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             }
         }
 
-        private void HandleSetGlobalPriceMultiplier(SocketUserMessage message, string messageText, ViewerEventsExecutor eventExecutor)
+        private void HandleSetGlobalPriceMultiplier(SocketUserMessage message, string messageText, IEventsExecutor<TQueuedEvent> eventExecutor)
         {
             if (!messageText.StartsWith("!setmultiplier ", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -151,7 +143,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             _helpProvider.SendAllEventsHelpMessages(eventExecutor.Events);
         }
 
-        private void HandleGlobalPause(SocketUserMessage message, string messageText, ViewerEventsExecutor eventExecutor)
+        private void HandleGlobalPause(SocketUserMessage message, string messageText, IEventsExecutor<TQueuedEvent> eventExecutor)
         {
             if (messageText.StartsWith("!pause", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -168,7 +160,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             }
         }
 
-        private void HandleTestAllEvents(SocketUserMessage message, string messageText, ViewerEventsExecutor eventExecutor)
+        private void HandleTestAllEvents(SocketUserMessage message, string messageText, IEventsExecutor<TQueuedEvent> eventExecutor)
         {
             if (!messageText.StartsWith("!testallevents", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -187,7 +179,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             eventExecutor.Queue.PrintToConsole();
         }
 
-        private void HandleGetGlobalPriceMultiplier(SocketUserMessage message, string messageText, ViewerEventsExecutor eventExecutor)
+        private void HandleGetGlobalPriceMultiplier(SocketUserMessage message, string messageText, IEventsExecutor<TQueuedEvent> eventExecutor)
         {
             if (!messageText.Equals("!prices"))
             {
@@ -197,7 +189,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             _communications.ReplyTo(message, $"The global event price is currently {eventExecutor.Events.CurrentMultiplier}");
         }
 
-        private void HandleCommandBank(SocketUserMessage message, string messageText, ViewerEventsExecutor eventExecutor)
+        private void HandleCommandBank(SocketUserMessage message, string messageText, IEventsExecutor<TQueuedEvent> eventExecutor)
         {
             if (!messageText.StartsWith("!bank ", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -213,7 +205,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             CheckEventBank(message, eventExecutor, eventName);
         }
 
-        private async Task HandleCommandPurchase(SocketUserMessage message, string messageText, CreditAccounts creditAccounts, ViewerEventsExecutor eventExecutor)
+        private async Task HandleCommandPurchase(SocketUserMessage message, string messageText, CreditAccounts creditAccounts, IEventsExecutor<TQueuedEvent> eventExecutor)
         {
             if (!messageText.StartsWith("!purchase ", StringComparison.InvariantCultureIgnoreCase) && !messageText.StartsWith("!buy ", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -241,7 +233,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             await PayForEvent(message, creditAccounts, eventExecutor, chosenEvent, costForNextStack, parameters);
         }
 
-        private async Task HandleCommandPay(SocketUserMessage message, string messageText, CreditAccounts creditAccounts, ViewerEventsExecutor eventExecutor)
+        private async Task HandleCommandPay(SocketUserMessage message, string messageText, CreditAccounts creditAccounts, IEventsExecutor<TQueuedEvent> eventExecutor)
         {
             if (!messageText.StartsWith("!pay ", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -266,7 +258,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             await PayForEvent(message, creditAccounts, eventExecutor, eventName, creditsToPay, args);
         }
 
-        private async Task PayForEvent(SocketUserMessage message, CreditAccounts creditAccounts, ViewerEventsExecutor eventExecutor, string eventName, int creditsToPay, string[] args)
+        private async Task PayForEvent(SocketUserMessage message, CreditAccounts creditAccounts, IEventsExecutor<TQueuedEvent> eventExecutor, string eventName, int creditsToPay, string[] args)
         {
             var chosenEvent = eventExecutor.Events.GetEvent(eventName);
             if (chosenEvent == null)
@@ -278,7 +270,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             await PayForEvent(message, creditAccounts, eventExecutor, chosenEvent, creditsToPay, args);
         }
 
-        private async Task PayForEvent(SocketUserMessage message, CreditAccounts creditAccounts, ViewerEventsExecutor eventExecutor, ViewerEvent chosenEvent, int creditsToPay, string[] args)
+        private async Task PayForEvent(SocketUserMessage message, CreditAccounts creditAccounts, IEventsExecutor<TQueuedEvent> eventExecutor, ViewerEvent chosenEvent, int creditsToPay, string[] args)
         {
             var userAccount = creditAccounts[message.Author.Id];
 
@@ -298,7 +290,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             }
 
             chosenEvent.AddToBank(creditsToPay);
-            userAccount.RemoveCredits(creditsToPay);
+            userAccount.SpendCredits(creditsToPay);
 
             var numberOfActivations = TriggerEventAsNeeded(message.Author, chosenEvent, eventExecutor, args);
 
@@ -316,7 +308,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             eventExecutor.Queue.PrintToConsole();
         }
 
-        private int TriggerEventAsNeeded(SocketUser sender, ViewerEvent chosenEvent, ViewerEventsExecutor eventExecutor, string[] args)
+        private int TriggerEventAsNeeded(SocketUser sender, ViewerEvent chosenEvent, IEventsExecutor<TQueuedEvent> eventExecutor, string[] args)
         {
             var numberOfActivations = 0;
             while (chosenEvent.GetBank() >= chosenEvent.GetMultiplierCost(eventExecutor.Events.CurrentMultiplier))
@@ -344,7 +336,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             w.WriteLine($"[{localDate}] {senderName} paid {payAmount} credits.");
         }
 
-        private void CheckEventBank(SocketUserMessage message, ViewerEventsExecutor eventExecutor, string eventName)
+        private void CheckEventBank(SocketUserMessage message, IEventsExecutor<TQueuedEvent> eventExecutor, string eventName)
         {
             var invokedEvent = eventExecutor.Events.GetEvent(eventName);
             if (invokedEvent == null)

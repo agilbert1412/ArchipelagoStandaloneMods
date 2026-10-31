@@ -2,15 +2,16 @@
 using Microsoft.Xna.Framework.Graphics;
 using StardewModdingAPI;
 using StardewValley;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEvents
 {
     internal class InvisibleCow : FarmAnimal
     {
-        private static IMonitor _logger;
+        private static IViewerEventsLogger _logger;
         private static IModHelper _helper;
 
-        public static void Initialize(IMonitor logger, IModHelper helper)
+        public static void Initialize(IViewerEventsLogger logger, IModHelper helper)
         {
             _logger = logger;
             _helper = helper;

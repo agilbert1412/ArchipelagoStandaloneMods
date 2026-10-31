@@ -4,6 +4,7 @@ using StardewValley.Objects;
 using StardewValley.TerrainFeatures;
 using StardewValley.Tools;
 using StardewViewerEvents.Events;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.CropEvents
 {
@@ -12,7 +13,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CropEvents
         public const int NUMBER_UNWATER = 20;
         public const int AMOUNT_REMOVED_FROM_CAN = 20;
 
-        public DroughtEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public DroughtEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
         }
 

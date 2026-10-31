@@ -3,12 +3,14 @@ using StardewModdingAPI;
 using StardewValley;
 using StardewViewerEvents.Events;
 using StardewViewerEvents.Extensions;
+using ViewerEventsLibrary.Extensions;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.SoundEvents
 {
     public abstract class PlaySoundEvent : ExecutableEvent
     {
-        protected PlaySoundEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        protected PlaySoundEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
         }
 

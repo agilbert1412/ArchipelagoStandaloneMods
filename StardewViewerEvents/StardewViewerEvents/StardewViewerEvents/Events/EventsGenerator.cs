@@ -5,10 +5,13 @@ using StardewViewerEvents.EventsExecution.EventsImplementations.DebrisEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.DurationEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.InventoryEvents;
 using StardewViewerEvents.EventsExecution.EventsImplementations.StatsChangeEvents;
+using ViewerEventsLibrary;
+using ViewerEventsLibrary.Events;
+using ViewerEventsLibrary.Events.Constants;
 
 namespace StardewViewerEvents.Events;
 
-public class EventsGenerator
+public class EventsGenerator : IEventsGenerator
 {
     public List<ViewerEvent> GenerateDefaultEvents()
     {

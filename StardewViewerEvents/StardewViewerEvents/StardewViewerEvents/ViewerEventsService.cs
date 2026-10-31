@@ -6,6 +6,8 @@ using StardewViewerEvents.EventsExecution;
 using StardewViewerEvents.Extensions;
 using ViewerEventsLibrary;
 using ViewerEventsLibrary.Credits;
+using ViewerEventsLibrary.DiscordIntegration.Commands;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents
 {
@@ -13,7 +15,7 @@ namespace StardewViewerEvents
     {
         public static ViewerEventsService Instance;
 
-        private IMonitor _logger;
+        private IViewerEventsLogger _logger;
         private Harmony _harmony;
         private ModConfig _config;
         private ViewerEventsExecutor _eventsExecutor;
@@ -26,7 +28,7 @@ namespace StardewViewerEvents
         public IBotCommunicator DiscordCommunications => _discordBot.Communications;
         public bool IsInitialized { get; set; }
 
-        public ViewerEventsService(IMonitor logger, Harmony harmony, ModConfig config, ViewerEventsExecutor eventsExecutor)
+        public ViewerEventsService(IViewerEventsLogger logger, Harmony harmony, ModConfig config, ViewerEventsExecutor eventsExecutor)
         {
             if (Instance != null)
             {

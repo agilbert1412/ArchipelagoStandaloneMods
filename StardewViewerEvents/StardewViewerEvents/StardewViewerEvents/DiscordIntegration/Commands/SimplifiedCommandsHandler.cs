@@ -1,7 +1,8 @@
-﻿using StardewViewerEvents.Events;
-using StardewViewerEvents.EventsExecution;
+﻿using StardewViewerEvents.EventsExecution;
 using ViewerEventsLibrary.Credits;
 using ViewerEventsLibrary.DiscordIntegration;
+using ViewerEventsLibrary.DiscordIntegration.Commands;
+using ViewerEventsLibrary.Events;
 
 namespace StardewViewerEvents.DiscordIntegration.Commands
 {
@@ -229,7 +230,7 @@ namespace StardewViewerEvents.DiscordIntegration.Commands
             }
 
             chosenEvent.AddToBank(creditsToPay);
-            userAccount.RemoveCredits(creditsToPay);
+            userAccount.SpendCredits(creditsToPay);
 
             var numberOfActivations = TriggerEventAsNeeded(sender, chosenEvent, eventExecutor, args);
 

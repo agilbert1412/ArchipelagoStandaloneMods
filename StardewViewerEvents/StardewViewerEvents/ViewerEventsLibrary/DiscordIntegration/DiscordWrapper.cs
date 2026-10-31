@@ -1,16 +1,14 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using StardewModdingAPI;
-using StardewViewerEvents.Extensions;
-using ViewerEventsLibrary;
-using IMessage = Discord.IMessage;
+using ViewerEventsLibrary.Extensions;
+using ViewerEventsLibrary.Logging;
 
-namespace StardewViewerEvents.DiscordIntegration
+namespace ViewerEventsLibrary.DiscordIntegration
 {
     public class DiscordWrapper : IBotCommunicator
     {
-        private readonly IMonitor _logger;
+        private readonly IViewerEventsLogger _logger;
         private DiscordSocketClient _client;
         private CommandService _commands;
         // private IServiceProvider _services;
@@ -44,7 +42,7 @@ namespace StardewViewerEvents.DiscordIntegration
 
         public ulong MyId => _client.CurrentUser.Id;
 
-        public DiscordWrapper(IMonitor logger)
+        public DiscordWrapper(IViewerEventsLogger logger)
         {
             _logger = logger;
         }

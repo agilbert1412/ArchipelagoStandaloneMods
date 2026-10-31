@@ -4,13 +4,15 @@ using StardewValley.TokenizableStrings;
 using StardewViewerEvents.Events;
 using StardewViewerEvents.Extensions;
 using StardewValley.GameData.Buffs;
+using ViewerEventsLibrary.Extensions;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.BuffEvents
 {
     public class SpecificBuffEvent : ExecutableEvent
     {
 
-        public SpecificBuffEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public SpecificBuffEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
         }
 

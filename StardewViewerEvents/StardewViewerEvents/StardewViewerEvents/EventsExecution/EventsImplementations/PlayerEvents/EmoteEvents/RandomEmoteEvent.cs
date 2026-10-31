@@ -1,6 +1,7 @@
 ﻿using StardewModdingAPI;
 using StardewValley;
 using StardewViewerEvents.Events;
+using ViewerEventsLibrary.Logging;
 using static StardewValley.Farmer;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.PlayerEvents.EmoteEvents
@@ -8,7 +9,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.PlayerEvents
     public class RandomEmoteEvent : EmoteEvent
     {
 
-        public RandomEmoteEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public RandomEmoteEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
         }
 

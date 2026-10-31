@@ -1,6 +1,8 @@
 ﻿using StardewModdingAPI;
 using StardewViewerEvents.Events;
 using StardewViewerEvents.Extensions;
+using ViewerEventsLibrary.Extensions;
+using ViewerEventsLibrary.Logging;
 using static StardewValley.Farmer;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.PlayerEvents.EmoteEvents
@@ -8,7 +10,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.PlayerEvents
     public class SpecificEmoteEvent : EmoteEvent
     {
 
-        public SpecificEmoteEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public SpecificEmoteEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
         }
 

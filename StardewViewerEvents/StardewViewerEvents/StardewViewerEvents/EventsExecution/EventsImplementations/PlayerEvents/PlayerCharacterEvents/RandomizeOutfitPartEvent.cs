@@ -1,5 +1,6 @@
 ﻿using StardewModdingAPI;
 using StardewViewerEvents.Events;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.PlayerEvents.PlayerCharacterEvents
 {
@@ -13,7 +14,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.PlayerEvents
         public static readonly string[] _validParts = new[] { HAIR, SHIRT, PANTS, HAT };
 
 
-        public RandomizeOutfitPartEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public RandomizeOutfitPartEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
         }
 

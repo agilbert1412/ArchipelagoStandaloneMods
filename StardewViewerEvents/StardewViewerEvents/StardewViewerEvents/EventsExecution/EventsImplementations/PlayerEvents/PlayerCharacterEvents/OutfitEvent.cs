@@ -4,14 +4,14 @@ using StardewValley.Extensions;
 using StardewValley.GameData.MakeoverOutfits;
 using StardewValley.Objects;
 using StardewViewerEvents.Events;
-using StardewViewerEvents.Extensions;
 using Color = Microsoft.Xna.Framework.Color;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.PlayerEvents.PlayerCharacterEvents
 {
     public abstract class OutfitEvent : ExecutableEvent
     {
-        protected OutfitEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        protected OutfitEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
         }
 

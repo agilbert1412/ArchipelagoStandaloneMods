@@ -5,15 +5,16 @@ using StardewValley.Characters;
 using StardewValley.Locations;
 using StardewValley.Pathfinding;
 using StardewViewerEvents.Extensions;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEvents
 {
     internal class TemporaryBaby : Child
     {
-        private static IMonitor _logger;
+        private static IViewerEventsLogger _logger;
         private static IModHelper _helper;
 
-        public static void Initialize(IMonitor logger, IModHelper helper)
+        public static void Initialize(IViewerEventsLogger logger, IModHelper helper)
         {
             _logger = logger;
             _helper = helper;

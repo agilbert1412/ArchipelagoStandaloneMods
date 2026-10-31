@@ -3,13 +3,14 @@ using StardewValley;
 using StardewValley.Objects;
 using StardewValley.TerrainFeatures;
 using StardewViewerEvents.Events;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.CropEvents
 {
     public class CropEvent : ExecutableEvent
     {
 
-        public CropEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public CropEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
         }
 

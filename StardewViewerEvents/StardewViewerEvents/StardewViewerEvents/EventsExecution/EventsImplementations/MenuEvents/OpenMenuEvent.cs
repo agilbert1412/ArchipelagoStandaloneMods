@@ -2,13 +2,14 @@
 using StardewValley;
 using StardewValley.Menus;
 using StardewViewerEvents.Events;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.MenuEvents
 {
     public class OpenMenuEvent : ExecutableEvent
     {
 
-        public OpenMenuEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public OpenMenuEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
         }
 

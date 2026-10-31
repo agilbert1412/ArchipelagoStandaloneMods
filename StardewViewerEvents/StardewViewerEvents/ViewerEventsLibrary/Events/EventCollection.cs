@@ -2,18 +2,18 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace StardewViewerEvents.Events
+namespace ViewerEventsLibrary.Events
 {
     public class EventCollection
     {
-        private EventsGenerator _eventsGenerator;
+        private IEventsGenerator _eventsGenerator;
         public Dictionary<string, ViewerEvent> _events;
 
         public double CurrentMultiplier { get; set; }
 
-        public EventCollection()
+        public EventCollection(IEventsGenerator eventsGenerator)
         {
-            _eventsGenerator = new EventsGenerator();
+            _eventsGenerator = eventsGenerator;
             _events = new Dictionary<string, ViewerEvent>();
             CurrentMultiplier = 1;
         }

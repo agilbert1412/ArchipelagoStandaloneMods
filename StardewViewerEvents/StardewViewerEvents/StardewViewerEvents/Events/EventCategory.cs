@@ -4,7 +4,6 @@ namespace StardewViewerEvents.Events
 {
     public static class EventCategory
     {
-        public const string OTHER = "Other Events";
         public const string TELEPORT = "Teleport Events";
         public const string ITEM = "Item Events";
         public const string SPAWN = "Spawning Events";

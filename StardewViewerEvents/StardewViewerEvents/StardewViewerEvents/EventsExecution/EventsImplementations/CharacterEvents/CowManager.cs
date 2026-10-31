@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using StardewModdingAPI;
 using StardewValley;
 using StardewViewerEvents.Extensions;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEvents
 {
@@ -10,10 +11,10 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
     {
         public const string INVISIBLE_COW_KEY = "InvisibleCow";
 
-        private static IMonitor _logger;
+        private static IViewerEventsLogger _logger;
         private static IModHelper _helper;
 
-        public static void Initialize(IMonitor logger, IModHelper helper)
+        public static void Initialize(IViewerEventsLogger logger, IModHelper helper)
         {
             _logger = logger;
             _helper = helper;

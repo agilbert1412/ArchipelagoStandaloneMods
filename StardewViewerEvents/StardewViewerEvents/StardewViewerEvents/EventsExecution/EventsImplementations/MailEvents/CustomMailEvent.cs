@@ -3,12 +3,14 @@ using StardewValley;
 using StardewValley.Menus;
 using StardewViewerEvents.Events;
 using StardewViewerEvents.Extensions;
+using ViewerEventsLibrary.Extensions;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.MailEvents
 {
     public class CustomMailEvent : ExecutableEvent
     {
-        public CustomMailEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public CustomMailEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
         }
 

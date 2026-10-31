@@ -1,4 +1,4 @@
-﻿namespace StardewViewerEvents.DiscordIntegration.Commands
+﻿namespace ViewerEventsLibrary.DiscordIntegration.Commands
 {
     public class CommandReader
     {

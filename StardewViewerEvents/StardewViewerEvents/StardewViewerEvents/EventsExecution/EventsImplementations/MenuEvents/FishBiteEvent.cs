@@ -4,6 +4,7 @@ using StardewValley;
 using StardewValley.Internal;
 using StardewValley.Tools;
 using StardewViewerEvents.Events;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.MenuEvents
 {
@@ -12,7 +13,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.MenuEvents
         public const int CATEGORY_FISH = -4;
         private Item _currentFish;
 
-        public FishBiteEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public FishBiteEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
             _currentFish = null;
         }

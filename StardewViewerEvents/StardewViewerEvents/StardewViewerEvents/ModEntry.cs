@@ -4,6 +4,7 @@ using StardewModdingAPI.Events;
 using StardewViewerEvents.DiscordIntegration;
 using StardewViewerEvents.EventsExecution;
 using StardewViewerEvents.Integrations.GenericModConfigMenu;
+using StardewViewerEvents.Logging;
 
 namespace StardewViewerEvents
 {
@@ -13,6 +14,7 @@ namespace StardewViewerEvents
         public ModConfig Config;
         private IModHelper _helper;
         private Harmony _harmony;
+        private StardewLogger _logger;
         private ViewerEventsService _viewerEventsService;
         private ViewerEventsExecutor _viewerEventsExecutor;
         private HarmonyPatcher _harmonyPatcher;
@@ -31,11 +33,12 @@ namespace StardewViewerEvents
         {
             _helper = helper;
             _harmony = new Harmony(ModManifest.UniqueID);
+            _logger = new StardewLogger(Monitor);
 
             Config = Helper.ReadConfig<ModConfig>();
 
-            _viewerEventsExecutor = new ViewerEventsExecutor(Monitor);
-            _viewerEventsService = new ViewerEventsService(Monitor, _harmony, Config, _viewerEventsExecutor);
+            _viewerEventsExecutor = new ViewerEventsExecutor(_logger);
+            _viewerEventsService = new ViewerEventsService(_logger, _harmony, Config, _viewerEventsExecutor);
 
             _helper.Events.GameLoop.GameLaunched += OnGameLaunched;
             _helper.Events.GameLoop.SaveCreating += OnSaveCreating;
@@ -45,7 +48,7 @@ namespace StardewViewerEvents
             _helper.Events.GameLoop.UpdateTicked += OnUpdateTicked;
 
             _harmonyPatcher = new HarmonyPatcher();
-            _harmonyPatcher.Initialize(Monitor, _helper, _harmony);
+            _harmonyPatcher.Initialize(_logger, _helper, _harmony);
         }
 
         private void OnGameLaunched(object sender, GameLaunchedEventArgs e)
@@ -92,7 +95,7 @@ namespace StardewViewerEvents
             var framesBetweenEvents = Config.EventsDelay * 60;
             if (framesBetweenEvents == 0 || e.IsMultipleOf(framesBetweenEvents))
             {
-                _viewerEventsExecutor.DequeueEvent(Monitor, Helper, _viewerEventsService.DiscordCommunications, _viewerEventsService.CreditAccounts, DiscordModule.ActiveChannels);
+                _viewerEventsExecutor.DequeueEvent(_logger, Helper, _viewerEventsService.DiscordCommunications, _viewerEventsService.CreditAccounts, DiscordModule.ActiveChannels);
             }
         }
 

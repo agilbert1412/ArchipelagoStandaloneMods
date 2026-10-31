@@ -3,12 +3,14 @@ using StardewModdingAPI;
 using StardewValley;
 using StardewViewerEvents.Events;
 using StardewViewerEvents.Extensions;
+using ViewerEventsLibrary.Extensions;
+using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.TeleportEvents
 {
     public class TeleportMapEvent : TeleportEvent
     {
-        public TeleportMapEvent(IMonitor logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public TeleportMapEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
         }
 

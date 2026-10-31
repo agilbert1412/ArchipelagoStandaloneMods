@@ -1,4 +1,4 @@
-﻿namespace StardewViewerEvents.Events.Constants
+﻿namespace ViewerEventsLibrary.Events.Constants
 {
     public static class Alignment
     {

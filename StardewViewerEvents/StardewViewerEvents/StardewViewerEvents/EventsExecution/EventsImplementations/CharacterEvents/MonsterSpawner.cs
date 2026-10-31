@@ -2,6 +2,7 @@
 using StardewValley;
 using StardewValley.Monsters;
 using StardewViewerEvents.Extensions;
+using ViewerEventsLibrary.Extensions;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEvents
 {
