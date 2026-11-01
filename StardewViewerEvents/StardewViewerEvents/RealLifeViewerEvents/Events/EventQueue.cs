@@ -1,6 +1,7 @@
 ﻿using Discord.WebSocket;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using RealLifeViewerEvents.EventsExecution;
 using System.Collections;
 using System.Text;
 using ViewerEventsLibrary;
@@ -13,12 +14,14 @@ namespace RealLifeViewerEvents.Events
     public class EventQueue : IEventQueue<QueuedEvent>
     {
         private readonly IViewerEventsLogger _logger;
+        private readonly SoundPlayer _soundPlayer;
         public List<QueuedEvent> _eventQueue;
         private bool _globalPause;
 
-        public EventQueue(IViewerEventsLogger logger)
+        public EventQueue(IViewerEventsLogger logger, SoundPlayer soundPlayer)
         {
             _logger = logger;
+            _soundPlayer = soundPlayer;
             _eventQueue = new List<QueuedEvent>();
             _globalPause = false;
         }
@@ -76,9 +79,41 @@ namespace RealLifeViewerEvents.Events
             _eventQueue.RemoveAt(0);
         }
 
+        public void Clear()
+        {
+            _eventQueue.Clear();
+        }
+
+        public void OnEventAdded()
+        {
+            _soundPlayer.PlayNewEventSound();
+            PrintNextEvent();
+            PrintNextEventCommand();
+        }
+
+        public void PrintNextEventCommand()
+        {
+            if (IsEmpty)
+            {
+                return;
+            }
+
+            Console.WriteLine($"Use '{ViewerEventsExecutor.GO_COMMAND}' or '{ViewerEventsExecutor.SKIP_COMMAND}'");
+        }
+
         public void PrintToConsole()
         {
             _logger.LogInfo($"Queue current has {_eventQueue.Count} Events:{Environment.NewLine}{GetPrintableQueue()}");
+        }
+
+        public void PrintNextEvent()
+        {
+            if (IsEmpty)
+            {
+                return;
+            }
+
+            _logger.LogInfo($"Event Available: {GetPrintableEvent(First)}");
         }
 
         private string GetDiscordMessage()
@@ -92,9 +127,10 @@ namespace RealLifeViewerEvents.Events
         private string GetPrintableQueue()
         {
             var printedQueue = "";
-            foreach (var queuedEvent in _eventQueue)
+            for (var i = 0; i < _eventQueue.Count; i++)
             {
-                printedQueue += (GetPrintableEvent(queuedEvent)) + Environment.NewLine;
+                var queuedEvent = _eventQueue[i];
+                printedQueue += $"\t[{i}]{GetPrintableEvent(queuedEvent)}{Environment.NewLine}";
             }
 
             return printedQueue;
@@ -103,6 +139,13 @@ namespace RealLifeViewerEvents.Events
         private string GetPrintableEvent(QueuedEvent eventToPrint)
         {
             var text = $"Event: {eventToPrint.baseEventName}";
+            if (eventToPrint.parameters != null && eventToPrint.parameters.Length > 0)
+            {
+                foreach (var parameter in eventToPrint.parameters)
+                {
+                    text += $" {parameter}";
+                }
+            }
             if (eventToPrint.queueCount > 1)
             {
                 text += $"\t (x{eventToPrint.queueCount})";

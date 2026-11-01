@@ -59,7 +59,7 @@ namespace ViewerEventsLibrary.DiscordIntegration.Commands
 
             eventExecutor.AddOrIncrementEventInQueue(message.Author, chosenEvent, args);
             _communications.ReplyTo(message, $"Queued up one instance of {chosenEvent.name}.");
-            eventExecutor.Queue.PrintToConsole();
+            eventExecutor.Queue.OnEventAdded();
         }
 
         private void HandleTriggerEvent(SocketUserMessage message, string messageText, IEventsExecutor<TQueuedEvent> eventExecutor)
@@ -90,7 +90,7 @@ namespace ViewerEventsLibrary.DiscordIntegration.Commands
             eventExecutor.Queue.PushAtBeginning(forcedEvent, args, message, 1);
             _communications.ReplyTo(message, $"Forced {forcedEvent.name} immediately.");
 
-            eventExecutor.Queue.PrintToConsole();
+            eventExecutor.Queue.OnEventAdded();
         }
 
         private void HandleSetBank(SocketUserMessage message, string messageText, IEventsExecutor<TQueuedEvent> eventExecutor)
@@ -176,7 +176,7 @@ namespace ViewerEventsLibrary.DiscordIntegration.Commands
             }
 
             _communications.ReplyTo(message, $"Queued up one instance of all {counter} available events.");
-            eventExecutor.Queue.PrintToConsole();
+            eventExecutor.Queue.OnEventAdded();
         }
 
         private void HandleGetGlobalPriceMultiplier(SocketUserMessage message, string messageText, IEventsExecutor<TQueuedEvent> eventExecutor)
@@ -305,7 +305,7 @@ namespace ViewerEventsLibrary.DiscordIntegration.Commands
                     $"Received {creditsToPay} credits from {message.Author.Username}.  {chosenEvent.name} is now at {chosenEvent.GetBank()}/{chosenEvent.GetMultiplierCost(eventExecutor.Events.CurrentMultiplier)}.");
             }
 
-            eventExecutor.Queue.PrintToConsole();
+            eventExecutor.Queue.OnEventAdded();
         }
 
         private int TriggerEventAsNeeded(SocketUser sender, ViewerEvent chosenEvent, IEventsExecutor<TQueuedEvent> eventExecutor, string[] args)

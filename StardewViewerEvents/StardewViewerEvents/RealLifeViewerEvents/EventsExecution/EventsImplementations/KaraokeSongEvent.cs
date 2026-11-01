@@ -5,67 +5,27 @@ using ViewerEventsLibrary.Logging;
 
 namespace RealLifeViewerEvents.EventsExecution.EventsImplementations
 {
-    public class KaraokeSongEvent : ExecutableEvent
+    public class KaraokeSongEvent : ManualEndEvent
     {
-        private bool _isStarted;
-        private bool _isDone;
 
         public KaraokeSongEvent(IViewerEventsLogger logger, QueuedEvent queuedEvent) : base(logger, queuedEvent)
         {
-            _isStarted = false;
-            _isDone = false;
-        }
-
-        public override bool CanExecuteRightNow()
-        {
-            return base.CanExecuteRightNow();
-        }
-
-        public override void Execute()
-        {
-            base.Execute();
-            _isStarted = true;
-            Console.WriteLine($"Type 'd' when done");
-        }
-
-        public override void ReceivedInput(string? input)
-        {
-            if (string.IsNullOrEmpty(input))
-            {
-                return;
-            }
-
-            if (input.ToLower().StartsWith("d"))
-            {
-                _isDone = true;
-            }
-        }
-
-        public override bool UpdateAndTryFinish(int deltaMilliseconds)
-        {
-            return _isDone;
         }
 
         public override bool ValidateParameters(out string errorMessage)
         {
             if (QueuedEvent.parameters == null || QueuedEvent.parameters.Length < 1)
             {
-                errorMessage = "You must specify a song from the list";
-                foreach (var song in KaraokeSongs.SONG_TITLES)
-                {
-                    errorMessage += $"{Environment.NewLine}\t - {song}";
-                }
+                errorMessage = "You must specify a song from the list:";
+                AddAllSongsToMessage(ref errorMessage);
                 return false;
             }
 
             var desiredSongName = GetSingleParameter();
-            if (!TryGetDesiredSong(desiredSongName, out var correctSongName))
+            if (!TryGetDesiredSong(desiredSongName, out var correctSong))
             {
                 errorMessage = $"Unrecognized song name [{desiredSongName}]. You must specify a song from the following list:";
-                foreach (var song in KaraokeSongs.SONG_TITLES)
-                {
-                    errorMessage += $"{Environment.NewLine}\t - {song}";
-                }
+                AddAllSongsToMessage(ref errorMessage);
                 return false;
             }
 
@@ -73,21 +33,30 @@ namespace RealLifeViewerEvents.EventsExecution.EventsImplementations
             return true;
         }
 
-        private bool TryGetDesiredSong(string desiredSongName, out string correctSongName)
+        private static void AddAllSongsToMessage(ref string errorMessage)
         {
-            correctSongName = string.Empty;
+            foreach (var song in KaraokeSongs.ALL_SONGS)
+            {
+                errorMessage += $"{Environment.NewLine}\t - {song.Title} ({song.Context})";
+            }
+        }
+
+        private bool TryGetDesiredSong(string desiredSongName, out KaraokeSong correctSong)
+        {
+            correctSong = null;
             if (string.IsNullOrEmpty(desiredSongName))
             {
                 return false;
             }
 
             var sanitizedDesiredSongName = desiredSongName.SanitizeName();
-            foreach (var song in KaraokeSongs.SONG_TITLES)
+            foreach (var song in KaraokeSongs.ALL_SONGS)
             {
-                var sanitizedTitle = song.SanitizeName();
-                if (sanitizedTitle == sanitizedDesiredSongName)
+                var sanitizedTitle = song.Title.SanitizeName();
+                var sanitizedTitleWithContext = $"{sanitizedTitle} ({song.Context.SanitizeName()})";
+                if (sanitizedTitle == sanitizedDesiredSongName || sanitizedTitleWithContext == sanitizedDesiredSongName)
                 {
-                    correctSongName = song;
+                    correctSong = song;
                     return true;
                 }
             }

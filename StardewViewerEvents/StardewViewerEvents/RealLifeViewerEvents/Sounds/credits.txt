@@ -1,0 +1,2 @@
+new_event: Zapsplat - Master of Dreams - Game sound, success, fast pops and chime, higher pitched
+event_done: Zapsplat - Master of Dreams - Game sound, success, fast pops and chime, lower pitched

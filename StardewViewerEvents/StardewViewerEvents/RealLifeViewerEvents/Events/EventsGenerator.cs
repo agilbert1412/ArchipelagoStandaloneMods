@@ -11,12 +11,31 @@ public class EventsGenerator : IEventsGenerator
     {
         var events = new List<ViewerEvent>
         {
-            CreateParameterUnstackableEvent(EventName.KARAOKE_SONG, Alignment.NEUTRAL, 10, "Make me sing a song"),
-            //CreateUnstackableEvent(EventName.TELEPORT_HOME, Alignment.NEUTRAL, 10, "Teleport home"),
-            //CreateParameterUnstackableEvent(EventName.TELEPORT_MAP, Alignment.NEUTRAL, 50, "Teleport to a specific map. Must use stardew internal map names"),
-            //CreateStackableEvent(EventName.ITEM_GET_RANDOM, Alignment.POSITIVE, 10, "Give a random item"),
-            //CreateParameterStackableEvent(EventName.ITEM_GET_SPECIFIC, Alignment.POSITIVE, 25, "Give a specific item. Can use either an item ID, a Qualified item ID, or an item name"),
-            //CreateUnqueueableEvent(EventName.ITEM_FILL_INVENTORY, Alignment.NEUTRAL, 50, "Fills inventory with random trash-tier items"),
+            CreateParameterUnstackableEvent(EventName.KARAOKE_SONG, Alignment.NEUTRAL, 500, "Make me sing a song. Warning: I sing VERY badly"),
+            CreateStackableEvent(EventName.OVEN_MITTS, Alignment.NEGATIVE, 100, "Wear Oven Mitts for 1 minute"),
+            CreateUnstackableEvent(EventName.DOGGO, Alignment.POSITIVE, 50, "Show the stream a good boy"),
+            CreateStackableEvent(EventName.PUSH_UPS, Alignment.NEGATIVE, 50, "Do one push-up"),
+            CreateStackableEvent(EventName.HORNET_MASK, Alignment.NEGATIVE, 50, "Wear a Hornet Mask for 1 minute"),
+            CreateStackableEvent(EventName.BLINDFOLD, Alignment.NEGATIVE, 200, "Wear a Blindfold for 30 seconds"),
+            CreateStackableEvent(EventName.SILENCE, Alignment.NEGATIVE, 50, "Lose all audio for 1 minute"),
+            CreateStackableEvent(EventName.MUTE, Alignment.NEGATIVE, 20, "Mute your Discord microphone for 1 minute (stream mic will still work)"),
+            CreateStackableEvent(EventName.NO_KEYBOARD, Alignment.NEGATIVE, 100, "Can't use keyboard for 1 minute"),
+            CreateStackableEvent(EventName.NO_MOUSE, Alignment.NEGATIVE, 50, "Can't use mouse for 1 minute"),
+            CreateStackableEvent(EventName.INVERT_HANDS, Alignment.NEGATIVE, 50, "Swap hands for mouse and keyboard for 1 minute"),
+            CreateStackableEvent(EventName.GAMING_RELAY, Alignment.NEUTRAL, 100, "Give control of the game to someone else for 1 minute"),
+            CreateUnstackableEvent(EventName.HYDRATE, Alignment.POSITIVE, 50, "Drink something"),
+            // CreateUnstackableEvent(EventName.SPLASH, Alignment.NEGATIVE, 1000, "Splash something on your head"),
+            CreateParameterStackableEvent(EventName.WORD_BAN, Alignment.NEUTRAL, 50, "Ban a word for 1 minute. Every time I say the word, you are refunded 1x the base cost of the event"),
+            // CreateStackableEvent(EventName.PIRATE_SPEAK, Alignment.NEUTRAL, 100, "Speak like a pirate for 1 minute"),
+            // CreateStackableEvent(EventName.NYAN_ACCENT, Alignment.NEUTRAL, 200, "Speak like a catgirl for 1 minute"),
+            CreateStackableEvent(EventName.OPTIMIST, Alignment.NEUTRAL, 50, "Be extremely positive and happy for 1 minute"),
+            CreateStackableEvent(EventName.PESSIMIST, Alignment.NEUTRAL, 50, "Be extremely negative and grumpy for 1 minute"),
+            CreateStackableEvent(EventName.HYPE, Alignment.NEUTRAL, 50, "Be extremely hype and energetic for 1 minute"),
+            CreateUnstackableEvent(EventName.REVERSE_SHIRT, Alignment.NEUTRAL, 100, "Reverse your shirt"),
+            CreateParameterUnstackableEvent(EventName.PICK_NEXT_GAME, Alignment.NEUTRAL, 1000, "Choose the next game I'll play. I'll try to switch relatively soon. Has to be a game I already own."),
+            /*
+             *
+             */
         };
 
         return events;

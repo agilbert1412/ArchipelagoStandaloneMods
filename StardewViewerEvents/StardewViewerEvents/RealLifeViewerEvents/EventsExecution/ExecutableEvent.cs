@@ -8,7 +8,7 @@ namespace RealLifeViewerEvents.EventsExecution
     {
         protected readonly IViewerEventsLogger _logger;
         protected QueuedEvent QueuedEvent { get; }
-        private ViewerEvent BaseEvent => QueuedEvent.BaseEvent;
+        public ViewerEvent BaseEvent => QueuedEvent.BaseEvent;
 
         public virtual bool CanBeSimultaneous => false;
 
@@ -56,13 +56,12 @@ namespace RealLifeViewerEvents.EventsExecution
         private void ShowEventInChat()
         {
             var message = GetChatMessage();
-
             Console.WriteLine(message);
         }
 
         protected virtual string GetChatMessage()
         {
-            var message = $"{QueuedEvent.username} sent {QueuedEvent.BaseEvent.name}";
+            var message = $"Executing event from {QueuedEvent.username}: {QueuedEvent.BaseEvent.name}";
 
             message = AppendParameters(message);
 
@@ -93,6 +92,15 @@ namespace RealLifeViewerEvents.EventsExecution
 
         public virtual void ReceivedInput(string? input)
         {
+        }
+
+        public virtual void PrintNextCommandHelp()
+        {
+        }
+
+        public virtual bool WillFinishThisFrame()
+        {
+            return false;
         }
     }
 }

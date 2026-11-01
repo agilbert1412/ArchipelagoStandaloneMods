@@ -12,11 +12,15 @@ namespace ViewerEventsLibrary
         bool IsPaused();
         void RemoveFirst();
         void PrintToConsole();
+        void PrintNextEvent();
         void QueueEvent(T eventToSend);
         void PushAtBeginning(ViewerEvent forcedEvent, string[] parameters, SocketUserMessage message, int count);
         void Pause();
         void Unpause();
         void ImportFrom(string combine, EventCollection eventsExecutorEvents);
         void ExportTo(string combine);
+        void Clear();
+        void OnEventAdded();
+        void PrintNextEventCommand();
     }
 }

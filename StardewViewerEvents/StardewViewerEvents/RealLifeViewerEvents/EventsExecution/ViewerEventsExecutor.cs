@@ -1,5 +1,7 @@
 ﻿using Discord.WebSocket;
+using RealLifeViewerEvents.DiscordIntegration;
 using RealLifeViewerEvents.Events;
+using RealLifeViewerEvents.Extensions;
 using ViewerEventsLibrary;
 using ViewerEventsLibrary.Credits;
 using ViewerEventsLibrary.DiscordIntegration;
@@ -11,7 +13,12 @@ namespace RealLifeViewerEvents.EventsExecution
 {
     public class ViewerEventsExecutor : IEventsExecutor<QueuedEvent>
     {
+
+        public const string GO_COMMAND = "go";
+        public const string SKIP_COMMAND = "skip";
+
         private readonly IViewerEventsLogger _logger;
+        private readonly SoundPlayer _soundPlayer;
         public EventCollection Events { get; }
         public IEventQueue<QueuedEvent> Queue { get; }
         private ExecutableEvent? _activeEvent;
@@ -19,8 +26,9 @@ namespace RealLifeViewerEvents.EventsExecution
         public ViewerEventsExecutor(IViewerEventsLogger logger)
         {
             _logger = logger;
+            _soundPlayer = new SoundPlayer(_logger);
             Events = new EventCollection(new EventsGenerator());
-            Queue = new EventQueue(logger);
+            Queue = new EventQueue(logger, _soundPlayer);
             _activeEvent = null;
 
             _logger.LogInfo(Events.Count + " is the total events count.");
@@ -36,9 +44,8 @@ namespace RealLifeViewerEvents.EventsExecution
             var eventToSend = Queue.First;
             var baseEvent = eventToSend.BaseEvent;
             var baseEventName = baseEvent.name;
-            _logger.LogInfo($"Attempting to dequeue {eventToSend.queueCount} instances of {baseEventName} triggered by {eventToSend.username}.");
+            _logger.LogInfo($"Executing {eventToSend.queueCount} instances of {baseEventName} triggered by {eventToSend.username}.");
             Queue.RemoveFirst();
-            Queue.PrintToConsole();
 
             SendSameTypeEventsToBackOfQueue(eventToSend);
 
@@ -180,13 +187,79 @@ namespace RealLifeViewerEvents.EventsExecution
 
             if (_activeEvent.UpdateAndTryFinish(deltaMilliseconds))
             {
+                _logger.LogInfo($"{_activeEvent.BaseEvent.name} is done!");
                 _activeEvent = null;
+                Queue.PrintToConsole();
+                Queue.PrintNextEvent();
+                Queue.PrintNextEventCommand();
+                _soundPlayer.PlayEventDoneSound();
             }
         }
 
-        public void ReceivedInput(string? input)
+        public void ReceivedInput(string? input, ViewerEventsService viewerEventsService)
         {
-            _activeEvent?.ReceivedInput(input);
+            if (_activeEvent == null)
+            {
+                var sanitizedInput = input.SanitizeName();
+                if (sanitizedInput == SKIP_COMMAND)
+                {
+                    SkipEvent();
+                    return;
+                }
+
+                if (sanitizedInput == GO_COMMAND)
+                {
+                    DequeueEvent(_logger, viewerEventsService.DiscordCommunications, viewerEventsService.CreditAccounts, DiscordModule.ActiveChannels);
+                    return;
+                }
+                return;
+            }
+
+            _activeEvent.ReceivedInput(input);
+        }
+
+        public void PrintNextCommandHelp()
+        {
+            if (_activeEvent == null)
+            {
+                Queue.PrintToConsole();
+                Queue.PrintNextEventCommand();
+                return;
+            }
+
+            if (!_activeEvent.WillFinishThisFrame())
+            {
+                _activeEvent.PrintNextCommandHelp();
+                return;
+            }
+        }
+
+        private void SkipEvent()
+        {
+            if (Queue.IsEmpty || Queue.Count < 2)
+            {
+                return;
+            }
+
+            var nextEvent = Queue.First;
+
+            if (Queue.All(x => x.baseEventName == nextEvent.baseEventName))
+            {
+                return;
+            }
+
+            var eventsToMove = Queue.Where(x => x.baseEventName == nextEvent.baseEventName).ToList();
+            var eventsToKeep = Queue.Where(x => x.baseEventName != nextEvent.baseEventName).ToList();
+
+            Queue.Clear();
+            foreach (var eventToAdd in eventsToKeep)
+            {
+                Queue.QueueEvent(eventToAdd);
+            }
+            foreach (var eventToAdd in eventsToMove)
+            {
+                Queue.QueueEvent(eventToAdd);
+            }
         }
     }
 }

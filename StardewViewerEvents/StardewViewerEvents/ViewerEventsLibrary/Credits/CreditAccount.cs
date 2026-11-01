@@ -23,7 +23,7 @@ namespace ViewerEventsLibrary.Credits
             discordName = data["discordName"].ToString();
             discordId = ulong.Parse(data["discordId"].ToString());
             credits = Int32.Parse(data["credits"].ToString());
-            credits = data.ContainsKey("spentSoFar") ? Int32.Parse(data["spentSoFar"].ToString()) : 0;
+            spentSoFar = data.ContainsKey("spentSoFar") ? Int32.Parse(data["spentSoFar"].ToString()) : 0;
             lastActivityTime = data.ContainsKey("lastActivityTime") ? DateTime.Parse(data["lastActivityTime"].ToString()) : DateTime.Now;
             twitchlink = data["twitchlink"]?.ToString();
         }

@@ -1,7 +1,4 @@
-﻿using System.Reflection;
-using System.Text.Json.Serialization;
-using Newtonsoft.Json;
-using RealLifeViewerEvents.DiscordIntegration;
+﻿using Newtonsoft.Json;
 using RealLifeViewerEvents.EventsExecution;
 using ViewerEventsLibrary.Extensions;
 
@@ -24,6 +21,7 @@ namespace RealLifeViewerEvents
                 _viewerEventsService = new ViewerEventsService(_logger, _config, _viewerEventsExecutor);
 
                 InitializePersistentData();
+                _viewerEventsExecutor.Queue.PrintToConsole();
                 StartQueueProcessAsync().FireAndForget();
                 StartInputProcessAsync().FireAndForget();
                 _viewerEventsExecutor.Queue.Unpause();
@@ -107,7 +105,6 @@ namespace RealLifeViewerEvents
             }
 
             _viewerEventsExecutor.Update(deltaMilliseconds);
-            _viewerEventsExecutor.DequeueEvent(_logger, _viewerEventsService.DiscordCommunications, _viewerEventsService.CreditAccounts, DiscordModule.ActiveChannels);
         }
 
         private static async Task StartInputProcessAsync()
@@ -118,7 +115,8 @@ namespace RealLifeViewerEvents
                 try
                 {
                     var input = Console.ReadLine();
-                    _viewerEventsExecutor.ReceivedInput(input);
+                    _viewerEventsExecutor.ReceivedInput(input, _viewerEventsService);
+                    _viewerEventsExecutor.PrintNextCommandHelp();
                 }
                 catch (Exception e)
                 {

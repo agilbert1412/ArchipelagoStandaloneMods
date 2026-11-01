@@ -106,6 +106,7 @@ namespace RealLifeViewerEvents.DiscordIntegration
                 return;
             }
 
+            creditAccounts.CreateBackup(5);
             await _donationsCommandsHandler.HandleEventsDonationCommands(message, _accounts);
         }
 

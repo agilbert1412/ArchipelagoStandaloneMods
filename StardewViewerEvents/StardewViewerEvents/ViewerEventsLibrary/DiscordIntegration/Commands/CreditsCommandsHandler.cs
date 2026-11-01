@@ -30,6 +30,7 @@ namespace ViewerEventsLibrary.DiscordIntegration.Commands
 
         public async Task HandleCreditsUserCommands(SocketUserMessage message, string messageText, CreditAccounts creditAccounts)
         {
+            creditAccounts.CreateBackup(5);
             HandleReadCredits(message, messageText, creditAccounts);
             await HandleTransferCredits(message, messageText, creditAccounts);
             await HandleShareCredits(message, messageText, creditAccounts);

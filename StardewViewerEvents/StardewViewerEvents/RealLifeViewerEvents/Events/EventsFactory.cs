@@ -13,6 +13,8 @@ namespace RealLifeViewerEvents.Events
             {
                 case EventName.KARAOKE_SONG:
                     return new KaraokeSongEvent(logger, queuedEvent);
+                case EventName.OVEN_MITTS:
+                    return new OvenMittsEvent(logger, queuedEvent);
             }
 
             throw new NotImplementedException($"No Executable event found for event '{queuedEvent.BaseEvent.name}'");

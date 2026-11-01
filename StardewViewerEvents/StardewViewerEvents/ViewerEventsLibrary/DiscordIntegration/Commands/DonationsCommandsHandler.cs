@@ -18,6 +18,7 @@ namespace ViewerEventsLibrary.DiscordIntegration.Commands
 
         public async Task HandleEventsDonationCommands(SocketUserMessage message, CreditAccounts accounts)
         {
+            accounts.CreateBackup(5);
             await HandleDonationCommand(message, accounts);
         }
 

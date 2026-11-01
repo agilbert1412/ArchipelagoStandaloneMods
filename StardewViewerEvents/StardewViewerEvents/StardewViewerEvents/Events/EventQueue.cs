@@ -52,6 +52,21 @@ namespace StardewViewerEvents.Events
             File.WriteAllText(eventsQueueFile, json);
         }
 
+        public void Clear()
+        {
+            _eventQueue.Clear();
+        }
+
+        public void OnEventAdded()
+        {
+            PrintToConsole();
+        }
+
+        public void PrintNextEventCommand()
+        {
+
+        }
+
         public void PushAtBeginning(ViewerEvent forcedEvent, string[] parameters, SocketUserMessage message, int count)
         {
             var queuedForcedEvent = new QueuedEvent(forcedEvent, parameters);
@@ -64,6 +79,16 @@ namespace StardewViewerEvents.Events
         public void PushAtBeginning(QueuedEvent eventQueued)
         {
             _eventQueue.Insert(0, eventQueued);
+        }
+
+        public void PrintNextEvent()
+        {
+            if (IsEmpty)
+            {
+                return;
+            }
+
+            _logger.LogInfo($"Event Available: {GetPrintableEvent(First)}");
         }
 
         public void QueueEvent(QueuedEvent eventQueued)
