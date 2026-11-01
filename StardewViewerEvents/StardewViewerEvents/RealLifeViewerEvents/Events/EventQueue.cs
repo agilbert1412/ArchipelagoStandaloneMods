@@ -78,12 +78,12 @@ namespace RealLifeViewerEvents.Events
 
         public void PrintToConsole()
         {
-            _logger.LogInfo($"Queue is currently:{Environment.NewLine}[{Environment.NewLine}{GetPrintableQueue()}{Environment.NewLine}]{Environment.NewLine}-------------------------------");
+            _logger.LogInfo($"Queue current has {_eventQueue.Count} Events:{Environment.NewLine}{GetPrintableQueue()}");
         }
 
         private string GetDiscordMessage()
         {
-            var message = "Queue is currently:\n```";
+            var message = $"Queue current has {_eventQueue.Count} Events:\n```";
             message += GetPrintableQueue();
             message += "\n```";
             return message;
@@ -97,14 +97,17 @@ namespace RealLifeViewerEvents.Events
                 printedQueue += (GetPrintableEvent(queuedEvent)) + Environment.NewLine;
             }
 
-            printedQueue += $"Number of queue events: {_eventQueue.Count}" + Environment.NewLine;
             return printedQueue;
         }
 
         private string GetPrintableEvent(QueuedEvent eventToPrint)
         {
-            return
-                $"Event: {eventToPrint.baseEventName} \t| Current Bank: {eventToPrint.BaseEvent.GetBank()} \t| Total Queue Count: {eventToPrint.queueCount}";
+            var text = $"Event: {eventToPrint.baseEventName}";
+            if (eventToPrint.queueCount > 1)
+            {
+                text += $"\t (x{eventToPrint.queueCount})";
+            }
+            return text;
         }
 
         public IEnumerator<QueuedEvent> GetEnumerator()

@@ -1,4 +1,5 @@
 ﻿using RealLifeViewerEvents.DiscordIntegration;
+using RealLifeViewerEvents.DiscordIntegration.Commands;
 using RealLifeViewerEvents.EventsExecution;
 using ViewerEventsLibrary;
 using ViewerEventsLibrary.Credits;

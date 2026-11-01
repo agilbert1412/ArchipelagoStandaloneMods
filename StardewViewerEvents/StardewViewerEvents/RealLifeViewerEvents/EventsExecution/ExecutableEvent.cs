@@ -1,16 +1,18 @@
 ﻿using RealLifeViewerEvents.Events;
 using ViewerEventsLibrary.Events;
+using ViewerEventsLibrary.Logging;
 
 namespace RealLifeViewerEvents.EventsExecution
 {
     public abstract class ExecutableEvent
     {
+        protected readonly IViewerEventsLogger _logger;
         protected QueuedEvent QueuedEvent { get; }
         private ViewerEvent BaseEvent => QueuedEvent.BaseEvent;
 
         public virtual bool CanBeSimultaneous => false;
 
-        protected ExecutableEvent(QueuedEvent queuedEvent)
+        protected ExecutableEvent(IViewerEventsLogger logger, QueuedEvent queuedEvent)
         {
             QueuedEvent = queuedEvent;
         }
@@ -46,7 +48,7 @@ namespace RealLifeViewerEvents.EventsExecution
         /// Update this active event on every frame
         /// </summary>
         /// <returns>true if the event should finish, false if the event continue being active</returns>
-        public virtual bool UpdateAndTryFinish()
+        public virtual bool UpdateAndTryFinish(int deltaMilliseconds)
         {
             return true;
         }
@@ -87,6 +89,10 @@ namespace RealLifeViewerEvents.EventsExecution
             }
 
             return message;
+        }
+
+        public virtual void ReceivedInput(string? input)
+        {
         }
     }
 }

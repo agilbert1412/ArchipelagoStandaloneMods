@@ -14,21 +14,21 @@ namespace RealLifeViewerEvents.EventsExecution
         private readonly IViewerEventsLogger _logger;
         public EventCollection Events { get; }
         public IEventQueue<QueuedEvent> Queue { get; }
-        private List<ExecutableEvent> _activeEvents;
+        private ExecutableEvent? _activeEvent;
 
         public ViewerEventsExecutor(IViewerEventsLogger logger)
         {
             _logger = logger;
             Events = new EventCollection(new EventsGenerator());
             Queue = new EventQueue(logger);
-            _activeEvents = new List<ExecutableEvent>();
+            _activeEvent = null;
 
             _logger.LogInfo(Events.Count + " is the total events count.");
         }
 
         public async Task DequeueEvent(IViewerEventsLogger logger, IBotCommunicator communications, CreditAccounts accounts, ChannelSet channels)
         {
-            if (Queue.IsEmpty || Queue.IsPaused())
+            if (Queue.IsEmpty || Queue.IsPaused() || _activeEvent != null)
             {
                 return;
             }
@@ -36,8 +36,7 @@ namespace RealLifeViewerEvents.EventsExecution
             var eventToSend = Queue.First;
             var baseEvent = eventToSend.BaseEvent;
             var baseEventName = baseEvent.name;
-            _logger.LogInfo(
-                $"Attempting to dequeue {eventToSend.queueCount} instances of {baseEventName} triggered by {eventToSend.username}.");
+            _logger.LogInfo($"Attempting to dequeue {eventToSend.queueCount} instances of {baseEventName} triggered by {eventToSend.username}.");
             Queue.RemoveFirst();
             Queue.PrintToConsole();
 
@@ -45,7 +44,7 @@ namespace RealLifeViewerEvents.EventsExecution
 
             try
             {
-                var executableEvent = eventToSend.GetExecutableEvent();
+                var executableEvent = eventToSend.GetExecutableEvent(logger);
 
                 if (!executableEvent.ValidateParameters(out var errorMessage))
                 {
@@ -57,19 +56,10 @@ namespace RealLifeViewerEvents.EventsExecution
                     return;
                 }
 
-                if (!executableEvent.CanBeSimultaneous)
-                {
-                    if (_activeEvents.Any(x => x.GetType() == executableEvent.GetType()) || !executableEvent.CanExecuteRightNow())
-                    {
-                        Queue.QueueEvent(eventToSend);
-                        return;
-                    }
-                }
-
                 try
                 {
                     executableEvent.Execute();
-                    _activeEvents.Add(executableEvent);
+                    _activeEvent = executableEvent;
                 }
                 catch (Exception ex)
                 {
@@ -183,14 +173,20 @@ namespace RealLifeViewerEvents.EventsExecution
 
         public void Update(int deltaMilliseconds)
         {
-            for (var i = _activeEvents.Count - 1; i >= 0; i--)
+            if (_activeEvent == null)
             {
-                var activeEvent = _activeEvents[i];
-                if (activeEvent.UpdateAndTryFinish())
-                {
-                    _activeEvents.RemoveAt(i);
-                }
+                return;
             }
+
+            if (_activeEvent.UpdateAndTryFinish(deltaMilliseconds))
+            {
+                _activeEvent = null;
+            }
+        }
+
+        public void ReceivedInput(string? input)
+        {
+            _activeEvent?.ReceivedInput(input);
         }
     }
 }

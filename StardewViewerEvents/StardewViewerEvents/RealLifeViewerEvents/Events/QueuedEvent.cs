@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using RealLifeViewerEvents.EventsExecution;
 using ViewerEventsLibrary.Events;
+using ViewerEventsLibrary.Logging;
 
 namespace RealLifeViewerEvents.Events
 {
@@ -32,14 +33,14 @@ namespace RealLifeViewerEvents.Events
 
         public ViewerEvent BaseEvent => _baseEvent;
 
-        public ExecutableEvent GetExecutableEvent()
+        public ExecutableEvent GetExecutableEvent(IViewerEventsLogger logger)
         {
-            return new EventsFactory().GetExecutableEvent(this);
+            return new EventsFactory().GetExecutableEvent(logger, this);
         }
 
-        public bool ValidateParameters(out string errorMessage)
+        public bool ValidateParameters(IViewerEventsLogger logger, out string errorMessage)
         {
-            return GetExecutableEvent().ValidateParameters(out errorMessage);
+            return GetExecutableEvent(logger).ValidateParameters(out errorMessage);
         }
     }
 }
