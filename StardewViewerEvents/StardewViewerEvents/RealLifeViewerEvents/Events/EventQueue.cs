@@ -55,9 +55,9 @@ namespace RealLifeViewerEvents.Events
             File.WriteAllText(eventsQueueFile, json);
         }
 
-        public void PushAtBeginning(ViewerEvent forcedEvent, string[] parameters, SocketUserMessage message, int count)
+        public void PushAtBeginning(ViewerEvent forcedEvent, string[] parameters, SocketUserMessage message, int count, double currentPriceMultiplier)
         {
-            var queuedForcedEvent = new QueuedEvent(forcedEvent, parameters);
+            var queuedForcedEvent = new QueuedEvent(forcedEvent, parameters, currentPriceMultiplier);
             queuedForcedEvent.queueCount = 1;
             queuedForcedEvent.username = message.Author.GetDisplayName();
             queuedForcedEvent.userId = message.Author.Id;

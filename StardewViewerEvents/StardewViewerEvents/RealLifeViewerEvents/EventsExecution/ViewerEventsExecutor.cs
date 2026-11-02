@@ -162,7 +162,7 @@ namespace RealLifeViewerEvents.EventsExecution
 
         public QueuedEvent CreateQueuedEvent(SocketUser sender, ViewerEvent chosenEvent, string[] args)
         {
-            var invokedEvent = new QueuedEvent(chosenEvent, args);
+            var invokedEvent = new QueuedEvent(chosenEvent, args, Events.CurrentMultiplier);
             invokedEvent.username = sender.GetDisplayName();
             invokedEvent.userId = sender.Id;
             invokedEvent.queueCount = 1;
@@ -171,7 +171,7 @@ namespace RealLifeViewerEvents.EventsExecution
 
         public QueuedEvent CreateQueuedEvent(Author sender, ViewerEvent chosenEvent, string[] args)
         {
-            var invokedEvent = new QueuedEvent(chosenEvent, args);
+            var invokedEvent = new QueuedEvent(chosenEvent, args, Events.CurrentMultiplier);
             invokedEvent.username = sender.DisplayName;
             invokedEvent.userId = sender.Id;
             invokedEvent.queueCount = 1;

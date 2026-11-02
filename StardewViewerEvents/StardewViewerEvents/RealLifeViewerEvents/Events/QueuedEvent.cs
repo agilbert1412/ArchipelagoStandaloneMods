@@ -13,12 +13,14 @@ namespace RealLifeViewerEvents.Events
         public string username; //who triggered it
         public ulong userId; //who triggered it
         public string[] parameters;
+        public double currentMultiplier;
 
-        public QueuedEvent(ViewerEvent e, string[] args)
+        public QueuedEvent(ViewerEvent e, string[] args, double eventsCurrentMultiplier)
         {
             _baseEvent = e;
             baseEventName = e.name;
             parameters = args;
+            currentMultiplier = eventsCurrentMultiplier;
         }
 
         public QueuedEvent(JObject data, EventCollection allEvents)
@@ -29,6 +31,7 @@ namespace RealLifeViewerEvents.Events
             userId = ulong.Parse(data["userId"].ToString());
             parameters = data["parameters"].ToObject<string[]>();
             _baseEvent = allEvents.GetEvent(baseEventName);
+            currentMultiplier = data.ContainsKey("currentMultiplier") ? double.Parse(data["currentMultiplier"].ToString()) : allEvents.CurrentMultiplier;
         }
 
         public ViewerEvent BaseEvent => _baseEvent;

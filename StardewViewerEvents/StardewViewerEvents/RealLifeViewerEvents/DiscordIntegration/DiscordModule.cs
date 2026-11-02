@@ -109,7 +109,7 @@ namespace RealLifeViewerEvents.DiscordIntegration
             await _donationsCommandsHandler.HandleEventsDonationCommands(message, _accounts);
         }
 
-        private void ExportData()
+        internal void ExportData()
         {
             ExportChannels();
             ExportEvents();

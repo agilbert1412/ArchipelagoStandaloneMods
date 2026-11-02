@@ -13,7 +13,7 @@
         public const string NO_KEYBOARD = "pointandclick";
         public const string NO_MOUSE = "hotkeysonly";
         public const string INVERT_HANDS = "mirrorhands";
-        public const string GAMING_RELAY = "callafriend";
+        public const string CALL_A_FRIEND = "callafriend";
         public const string HYDRATE = "drinkup";
         public const string SPLASH = "splash";
         public const string WORD_BAN = "dangerword";

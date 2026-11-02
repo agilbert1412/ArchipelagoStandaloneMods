@@ -46,5 +46,10 @@ namespace RealLifeViewerEvents.DiscordIntegration
 
             await _discordModule.ExecuteViewerCommand(msg);
         }
+
+        public void ExportData()
+        {
+            _discordModule.ExportData();
+        }
     }
 }

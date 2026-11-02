@@ -87,7 +87,7 @@ namespace ViewerEventsLibrary.DiscordIntegration.Commands
             forcedEvent.name = eventName;
             forcedEvent.SetBank(1);
             forcedEvent.SetCost(1);
-            eventExecutor.Queue.PushAtBeginning(forcedEvent, args, message, 1);
+            eventExecutor.Queue.PushAtBeginning(forcedEvent, args, message, 1, eventExecutor.Events.CurrentMultiplier);
             _communications.ReplyTo(message, $"Forced {forcedEvent.name} immediately.");
 
             eventExecutor.Queue.OnEventAdded();

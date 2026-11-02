@@ -117,6 +117,7 @@ namespace RealLifeViewerEvents
                     var input = Console.ReadLine();
                     _viewerEventsExecutor.ReceivedInput(input, _viewerEventsService);
                     _viewerEventsExecutor.PrintNextCommandHelp();
+                    _viewerEventsService.ExportData();
                 }
                 catch (Exception e)
                 {

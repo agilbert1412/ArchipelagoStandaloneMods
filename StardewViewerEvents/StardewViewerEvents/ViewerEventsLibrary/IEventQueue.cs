@@ -14,7 +14,7 @@ namespace ViewerEventsLibrary
         void PrintToConsole();
         void PrintNextEvent();
         void QueueEvent(T eventToSend);
-        void PushAtBeginning(ViewerEvent forcedEvent, string[] parameters, SocketUserMessage message, int count);
+        void PushAtBeginning(ViewerEvent forcedEvent, string[] parameters, SocketUserMessage message, int count, double currentPriceMultiplier);
         void Pause();
         void Unpause();
         void ImportFrom(string combine, EventCollection eventsExecutorEvents);

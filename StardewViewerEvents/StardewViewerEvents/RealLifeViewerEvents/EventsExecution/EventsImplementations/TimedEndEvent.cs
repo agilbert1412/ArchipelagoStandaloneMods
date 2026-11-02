@@ -83,7 +83,7 @@ namespace RealLifeViewerEvents.EventsExecution.EventsImplementations
             if (remainingSeconds > 0)
             {
                 var secondsSinceLastUpdate = (DateTime.Now - _lastPrinted).TotalSeconds;
-                if (secondsSinceLastUpdate > 15 || Math.Round(secondsSinceLastUpdate) % 10 == 0)
+                if (secondsSinceLastUpdate > 15 || Math.Round(remainingSeconds) % 10 == 0)
                 {
                     PrintRemainingTime();
                 }

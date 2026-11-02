@@ -92,5 +92,10 @@ namespace RealLifeViewerEvents
                 _logger.LogError($"Could not initialize Twitch Integration.", e);
             }
         }
+
+        public void ExportData()
+        {
+            _discordBot.ExportData();
+        }
     }
 }

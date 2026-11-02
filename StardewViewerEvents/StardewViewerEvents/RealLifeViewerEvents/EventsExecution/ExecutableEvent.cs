@@ -14,6 +14,7 @@ namespace RealLifeViewerEvents.EventsExecution
 
         protected ExecutableEvent(IViewerEventsLogger logger, QueuedEvent queuedEvent)
         {
+            _logger = logger;
             QueuedEvent = queuedEvent;
         }
 

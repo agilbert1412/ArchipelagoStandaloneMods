@@ -67,7 +67,7 @@ namespace StardewViewerEvents.Events
 
         }
 
-        public void PushAtBeginning(ViewerEvent forcedEvent, string[] parameters, SocketUserMessage message, int count)
+        public void PushAtBeginning(ViewerEvent forcedEvent, string[] parameters, SocketUserMessage message, int count, double currentPriceMultiplier)
         {
             var queuedForcedEvent = new QueuedEvent(forcedEvent, parameters);
             queuedForcedEvent.queueCount = 1;
