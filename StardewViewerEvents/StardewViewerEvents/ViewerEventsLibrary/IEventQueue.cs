@@ -12,7 +12,6 @@ namespace ViewerEventsLibrary
         bool IsPaused();
         void RemoveFirst();
         void PrintToConsole();
-        void PrintNextEvent();
         void QueueEvent(T eventToSend);
         void PushAtBeginning(ViewerEvent forcedEvent, string[] parameters, SocketUserMessage message, int count, double currentPriceMultiplier);
         void Pause();
@@ -21,6 +20,8 @@ namespace ViewerEventsLibrary
         void ExportTo(string combine);
         void Clear();
         void OnEventAdded();
+        void PrintNextEvent();
         void PrintNextEventCommand();
+        void PrintNextEventAndCommand();
     }
 }

@@ -62,9 +62,25 @@ namespace StardewViewerEvents.Events
             PrintToConsole();
         }
 
+        public void PrintNextEvent()
+        {
+            if (IsEmpty)
+            {
+                return;
+            }
+
+            _logger.LogInfo($"Event Available: {GetPrintableEvent(First)}");
+        }
+
         public void PrintNextEventCommand()
         {
 
+        }
+
+        public void PrintNextEventAndCommand()
+        {
+            PrintNextEvent();
+            PrintNextEventCommand();
         }
 
         public void PushAtBeginning(ViewerEvent forcedEvent, string[] parameters, SocketUserMessage message, int count, double currentPriceMultiplier)
@@ -81,16 +97,6 @@ namespace StardewViewerEvents.Events
             _eventQueue.Insert(0, eventQueued);
         }
 
-        public void PrintNextEvent()
-        {
-            if (IsEmpty)
-            {
-                return;
-            }
-
-            _logger.LogInfo($"Event Available: {GetPrintableEvent(First)}");
-        }
-
         public void QueueEvent(QueuedEvent eventQueued)
         {
             _eventQueue.Add(eventQueued);
@@ -103,26 +109,26 @@ namespace StardewViewerEvents.Events
 
         public void PrintToConsole()
         {
-            _logger.LogInfo($"Queue is currently:{Environment.NewLine}[{Environment.NewLine}{GetPrintableQueue()}{Environment.NewLine}]{Environment.NewLine}-------------------------------");
+            _logger.LogInfo($"Queue currently has {_eventQueue.Count} Events:{Environment.NewLine}{GetPrintableQueue("\t")}");
         }
 
         private string GetDiscordMessage()
         {
-            var message = "Queue is currently:\n```";
-            message += GetPrintableQueue();
+            var message = $"Queue currently has {_eventQueue.Count} Events:\n```";
+            message += GetPrintableQueue("\t");
             message += "\n```";
             return message;
         }
 
-        private string GetPrintableQueue()
+        private string GetPrintableQueue(string prefix)
         {
             var printedQueue = "";
-            foreach (var queuedEvent in _eventQueue)
+            for (var i = 0; i < _eventQueue.Count; i++)
             {
-                printedQueue += (GetPrintableEvent(queuedEvent)) + Environment.NewLine;
+                var queuedEvent = _eventQueue[i];
+                printedQueue += $"{prefix}[{i}]{GetPrintableEvent(queuedEvent)}{Environment.NewLine}";
             }
 
-            printedQueue += $"Number of queue events: {_eventQueue.Count}" + Environment.NewLine;
             return printedQueue;
         }
 

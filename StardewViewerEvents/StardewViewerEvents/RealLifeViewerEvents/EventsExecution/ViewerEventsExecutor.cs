@@ -1,7 +1,9 @@
 ﻿using Discord.WebSocket;
 using RealLifeViewerEvents.DiscordIntegration;
 using RealLifeViewerEvents.Events;
+using RealLifeViewerEvents.EventsExecution.EventsImplementations;
 using RealLifeViewerEvents.Extensions;
+using TwitchLib.Api.Helix;
 using ViewerEventsLibrary;
 using ViewerEventsLibrary.Credits;
 using ViewerEventsLibrary.DiscordIntegration;
@@ -13,9 +15,6 @@ namespace RealLifeViewerEvents.EventsExecution
 {
     public class ViewerEventsExecutor : IEventsExecutor<QueuedEvent>
     {
-
-        public const string GO_COMMAND = "go";
-        public const string SKIP_COMMAND = "skip";
 
         private readonly IViewerEventsLogger _logger;
         private readonly SoundPlayer _soundPlayer;
@@ -34,7 +33,8 @@ namespace RealLifeViewerEvents.EventsExecution
             _logger.LogInfo(Events.Count + " is the total events count.");
         }
 
-        public async Task DequeueEvent(IViewerEventsLogger logger, IBotCommunicator communications, CreditAccounts accounts, ChannelSet channels)
+        public async Task DequeueEvent(IViewerEventsLogger logger, IBotCommunicator communications,
+            CreditAccounts accounts, ChannelSet channels)
         {
             if (Queue.IsEmpty || Queue.IsPaused() || _activeEvent != null)
             {
@@ -44,7 +44,8 @@ namespace RealLifeViewerEvents.EventsExecution
             var eventToSend = Queue.First;
             var baseEvent = eventToSend.BaseEvent;
             var baseEventName = baseEvent.name;
-            _logger.LogInfo($"Executing {eventToSend.queueCount} instances of {baseEventName} triggered by {eventToSend.username}.");
+            _logger.LogInfo(
+                $"Executing {eventToSend.queueCount} instances of {baseEventName} triggered by {eventToSend.username}.");
             Queue.RemoveFirst();
 
             SendSameTypeEventsToBackOfQueue(eventToSend);
@@ -57,7 +58,7 @@ namespace RealLifeViewerEvents.EventsExecution
                 {
                     var accountToRefund = accounts[eventToSend.userId];
                     var refundAmount = baseEvent.GetMultiplierCost(Events.CurrentMultiplier) * eventToSend.queueCount;
-                    accountToRefund.AddCredits(refundAmount);
+                    accountToRefund.RefundCredits(refundAmount);
                     await communications.SendMessageAsync(channels.EventsChannel,
                         $"{errorMessage} You have been refunded {refundAmount} credits. Current Balance: {accountToRefund.GetCredits()}");
                     return;
@@ -133,7 +134,7 @@ namespace RealLifeViewerEvents.EventsExecution
                     if (qe.baseEventName == chosenEvent.name)
                     {
                         qe.queueCount += 1;
-                        Console.WriteLine($"Increased queue count of {chosenEvent.name} to {qe.queueCount}.");
+                        _logger.LogDebug($"Increased queue count of {chosenEvent.name} to {qe.queueCount}.");
                         return true;
                     }
                 }
@@ -157,7 +158,7 @@ namespace RealLifeViewerEvents.EventsExecution
         private void AddEventToQueue(QueuedEvent invokedEvent)
         {
             Queue.QueueEvent(invokedEvent);
-            Console.WriteLine($"Added {invokedEvent.baseEventName} to queue.");
+            _logger.LogInfo($"Added {invokedEvent.baseEventName} to queue.");
         }
 
         public QueuedEvent CreateQueuedEvent(SocketUser sender, ViewerEvent chosenEvent, string[] args)
@@ -190,8 +191,7 @@ namespace RealLifeViewerEvents.EventsExecution
                 _logger.LogInfo($"{_activeEvent.BaseEvent.name} is done!");
                 _activeEvent = null;
                 Queue.PrintToConsole();
-                Queue.PrintNextEvent();
-                Queue.PrintNextEventCommand();
+                Queue.PrintNextEventAndCommand();
                 _soundPlayer.PlayEventDoneSound();
             }
         }
@@ -200,18 +200,6 @@ namespace RealLifeViewerEvents.EventsExecution
         {
             if (_activeEvent == null)
             {
-                var sanitizedInput = input.SanitizeName();
-                if (sanitizedInput == SKIP_COMMAND)
-                {
-                    SkipEvent();
-                    return;
-                }
-
-                if (sanitizedInput == GO_COMMAND)
-                {
-                    DequeueEvent(_logger, viewerEventsService.DiscordCommunications, viewerEventsService.CreditAccounts, DiscordModule.ActiveChannels);
-                    return;
-                }
                 return;
             }
 
@@ -234,7 +222,7 @@ namespace RealLifeViewerEvents.EventsExecution
             }
         }
 
-        private void SkipEvent()
+        public void SkipEvent()
         {
             if (Queue.IsEmpty || Queue.Count < 2)
             {
@@ -256,10 +244,32 @@ namespace RealLifeViewerEvents.EventsExecution
             {
                 Queue.QueueEvent(eventToAdd);
             }
+
             foreach (var eventToAdd in eventsToMove)
             {
                 Queue.QueueEvent(eventToAdd);
             }
+        }
+
+        public void RefundNextEvent(IViewerEventsLogger logger, IBotCommunicator communications, CreditAccounts accounts, ChannelSet channels)
+        {
+            if (Queue.IsEmpty)
+            {
+                _logger.LogInfo($"No event to refund");
+                return;
+            }
+
+            var eventToRefund = Queue.First;
+            Queue.RemoveFirst();
+
+            var baseEvent = eventToRefund.BaseEvent;
+            var accountToRefund = accounts[eventToRefund.userId];
+            var refundAmount = baseEvent.GetMultiplierCost(Events.CurrentMultiplier) * eventToRefund.queueCount;
+            accountToRefund.RefundCredits(refundAmount);
+            communications.SendMessageAsync(channels.EventsChannel, $"Event '{baseEvent.name}' was cancelled. You have been refunded {refundAmount} credits. Current Balance: {accountToRefund.GetCredits()}").FireAndForget();
+            _logger.LogInfo($"Event '{baseEvent.name}' cancelled. {refundAmount} credits were refunded to {accountToRefund.discordName}");
+            return;
+
         }
     }
 }

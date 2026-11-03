@@ -150,9 +150,7 @@ namespace RealLifeViewerEvents.DiscordIntegration.Commands
                 response = "";
                 return false;
             }
-
-            Console.WriteLine("Purchase: " + messageText);
-
+            
             if (!_commandReader.IsCommandValid(messageText, out var eventName, out string[] parameters))
             {
                 response = "Usage: !purchase [eventName]";
@@ -181,7 +179,6 @@ namespace RealLifeViewerEvents.DiscordIntegration.Commands
                 return false;
             }
 
-            Console.WriteLine("Pay: " + messageText);
             if (!_commandReader.IsCommandValid(messageText, out var eventName, out var creditsToPay, out var args))
             {
                 response = "Usage: !pay [eventName] [creditAmount] [args]";

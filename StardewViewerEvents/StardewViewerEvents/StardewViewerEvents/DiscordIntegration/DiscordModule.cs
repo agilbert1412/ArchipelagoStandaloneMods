@@ -67,7 +67,7 @@ namespace StardewViewerEvents.DiscordIntegration
             var sender = message.Author;
             var senderName = sender.Username;
 
-            _logger.LogInfo($"{senderName} said '{messageText}'");
+            _logger.LogDebug($"{senderName} said '{messageText}'");
 
             HandleAdminCommands(message, messageText);
             await HandleUserCommands(message, messageText, senderName);
@@ -81,6 +81,8 @@ namespace StardewViewerEvents.DiscordIntegration
             {
                 return;
             }
+
+            _logger.LogInfo($"{message.Author.Username} said '{messageText}' in the admin channel");
 
             if (messageText.Equals("test", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -105,10 +107,12 @@ namespace StardewViewerEvents.DiscordIntegration
 
         private async Task HandleDonationCommands(SocketUserMessage message)
         {
-            if (!(IsInDonationsChannel(message)))
+            if (!IsInDonationsChannel(message))
             {
                 return;
             }
+
+            _logger.LogInfo($"{message.Author.Username} said '{message.Content}' in the donations channel");
 
             await _donationsCommandsHandler.HandleEventsDonationCommands(message, _accounts);
         }

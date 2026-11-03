@@ -40,6 +40,12 @@ namespace ViewerEventsLibrary.Credits
             return credits;
         }
 
+        public void RefundCredits(int amount)
+        {
+            AddCredits(amount);
+            spentSoFar -= amount;
+        }
+
         public void AddCredits(int amount)
         {
             SetCredits(credits + amount);

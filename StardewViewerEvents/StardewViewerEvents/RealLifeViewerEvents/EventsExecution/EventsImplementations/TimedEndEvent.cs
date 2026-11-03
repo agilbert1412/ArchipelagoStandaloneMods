@@ -50,12 +50,12 @@ namespace RealLifeViewerEvents.EventsExecution.EventsImplementations
             {
                 var minutes = Math.Floor(remainingMinutes);
                 var seconds = Math.Round(remainingSeconds - (minutes * 60));
-                Console.WriteLine($"{BaseEvent.name} - {minutes}m {seconds}s remaining");
+                _logger.LogInfo($"{BaseEvent.name} - {minutes}m {seconds}s remaining");
             }
             else
             {
                 var seconds = Math.Round(remainingSeconds);
-                Console.WriteLine($"{BaseEvent.name} - {Math.Round(seconds)}s remaining");
+                _logger.LogInfo($"{BaseEvent.name} - {Math.Round(seconds)}s remaining");
             }
 
             _lastPrinted = DateTime.Now;

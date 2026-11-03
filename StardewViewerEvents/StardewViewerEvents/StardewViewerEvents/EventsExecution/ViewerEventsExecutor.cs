@@ -59,7 +59,7 @@ namespace StardewViewerEvents.EventsExecution
                 {
                     var accountToRefund = accounts[eventToSend.userId];
                     var refundAmount = baseEvent.GetMultiplierCost(Events.CurrentMultiplier) * eventToSend.queueCount;
-                    accountToRefund.AddCredits(refundAmount);
+                    accountToRefund.RefundCredits(refundAmount);
                     await communications.SendMessageAsync(channels.EventsChannel,
                         $"{errorMessage} You have been refunded {refundAmount} credits. Current Balance: {accountToRefund.GetCredits()}");
                     return;

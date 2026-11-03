@@ -4,34 +4,72 @@ namespace RealLifeViewerEvents
 {
     public class RealLifeLogger : IViewerEventsLogger
     {
-        public void LogError(string message)
-        {
-            Log("ERROR", message);
-        }
+        private const string _logPath = "RealLifeViewerEventslog.txt";
 
-        public void LogError(string message, Exception exception)
+        public RealLifeLogger()
         {
-            Log("ERROR", $"{message}{Environment.NewLine}\tException Message: {exception.Message}{Environment.NewLine}\tStack Trace: {exception.StackTrace}");
-        }
-
-        public void LogWarning(string message)
-        {
-            Log("WARNING", message);
+            File.Delete(_logPath);
         }
 
         public void LogDebug(string message)
         {
-            Log("DEBUG", message);
+            LogToConsole(LogLevel.Debug, message);
+            LogToFile(LogLevel.Debug, message);
+        }
+
+        public void LogError(string message)
+        {
+            LogToConsole(LogLevel.Error, message);
+            LogToFile(LogLevel.Error, message);
+        }
+
+        public void LogError(string message, Exception exception)
+        {
+            LogError($"{message}{Environment.NewLine}\tException Message: {exception.Message}{Environment.NewLine}\tStack Trace: {exception.StackTrace}");
+        }
+
+        public void LogError(Exception exception)
+        {
+            LogError($"Exception Message: {exception.Message}{Environment.NewLine}\tStack Trace: {exception.StackTrace}");
+        }
+
+        public void LogWarning(string message)
+        {
+            LogToConsole(LogLevel.Warning, message);
+            LogToFile(LogLevel.Warning, message);
         }
 
         public void LogInfo(string message)
         {
-            Log("INFO", message);
+            LogToConsole(LogLevel.Info, message);
+            LogToFile(LogLevel.Info, message);
         }
 
-        private void Log(string level, string message)
+        private string GetMessageWithTimestamp(LogLevel level, string message)
         {
-            Console.WriteLine($"{DateTime.Now.ToLongTimeString()} - [{level.ToUpper()}]: {message}");
+            return $"{DateTime.Now.ToLongTimeString()} - [{level.ToString().ToUpper()}]: {message}";
         }
+
+        private void LogToConsole(LogLevel level, string message)
+        {
+            if (level >= LogLevel.Warning)
+            {
+                Console.WriteLine(message);
+            }
+        }
+
+        private void LogToFile(LogLevel level, string message)
+        {
+            var formatted = GetMessageWithTimestamp(level, message);
+            File.AppendAllLines(_logPath, new[]{ formatted });
+        }
+    }
+
+    internal enum LogLevel
+    {
+        Debug,
+        Warning,
+        Error,
+        Info,
     }
 }

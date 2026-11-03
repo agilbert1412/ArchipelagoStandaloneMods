@@ -212,8 +212,6 @@ namespace ViewerEventsLibrary.DiscordIntegration.Commands
                 return;
             }
 
-            Console.WriteLine("Purchase: " + messageText);
-
             if (!_commandReader.IsCommandValid(messageText, out var eventName, out string[] parameters))
             {
                 _communications.ReplyTo(message, "Usage: !purchase [eventName]");

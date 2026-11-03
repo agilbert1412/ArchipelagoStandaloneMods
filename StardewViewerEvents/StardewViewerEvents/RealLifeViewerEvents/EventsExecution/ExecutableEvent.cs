@@ -57,7 +57,7 @@ namespace RealLifeViewerEvents.EventsExecution
         private void ShowEventInChat()
         {
             var message = GetChatMessage();
-            Console.WriteLine(message);
+            _logger.LogInfo(message);
         }
 
         protected virtual string GetChatMessage()

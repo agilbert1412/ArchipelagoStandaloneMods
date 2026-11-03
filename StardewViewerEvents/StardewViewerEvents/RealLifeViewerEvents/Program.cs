@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
+using RealLifeViewerEvents.DiscordIntegration;
 using RealLifeViewerEvents.EventsExecution;
+using RealLifeViewerEvents.Extensions;
 using ViewerEventsLibrary.Extensions;
 
 namespace RealLifeViewerEvents
@@ -30,10 +32,7 @@ namespace RealLifeViewerEvents
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
-                Console.WriteLine();
-                Console.WriteLine("Stack Trace: " + Environment.NewLine + "\t");
-                Console.WriteLine(e.StackTrace);
+                _logger.LogError(e);
             }
             finally
             {
@@ -86,10 +85,7 @@ namespace RealLifeViewerEvents
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.Message);
-                    Console.WriteLine();
-                    Console.WriteLine("Stack Trace: " + Environment.NewLine + "\t");
-                    Console.WriteLine(e.StackTrace);
+                    _logger.LogError(e);
                 }
 
                 await Task.Run(() => Thread.Sleep(tickDelay));
@@ -115,20 +111,69 @@ namespace RealLifeViewerEvents
                 try
                 {
                     var input = Console.ReadLine();
-                    _viewerEventsExecutor.ReceivedInput(input, _viewerEventsService);
-                    _viewerEventsExecutor.PrintNextCommandHelp();
+                    if (!HandleInput(input))
+                    {
+                        _viewerEventsExecutor.ReceivedInput(input, _viewerEventsService);
+                        _viewerEventsExecutor.PrintNextCommandHelp();
+                    }
                     _viewerEventsService.ExportData();
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.Message);
-                    Console.WriteLine();
-                    Console.WriteLine("Stack Trace: " + Environment.NewLine + "\t");
-                    Console.WriteLine(e.StackTrace);
+                    _logger.LogError(e);
                 }
 
                 await Task.Run(() => Thread.Sleep(tickDelay));
             }
+        }
+
+        public static readonly string[] COMMANDS_START_EVENT = new[] { "go", "start", "trigger" };
+        public const string COMMAND_SKIP_EVENT = "skip";
+        public const string COMMAND_SEE_QUEUE = "queue";
+        public const string COMMAND_SEE_NEXT_EVENT = "next";
+        public const string COMMAND_HELP = "help";
+        public const string COMMAND_REFUND = "refund";
+
+        private static bool HandleInput(string input)
+        {
+            var sanitizedInput = input.SanitizeName();
+            if (COMMANDS_START_EVENT.Contains(sanitizedInput))
+            {
+                _viewerEventsExecutor.DequeueEvent(_logger, _viewerEventsService.DiscordCommunications, _viewerEventsService.CreditAccounts, DiscordModule.ActiveChannels).FireAndForget();
+                return true;
+            }
+            if (sanitizedInput == COMMAND_SKIP_EVENT)
+            {
+                _viewerEventsExecutor.SkipEvent();
+                _viewerEventsExecutor.Queue.PrintToConsole();
+                return true;
+            }
+            if (sanitizedInput == COMMAND_SEE_QUEUE)
+            {
+                _viewerEventsExecutor.Queue.PrintToConsole();
+                return true;
+            }
+            if (sanitizedInput == COMMAND_SEE_NEXT_EVENT)
+            {
+                _viewerEventsExecutor.Queue.PrintNextEventAndCommand();
+                return true;
+            }
+            if (sanitizedInput == COMMAND_REFUND)
+            {
+                _viewerEventsExecutor.RefundNextEvent(_logger, _viewerEventsService.DiscordCommunications, _viewerEventsService.CreditAccounts, DiscordModule.ActiveChannels);
+                return true;
+            }
+            if (sanitizedInput == COMMAND_HELP)
+            {
+                _logger.LogInfo($"{COMMANDS_START_EVENT.First()}: Start the next event");
+                _logger.LogInfo($"{COMMAND_SKIP_EVENT}: Skip the next event and send it to the back of the queue");
+                _logger.LogInfo($"{COMMAND_SEE_QUEUE}: Show the full queue");
+                _logger.LogInfo($"{COMMAND_SEE_NEXT_EVENT}: Show next event");
+                _logger.LogInfo($"{COMMAND_REFUND}: Refund the next event to whoever paid for it and remove it from the queue");
+                return true;
+            }
+
+            return false;
         }
     }
 }

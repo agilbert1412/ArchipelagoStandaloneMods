@@ -40,7 +40,7 @@ namespace RealLifeViewerEvents.EventsExecution.EventsImplementations
 
         public override void PrintNextCommandHelp()
         {
-            Console.WriteLine($"Type 'done' when done");
+            _logger.LogInfo($"Type 'done' when done");
         }
 
         public override bool WillFinishThisFrame()
