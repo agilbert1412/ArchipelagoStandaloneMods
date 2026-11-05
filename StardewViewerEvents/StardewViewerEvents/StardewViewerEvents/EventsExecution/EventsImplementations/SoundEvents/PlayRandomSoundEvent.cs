@@ -29,9 +29,19 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.SoundEvents
             // private readonly Dictionary<string, CueDefinition> _cues = new Dictionary<string, CueDefinition>();
             var cuesField = _modHelper.Reflection.GetField<Dictionary<string, CueDefinition>>(soundBank, "_cues");
             var cues = cuesField.GetValue().Keys.ToArray();
+            var notLoopingSounds = FilterSoundsLooping(cues, false);
 
-            _soundCue = cues[Game1.random.Next(cues.Length)];
+            _soundCue = notLoopingSounds[Game1.random.Next(notLoopingSounds.Length)];
             return _soundCue;
+        }
+
+        private string[] FilterSoundsLooping(IEnumerable<string> sounds, bool looping)
+        {
+            return sounds
+                .Where(soundCue => Game1.soundBank.GetCueDefinition(soundCue).sounds
+                    .Any(sound => sound.soundClips == null || sound.soundClips
+                        .Any(clip => clip.clipEvents == null || clip.clipEvents
+                            .Any(clipEvent => clipEvent == null || clipEvent is not PlayWaveEvent playWaveEvent || (playWaveEvent.Loop == looping))))).ToArray();
         }
 
         protected override int GetSoundCount()

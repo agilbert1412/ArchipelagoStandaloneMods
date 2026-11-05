@@ -4,15 +4,15 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
 {
     public class CowSpawner
     {
-        public void SpawnManyInvisibleCows(int amount, string[] allValidNames)
+        public void SpawnManyInvisibleCows(int amount, string[] allValidNames, bool longCows)
         {
             for (var i = 0; i < amount; i++)
             {
-                SpawnInvisibleCow(allValidNames);
+                SpawnInvisibleCow(allValidNames, longCows);
             }
         }
 
-        public void SpawnInvisibleCow(string[] allValidNames)
+        public void SpawnInvisibleCow(string[] allValidNames, bool longCow)
         {
             var cowType = Game1.random.NextDouble() < 0.5 ? "White Cow" : "Brown Cow";
             var cowName = ChooseCowName(Game1.random, allValidNames);
@@ -28,6 +28,10 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
             cow.growFully();
 
             cow.modData.Add(CowManager.INVISIBLE_COW_KEY, true.ToString());
+            if (longCow)
+            {
+                cow.modData.Add(CowManager.LONG_INVISIBLE_COW_KEY, true.ToString());
+            }
 
             // ((AnimalHouse)this.newAnimalHome.GetIndoors()).adoptAnimal(this.animalBeingPurchased);
 

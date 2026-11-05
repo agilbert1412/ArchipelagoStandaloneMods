@@ -21,7 +21,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
             var activeNames = activeAccounts.Select(x => x.discordName).ToArray();
 
             var amount = NUMBER_COWS_PER_PURCHASE * QueuedEvent.queueCount;
-            _cowSpawner.SpawnManyInvisibleCows(amount, activeNames);
+            _cowSpawner.SpawnManyInvisibleCows(amount, activeNames, false);
         }
     }
 }

@@ -54,6 +54,16 @@ namespace StardewViewerEvents
                 original: AccessTools.Method(typeof(FarmAnimal), nameof(FarmAnimal.farmerPushing)),
                 prefix: new HarmonyMethod(typeof(CowManager), nameof(CowManager.FarmerPushing_TakeLongerToReact_Prefix))
             );
+
+            harmony.Patch(
+                original: AccessTools.Method(typeof(FarmAnimal), nameof(FarmAnimal.setRandomPosition)),
+                prefix: new HarmonyMethod(typeof(CowManager), nameof(CowManager.SetRandomPosition_DontLookForProduceArea_Prefix))
+            );
+
+            harmony.Patch(
+                original: AccessTools.Method(typeof(FarmAnimal), nameof(FarmAnimal.pet)),
+                prefix: new HarmonyMethod(typeof(CowManager), nameof(CowManager.Pet_DontShowMenu_Prefix))
+            );
         }
     }
 }

@@ -19,6 +19,8 @@ namespace StardewViewerEvents
         private ViewerEventsExecutor _viewerEventsExecutor;
         private HarmonyPatcher _harmonyPatcher;
 
+        // private BuffApplier _buffApplier;
+
         public ModEntry() : base()
         {
             Instance = this;
@@ -49,6 +51,8 @@ namespace StardewViewerEvents
 
             _harmonyPatcher = new HarmonyPatcher();
             _harmonyPatcher.Initialize(_logger, _helper, _harmony);
+
+            // _buffApplier = new BuffApplier();
         }
 
         private void OnGameLaunched(object sender, GameLaunchedEventArgs e)

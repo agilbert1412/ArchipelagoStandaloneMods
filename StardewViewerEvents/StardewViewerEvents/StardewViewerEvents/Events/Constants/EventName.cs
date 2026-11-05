@@ -3,6 +3,7 @@
     public static class EventName
     {
         public const string INVISIBLE_COWS = "wemoounseen";
+        public const string LONG_INVISIBLE_COWS = "wemoooounseen";
 
         public const string ITEM_HOME = "sendhome";
         public const string ITEM_SELL = "salesman";
@@ -101,6 +102,7 @@
         public const string DROUGHT = "dry";
 
         public const string NUDGE = "nudge";
+        public const string NUDGE_ANY = "universalnudge";
         public const string SHUFFLE_INVENTORY = "messy";
         public const string SHUFFLE_EVERYWHERE = "hoarder";
 

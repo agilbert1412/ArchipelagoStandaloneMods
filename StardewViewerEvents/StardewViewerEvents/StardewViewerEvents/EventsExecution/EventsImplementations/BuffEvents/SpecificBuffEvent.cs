@@ -11,9 +11,11 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.BuffEvents
 {
     public class SpecificBuffEvent : ExecutableEvent
     {
+        // private BuffApplier _buffApplier;
 
-        public SpecificBuffEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
+        public SpecificBuffEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent/*, BuffApplier buffApplier*/) : base(logger, modHelper, queuedEvent)
         {
+            //_buffApplier = buffApplier;
         }
 
         public override bool ValidateParameters(out string errorMessage)
@@ -43,10 +45,14 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.BuffEvents
             if (TryGetDesiredBuff(desiredBuffName, out var buffKey))
             {
                 var buff = new Buff(buffKey);
-                if (buff.millisecondsDuration < 1000 * 10)
+                var duration = buff.millisecondsDuration;
+                if (duration < 1000 * 10)
                 {
                     buff.millisecondsDuration *= 10;
+                    duration *= 10;
                 }
+
+                // _buffApplier.AddBuff(buffKey, duration);
                 Game1.player.applyBuff(buff);
             }
         }

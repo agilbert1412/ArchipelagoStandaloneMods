@@ -9,7 +9,12 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
 {
     public class CowManager
     {
-        public const string INVISIBLE_COW_KEY = "InvisibleCow";
+        public const string INVISIBLE_COW_KEY = "ViewerEvent_InvisibleCow";
+        public const string LONG_INVISIBLE_COW_KEY = "ViewerEvent_LongInvisibleCow";
+        public const double INVISIBLE_COW_DESPAWN_CHANCE_PER_DAY = 0.1;
+        public const double LONG_INVISIBLE_COW_DESPAWN_CHANCE_PER_DAY = 0.0005;
+        public const double INVISIBLE_COW_BONUS_DESPAWN_CHANCE = 0.1;
+        public const double LONG_INVISIBLE_COW_BONUS_DESPAWN_CHANCE = 0.1;
 
         private static IViewerEventsLogger _logger;
         private static IModHelper _helper;
@@ -100,12 +105,14 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
 
                 transparencyThisFrame = Math.Max(0, transparencyThisFrame - 20);
                 var tone = Math.Min(64, transparencyThisFrame * 2);
-                
+
                 var color = __instance.hitGlowTimer > 0 ? Color.Red : new Color(tone, tone, tone, transparencyThisFrame);
                 __instance.Sprite.draw(b, Utility.snapDrawPosition(Game1.GlobalToLocal(Game1.viewport, __instance.Position - new Vector2(0.0f, 24f) + vector2)), layerDepth, 0, 0, color, __instance.FacingDirection == 3, 4f);
 
                 if (!__instance.isEmoting)
+                {
                     return false;
+                }
                 var num1 = __instance.Sprite.SpriteWidth / 2 * 4 - 32 + (animalData != null ? animalData.EmoteOffset.X : 0);
                 var num2 = (animalData != null ? animalData.EmoteOffset.Y : 0) - 64;
                 var local1 = Game1.GlobalToLocal(Game1.viewport, new Vector2(__instance.Position.X + vector2.X + num1, __instance.Position.Y + vector2.Y + num2));
@@ -131,8 +138,22 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
                     return true;
                 }
 
-                const double chanceToDespawnPerDay = 0.1;
-                if (Game1.random.NextDouble() < chanceToDespawnPerDay)
+                var isLongCow = __instance.modData.ContainsKey(LONG_INVISIBLE_COW_KEY);
+                var chanceToDespawn = isLongCow
+                    ? LONG_INVISIBLE_COW_DESPAWN_CHANCE_PER_DAY
+                    : INVISIBLE_COW_DESPAWN_CHANCE_PER_DAY;
+
+                if (__instance.wasPet.Value)
+                {
+                    chanceToDespawn += isLongCow ? LONG_INVISIBLE_COW_BONUS_DESPAWN_CHANCE : INVISIBLE_COW_BONUS_DESPAWN_CHANCE;
+                }
+                else if (__instance.wasAutoPet.Value)
+                {
+                    chanceToDespawn += (isLongCow ? LONG_INVISIBLE_COW_BONUS_DESPAWN_CHANCE : INVISIBLE_COW_BONUS_DESPAWN_CHANCE)/2;
+                }
+
+                var despawnRoll = Game1.random.NextDouble();
+                if (despawnRoll < chanceToDespawn)
                 {
                     if (__instance.homeInterior is AnimalHouse animalHouse)
                     {
@@ -197,23 +218,111 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
 
         // public void doFarmerPush(int direction)
 
+        // public void setRandomPosition(GameLocation location)
+        public static bool SetRandomPosition_DontLookForProduceArea_Prefix(FarmAnimal __instance, GameLocation location)
+        {
+            try
+            {
+                if (!__instance.modData.ContainsKey(INVISIBLE_COW_KEY))
+                {
+                    return true;
+                }
+
+                SetRandomPosition(__instance, location);
+                return false;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed in {nameof(SetRandomPosition_DontLookForProduceArea_Prefix)}:\n{ex}");
+                return true;
+            }
+
+        }
+
         private static void SetRandomPosition(FarmAnimal cow, GameLocation location)
         {
             cow.StopAllActions();
-            Rectangle parsed;
+            // Rectangle parsed;
             //if (!location.TryGetMapPropertyAs("ProduceArea", out parsed, true))
             //    return;
             var tile = location.getRandomTile();
             cow.Position = new Vector2(tile.X * 64f, tile.Y * 64f);
-            int num = 0;
+            var num = 0;
             while (cow.Position.Equals(Vector2.Zero) || location.Objects.ContainsKey(cow.Position) || location.isCollidingPosition(cow.GetBoundingBox(), Game1.viewport, false, 0, false, cow))
             {
                 tile = location.getRandomTile();
                 cow.Position = new Vector2(tile.X * 64f, tile.Y * 64f); ++num;
                 if (num > 64)
+                {
                     break;
+                }
             }
-            // cow.SleepIfNecessary();
+
+            cow.SleepIfNecessary();
+        }
+
+        // public void pet(Farmer who, bool is_auto_pet = false)
+        public static bool Pet_DontShowMenu_Prefix(FarmAnimal __instance, Farmer who, bool is_auto_pet)
+        {
+            try
+            {
+                if (!__instance.modData.ContainsKey(INVISIBLE_COW_KEY))
+                {
+                    return true;
+                }
+
+                var autoPetFriendship = 7;
+                if (__instance.wasAutoPet.Value)
+                {
+                    __instance.friendshipTowardFarmer.Value = Math.Min(1000, __instance.friendshipTowardFarmer.Value + autoPetFriendship);
+                }
+                else if (is_auto_pet)
+                {
+                    __instance.friendshipTowardFarmer.Value = Math.Min(1000, __instance.friendshipTowardFarmer.Value + (15 - autoPetFriendship));
+                }
+                else
+                {
+                    __instance.friendshipTowardFarmer.Value = Math.Min(1000, __instance.friendshipTowardFarmer.Value + 15);
+                }
+                if (is_auto_pet)
+                {
+                    __instance.wasAutoPet.Value = true;
+                }
+                else
+                {
+                    __instance.wasPet.Value = true;
+                }
+
+                var animalData = __instance.GetAnimalData();
+                var happinessDrain = animalData != null ? animalData.HappinessDrain : 0;
+                if (!is_auto_pet)
+                {
+                    if (animalData != null && animalData.ProfessionForHappinessBoost >= 0 && who.professions.Contains(animalData.ProfessionForHappinessBoost))
+                    {
+                        __instance.friendshipTowardFarmer.Value = Math.Min(1000, __instance.friendshipTowardFarmer.Value + 15);
+                        __instance.happiness.Value = (byte)Math.Min(byte.MaxValue, __instance.happiness.Value + Math.Max(5, 30 + happinessDrain));
+                    }
+                    var num2 = 20;
+                    if (__instance.wasAutoPet.Value)
+                    {
+                        num2 = 32;
+                    }
+                    __instance.doEmote(__instance.moodMessage.Value == 4 ? 12 : num2);
+                }
+                __instance.happiness.Value = (byte)Math.Min(byte.MaxValue, __instance.happiness.Value + Math.Max(5, 30 + happinessDrain));
+                if (!is_auto_pet)
+                {
+                    __instance.makeSound();
+                    // who.gainExperience(0, 5);
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed in {nameof(Pet_DontShowMenu_Prefix)}:\n{ex}");
+                return true;
+            }
+
         }
     }
 }

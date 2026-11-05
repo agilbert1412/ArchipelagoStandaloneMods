@@ -63,6 +63,8 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
         public void SpawnOneSpecificBoostedMonster(GameLocation map, string monsterName, int boostLevel)
         {
             var monster = CreateMonster(map, monsterName);
+            monster.MaxHealth = (int)Math.Round(monster.MaxHealth * (1 + (Math.Max(0, boostLevel - 1) * 0.5)));
+            monster.Health = (int)Math.Round(monster.Health * (1 + (Math.Max(0, boostLevel - 1) * 0.5)));
             for (var i = 0; i < boostLevel; i++)
             {
                 SpawnMonster(map, monster);

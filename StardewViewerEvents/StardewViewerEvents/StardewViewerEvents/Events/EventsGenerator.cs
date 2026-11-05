@@ -67,7 +67,8 @@ public class EventsGenerator : IEventsGenerator
             CreateUnstackableEvent(EventName.EMOTE_RANDOM, Alignment.NEUTRAL, 1, "Trigger a random emote"),
             CreateParameterUnstackableEvent(EventName.EMOTE_SPECIFIC, Alignment.NEUTRAL, 2, "Trigger a specific emote. Must use stardew internal emote names"),
 
-            CreateStackableEvent(EventName.INVISIBLE_COWS, Alignment.NEGATIVE, 2, $"Spawn {SpawnInvisibleCowEvent.NUMBER_COWS_PER_PURCHASE} invisible cows on the current map. They despawn slowly over days"),
+            CreateStackableEvent(EventName.INVISIBLE_COWS, Alignment.NEGATIVE, 2, $"Spawn {SpawnInvisibleCowEvent.NUMBER_COWS_PER_PURCHASE} invisible cows on the current map. They have a 10% chance to despawn every day"),
+            CreateStackableEvent(EventName.LONG_INVISIBLE_COWS, Alignment.NEGATIVE, 4, $"Spawn {SpawnLongInvisibleCowEvent.NUMBER_LONG_COWS_PER_PURCHASE} invisible cows on the current map. They have a 10% chance to despawn only on days where they have been pet"),
 
             CreateUnqueueableEvent(EventName.THEMATIC_FULL_OUTFIT, Alignment.NEUTRAL, 5, "Change the player's entire outfit, based on an Emily theme"),
             CreateUnqueueableEvent(EventName.RANDOMIZE_FULL_OUTFIT, Alignment.NEUTRAL, 5, "Randomize the player's entire appearance"),
@@ -93,8 +94,9 @@ public class EventsGenerator : IEventsGenerator
             CreateStackableEvent(EventName.DROUGHT, Alignment.NEGATIVE, 5, $"Instantly unwater {DroughtEvent.NUMBER_UNWATER} crops and remove {DroughtEvent.AMOUNT_REMOVED_FROM_CAN} water from the watering can"),
 
             CreateStackableEvent(EventName.NUDGE, Alignment.NEGATIVE, 5, $"Perform {NudgeEvent.NUMBER_NUDGES} nudges to random chests"),
-            CreateStackableEvent(EventName.SHUFFLE_INVENTORY, Alignment.NEGATIVE, 4, $"Perform {ShuffleInventoryEvent.NUMBER_SWAPS} swaps between two random inventory items"),
-            CreateStackableEvent(EventName.SHUFFLE_EVERYWHERE, Alignment.NEGATIVE, 30, $"Perform {ShuffleEverywhereEvent.NUMBER_SWAPS} swaps between two random items anywhere in the world"),
+            CreateStackableEvent(EventName.NUDGE_ANY, Alignment.NEGATIVE, 10, $"Perform {NudgeAnythingEvent.NUMBER_NUDGES} nudges to random objects"),
+            CreateStackableEvent(EventName.SHUFFLE_INVENTORY, Alignment.NEGATIVE, 2, $"Perform {ShuffleInventoryEvent.NUMBER_SWAPS} swaps between two random inventory items"),
+            CreateStackableEvent(EventName.SHUFFLE_EVERYWHERE, Alignment.NEGATIVE, 15, $"Perform {ShuffleEverywhereEvent.NUMBER_SWAPS} swaps between two random items anywhere in the world"),
 
             CreateStackableEvent(EventName.REVERSE_CONTROLS, Alignment.NEGATIVE, 30, $"Invert the player controls for {ReverseControlsEvent.DURATION_SECONDS} seconds"),
             //CreateEvent(EventName.SLEEP_ONCE, Alignment.NEUTRAL, 20, "Go to sleep", false),

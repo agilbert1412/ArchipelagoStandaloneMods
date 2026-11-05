@@ -6,7 +6,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
 {
     public class SpawnTemporaryBabyEvent : BabyEvent
     {
-        public const int NUMBER_TEMPORARY_BABIES = 25;
+        public const int NUMBER_TEMPORARY_BABIES = 50;
 
         public SpawnTemporaryBabyEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Audio;
 using StardewModdingAPI;
 using StardewValley;
+using StardewValley.TerrainFeatures;
 using StardewViewerEvents.Events;
 using StardewViewerEvents.Extensions;
 using ViewerEventsLibrary.Extensions;
@@ -26,7 +27,20 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.SoundEvents
 
         protected virtual bool SoundCueIsValid(string soundCue)
         {
-            return Game1.soundBank.Exists(soundCue);
+            if (Game1.soundBank.Exists(soundCue))
+            {
+                return false;
+            }
+
+            return !IsSoundLooping(soundCue);
+        }
+
+        protected bool IsSoundLooping(string soundCue)
+        {
+            return Game1.soundBank.GetCueDefinition(soundCue).sounds
+                    .Any(sound => sound.soundClips == null || sound.soundClips
+                        .Any(clip => clip.clipEvents == null || clip.clipEvents
+                            .Any(clipEvent => clipEvent == null || clipEvent is not PlayWaveEvent playWaveEvent || playWaveEvent.Loop)));
         }
 
         protected virtual int GetSoundCount()

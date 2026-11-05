@@ -8,7 +8,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.InventoryEve
 {
     public class ShuffleInventoryEvent : InventoryEvent
     {
-        public const int NUMBER_SWAPS = 10;
+        public const int NUMBER_SWAPS = 5;
 
         public ShuffleInventoryEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)
         {
