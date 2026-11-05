@@ -71,6 +71,7 @@ namespace RealLifeViewerEvents
             {
                 Directory.CreateDirectory(dataPath);
             }
+
             _viewerEventsService.Initialize(dataPath);
         }
 
@@ -93,6 +94,7 @@ namespace RealLifeViewerEvents
         }
 
         private static int tickCount = 0;
+
         private static void OnTick(int deltaMilliseconds)
         {
             if (!_viewerEventsService.IsInitialized)
@@ -116,6 +118,7 @@ namespace RealLifeViewerEvents
                         _viewerEventsExecutor.ReceivedInput(input, _viewerEventsService);
                         _viewerEventsExecutor.PrintNextCommandHelp();
                     }
+
                     _viewerEventsService.ExportData();
                 }
                 catch (Exception e)
@@ -133,47 +136,102 @@ namespace RealLifeViewerEvents
         public const string COMMAND_SEE_NEXT_EVENT = "next";
         public const string COMMAND_HELP = "help";
         public const string COMMAND_REFUND = "refund";
+        public const string COMMAND_TRANSFER_FROM_OTHER_ACCOUNT = "transfer_from_other_accounts";
 
         private static bool HandleInput(string input)
         {
             var sanitizedInput = input.SanitizeName();
             if (COMMANDS_START_EVENT.Contains(sanitizedInput))
             {
-                _viewerEventsExecutor.DequeueEvent(_logger, _viewerEventsService.DiscordCommunications, _viewerEventsService.CreditAccounts, DiscordModule.ActiveChannels).FireAndForget();
+                _viewerEventsExecutor.DequeueEvent(_logger, _viewerEventsService.DiscordCommunications,
+                    _viewerEventsService.CreditAccounts, DiscordModule.ActiveChannels).FireAndForget();
                 return true;
             }
+
             if (sanitizedInput == COMMAND_SKIP_EVENT)
             {
                 _viewerEventsExecutor.SkipEvent();
                 _viewerEventsExecutor.Queue.PrintToConsole();
                 return true;
             }
+
             if (sanitizedInput == COMMAND_SEE_QUEUE)
             {
                 _viewerEventsExecutor.Queue.PrintToConsole();
                 return true;
             }
+
             if (sanitizedInput == COMMAND_SEE_NEXT_EVENT)
             {
                 _viewerEventsExecutor.Queue.PrintNextEventAndCommand();
                 return true;
             }
+
             if (sanitizedInput == COMMAND_REFUND)
             {
-                _viewerEventsExecutor.RefundNextEvent(_logger, _viewerEventsService.DiscordCommunications, _viewerEventsService.CreditAccounts, DiscordModule.ActiveChannels);
+                _viewerEventsExecutor.RefundNextEvent(_logger, _viewerEventsService.DiscordCommunications,
+                    _viewerEventsService.CreditAccounts, DiscordModule.ActiveChannels);
                 return true;
             }
+
+            if (sanitizedInput.StartsWith(COMMAND_TRANSFER_FROM_OTHER_ACCOUNT.SanitizeName()))
+            {
+                DoTransferFromOtherAccounts(input);
+                return true;
+            }
+
             if (sanitizedInput == COMMAND_HELP)
             {
                 _logger.LogInfo($"{COMMANDS_START_EVENT.First()}: Start the next event");
                 _logger.LogInfo($"{COMMAND_SKIP_EVENT}: Skip the next event and send it to the back of the queue");
                 _logger.LogInfo($"{COMMAND_SEE_QUEUE}: Show the full queue");
                 _logger.LogInfo($"{COMMAND_SEE_NEXT_EVENT}: Show next event");
-                _logger.LogInfo($"{COMMAND_REFUND}: Refund the next event to whoever paid for it and remove it from the queue");
+                _logger.LogInfo(
+                    $"{COMMAND_REFUND}: Refund the next event to whoever paid for it and remove it from the queue");
+                _logger.LogInfo($"{COMMAND_TRANSFER_FROM_OTHER_ACCOUNT}: Transfer credits remaining and spent, at custom rates (default 100% and 20%), from another credits file from a previous game.");
                 return true;
             }
 
             return false;
+        }
+
+        private static void DoTransferFromOtherAccounts(string command)
+        {
+            var inputWords = command.Split(" ");
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "PersistentData",
+                $"Transfert_{DiscordModule.CREDITS_FILE}");
+
+            var refundRateForRemainingCredits = 1.0;
+            var refundRateForSpentCredits = 0.2;
+
+            if (inputWords.Length > 1)
+            {
+                refundRateForSpentCredits = double.Parse(inputWords[1]);
+            }
+
+            if (inputWords.Length > 2)
+            {
+                refundRateForSpentCredits = double.Parse(inputWords[2]);
+            }
+
+            var changes = _viewerEventsService.CreditAccounts.DoPartialRefundFrom(path, refundRateForRemainingCredits,
+                refundRateForSpentCredits);
+
+            if (changes == null)
+            {
+                _logger.LogError($"Could not find a credits file to transfer from. Place a file at `{path}`");
+                return;
+            }
+
+            _logger.LogInfo($"Successfully added credits to {changes.Count} viewers:");
+
+            foreach (var (discordId, amount) in changes)
+            {
+                var account = _viewerEventsService.CreditAccounts[discordId];
+                var name = account.discordName;
+                _logger.LogInfo($"\t{name}: {amount} credits added (Current: {account.GetCredits()})");
+            }
         }
     }
 }

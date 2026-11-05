@@ -77,13 +77,53 @@ namespace ViewerEventsLibrary.Credits
                 return;
             }
 
-            var lines = File.ReadAllText(creditsFile, Encoding.UTF8);
+            var accountsToImport = DeserializeAccounts(creditsFile);
+            foreach (var importedAccount in accountsToImport)
+            {
+                Add(importedAccount.discordId, importedAccount);
+            }
+        }
+
+        public Dictionary<ulong, int> DoPartialRefundFrom(string creditsFile, double refundRateFromRemainingCredits, double refundRateFromSpentCredits)
+        {
+            if (!File.Exists(creditsFile))
+            {
+                return null;
+            }
+
+            var affectedAccounts = new Dictionary<ulong, int>();
+            var accountsToRefundFrom = DeserializeAccounts(creditsFile);
+            foreach (var accountToRefundFrom in accountsToRefundFrom)
+            {
+                var existingAccount = GetAccount(accountToRefundFrom.discordId);
+                var creditsToTransfer = accountToRefundFrom.credits * refundRateFromRemainingCredits;
+                var creditsToRefund = accountToRefundFrom.spentSoFar * refundRateFromSpentCredits;
+                var creditsToAdd = (int)Math.Round(creditsToTransfer + creditsToRefund);
+
+                existingAccount.AddCredits(creditsToAdd);
+                affectedAccounts.Add(existingAccount.discordId, creditsToAdd);
+
+                if (accountToRefundFrom.HasTwitchLink() && !existingAccount.HasTwitchLink())
+                {
+                    existingAccount.LinkTo(accountToRefundFrom.GetTwitchLink());
+                }
+            }
+
+            return affectedAccounts;
+        }
+
+        private List<CreditAccount> DeserializeAccounts(string file)
+        {
+            var accounts = new List<CreditAccount>();
+            var lines = File.ReadAllText(file, Encoding.UTF8);
             dynamic jsonData = JsonConvert.DeserializeObject(lines);
             foreach (JObject creditAccountString in jsonData)
             {
                 var creditAccount = new CreditAccount(creditAccountString);
-                Add(creditAccount.discordId, creditAccount);
+                accounts.Add(creditAccount);
             }
+
+            return accounts;
         }
 
         public void ExportTo(string creditsFile)
