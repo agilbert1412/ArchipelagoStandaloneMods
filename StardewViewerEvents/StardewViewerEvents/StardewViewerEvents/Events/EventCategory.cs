@@ -45,7 +45,7 @@ namespace StardewViewerEvents.Events
                 new[]
                 {
                     EventName.SPAWN_MONSTER_RANDOM, EventName.SPAWN_MONSTER_SPECIFIC, EventName.SPAWN_MONSTER_BOOSTED,
-                    EventName.TEMPORARY_BABY, EventName.NEW_BABY, EventName.BYE_BABY, EventName.INVISIBLE_COWS,
+                    EventName.TEMPORARY_BABY, EventName.NEW_BABY, EventName.BYE_BABY, EventName.INVISIBLE_COWS, EventName.LONG_INVISIBLE_COWS,
                 }
             },
             {
@@ -126,7 +126,7 @@ namespace StardewViewerEvents.Events
                 INVENTORY,
                 new[]
                 {
-                    EventName.NUDGE, EventName.SHUFFLE_INVENTORY, EventName.SHUFFLE_EVERYWHERE,
+                    EventName.NUDGE, EventName.NUDGE_ANY, EventName.SHUFFLE_INVENTORY, EventName.SHUFFLE_EVERYWHERE,
                 }
             },
             {

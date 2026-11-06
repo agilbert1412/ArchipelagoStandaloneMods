@@ -93,7 +93,7 @@ public class EventsGenerator : IEventsGenerator
             CreateStackableEvent(EventName.BENJAMIN_BUDTON, Alignment.NEGATIVE, 10, $"Instantly degrow {UngrowEvent.NUMBER_CROPS} random crops by {UngrowEvent.NUMBER_DAYS} days"),
             CreateStackableEvent(EventName.DROUGHT, Alignment.NEGATIVE, 5, $"Instantly unwater {DroughtEvent.NUMBER_UNWATER} crops and remove {DroughtEvent.AMOUNT_REMOVED_FROM_CAN} water from the watering can"),
 
-            CreateStackableEvent(EventName.NUDGE, Alignment.NEGATIVE, 5, $"Perform {NudgeEvent.NUMBER_NUDGES} nudges to random chests"),
+            CreateStackableEvent(EventName.NUDGE, Alignment.NEGATIVE, 4, $"Perform {NudgeEvent.NUMBER_NUDGES} nudges to random chests"),
             CreateStackableEvent(EventName.NUDGE_ANY, Alignment.NEGATIVE, 10, $"Perform {NudgeAnythingEvent.NUMBER_NUDGES} nudges to random objects"),
             CreateStackableEvent(EventName.SHUFFLE_INVENTORY, Alignment.NEGATIVE, 2, $"Perform {ShuffleInventoryEvent.NUMBER_SWAPS} swaps between two random inventory items"),
             CreateStackableEvent(EventName.SHUFFLE_EVERYWHERE, Alignment.NEGATIVE, 15, $"Perform {ShuffleEverywhereEvent.NUMBER_SWAPS} swaps between two random items anywhere in the world"),

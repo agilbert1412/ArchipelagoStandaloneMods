@@ -112,6 +112,8 @@ namespace StardewViewerEvents.Events
                     return new SpecificEmoteEvent(logger, modHelper, queuedEvent);
                 case EventName.INVISIBLE_COWS:
                     return new SpawnInvisibleCowEvent(logger, modHelper, queuedEvent);
+                case EventName.LONG_INVISIBLE_COWS:
+                    return new SpawnLongInvisibleCowEvent(logger, modHelper, queuedEvent);
                 case EventName.THEMATIC_FULL_OUTFIT:
                     return new ThemedOutfitEvent(logger, modHelper, queuedEvent);
                 case EventName.RANDOMIZE_FULL_OUTFIT:
@@ -150,6 +152,8 @@ namespace StardewViewerEvents.Events
                     return new DroughtEvent(logger, modHelper, queuedEvent);
                 case EventName.NUDGE:
                     return new NudgeEvent(logger, modHelper, queuedEvent);
+                case EventName.NUDGE_ANY:
+                    return new NudgeAnythingEvent(logger, modHelper, queuedEvent);
                 case EventName.SHUFFLE_INVENTORY:
                     return new ShuffleInventoryEvent(logger, modHelper, queuedEvent);
                 case EventName.SHUFFLE_EVERYWHERE:

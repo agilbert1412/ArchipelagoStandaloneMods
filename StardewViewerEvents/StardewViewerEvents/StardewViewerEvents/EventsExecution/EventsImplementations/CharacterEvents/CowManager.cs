@@ -14,7 +14,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
         public const double INVISIBLE_COW_DESPAWN_CHANCE_PER_DAY = 0.1;
         public const double LONG_INVISIBLE_COW_DESPAWN_CHANCE_PER_DAY = 0.0005;
         public const double INVISIBLE_COW_BONUS_DESPAWN_CHANCE = 0.1;
-        public const double LONG_INVISIBLE_COW_BONUS_DESPAWN_CHANCE = 0.1;
+        public const double LONG_INVISIBLE_COW_BONUS_DESPAWN_CHANCE = 0.15;
 
         private static IViewerEventsLogger _logger;
         private static IModHelper _helper;
@@ -33,6 +33,8 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
                 {
                     return true;
                 }
+
+                var isLongCow = __instance.modData.ContainsKey(LONG_INVISIBLE_COW_KEY);
 
                 var vector2 = new Vector2(0.0f, __instance.yJumpOffset);
                 var boundingBox = __instance.GetBoundingBox();
@@ -107,7 +109,17 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
                 var tone = Math.Min(64, transparencyThisFrame * 2);
 
                 var color = __instance.hitGlowTimer > 0 ? Color.Red : new Color(tone, tone, tone, transparencyThisFrame);
-                __instance.Sprite.draw(b, Utility.snapDrawPosition(Game1.GlobalToLocal(Game1.viewport, __instance.Position - new Vector2(0.0f, 24f) + vector2)), layerDepth, 0, 0, color, __instance.FacingDirection == 3, 4f);
+                var cowScale = 4f;
+                var drawPosition = Utility.snapDrawPosition(Game1.GlobalToLocal(Game1.viewport,
+                    __instance.Position - new Vector2(0.0f, 24f) + vector2));
+                if (isLongCow)
+                {
+                    const float longCowScaleFactor = 2f;
+                    cowScale *= longCowScaleFactor;
+                    drawPosition.X -= (__instance.Sprite.SpriteWidth * longCowScaleFactor / 2);
+                    drawPosition.Y -= (__instance.Sprite.SpriteHeight * longCowScaleFactor / 2);
+                }
+                __instance.Sprite.draw(b, drawPosition, layerDepth, 0, 0, color, __instance.FacingDirection == 3, cowScale);
 
                 if (!__instance.isEmoting)
                 {
@@ -155,6 +167,10 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
                 var despawnRoll = Game1.random.NextDouble();
                 if (despawnRoll < chanceToDespawn)
                 {
+                    var adjective = isLongCow ? "long " : "";
+                    var cowsOnMap = __instance.currentLocation.Animals.Values.Where(x => x.modData.ContainsKey(INVISIBLE_COW_KEY) && x.modData.ContainsKey(LONG_INVISIBLE_COW_KEY) == isLongCow);
+                    var numCowsOnMap = cowsOnMap.Count() - 1;
+                    _logger.LogInfo($"Despawning one {adjective}invisible cow on {__instance.currentLocation.Name} ({numCowsOnMap} remaining)");
                     if (__instance.homeInterior is AnimalHouse animalHouse)
                     {
                         animalHouse.animalsThatLiveHere.Remove(__instance.myID.Value);

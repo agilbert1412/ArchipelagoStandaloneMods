@@ -6,7 +6,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.InventoryEve
 {
     public class NudgeEvent : InventoryEvent
     {
-        public const int NUMBER_NUDGES = 4;
+        public const int NUMBER_NUDGES = 2;
         protected ObjectNudger _objectNudger; 
 
         public NudgeEvent(IViewerEventsLogger logger, IModHelper modHelper, QueuedEvent queuedEvent) : base(logger, modHelper, queuedEvent)

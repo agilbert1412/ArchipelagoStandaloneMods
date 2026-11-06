@@ -36,7 +36,10 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.InventoryEve
         {
             var allLocations = Game1.locations.ToList();
             allLocations.AddRange(Game1.getFarm().buildings.Where(building => building?.indoors.Value != null).Select(building => building.indoors.Value));
-            var allObjects = allLocations.SelectMany(x => x.Objects.Values.ToArray());
+            allLocations.RemoveAll(x => x.Name.StartsWith("Cellar") && (x.Name != "Cellar" || Game1.player.HouseUpgradeLevel < 3));
+            var ignoredTypes = new[] { "Litter", "asdf" };
+            var allObjects = allLocations.SelectMany(x => x.Objects.Values
+                .Where(y => !ignoredTypes.Contains(y.Type) && !y.IsSpawnedObject && y.Fragility != 2).ToArray());
             var allBuildings = new List<Building>();
 
             if (onlyChests)
