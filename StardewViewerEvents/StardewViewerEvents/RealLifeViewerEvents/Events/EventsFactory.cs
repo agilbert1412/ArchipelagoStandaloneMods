@@ -13,6 +13,8 @@ namespace RealLifeViewerEvents.Events
             {
                 case EventName.KARAOKE_SONG:
                     return new KaraokeSongEvent(logger, queuedEvent);
+                case EventName.MOVIE_RECAP:
+                    return new MovieRecapEvent(logger, queuedEvent);
                 case EventName.OVEN_MITTS:
                     return new OvenMittsEvent(logger, queuedEvent);
                 case EventName.DOGGO:

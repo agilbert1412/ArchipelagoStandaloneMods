@@ -3,6 +3,7 @@
     public static class EventName
     {
         public const string KARAOKE_SONG = "karaoke";
+        public const string MOVIE_RECAP = "thickplot";
         public const string OVEN_MITTS = "bighands";
         public const string DOGGO = "gooddoggo";
         public const string PUSH_UPS = "bestrong";
