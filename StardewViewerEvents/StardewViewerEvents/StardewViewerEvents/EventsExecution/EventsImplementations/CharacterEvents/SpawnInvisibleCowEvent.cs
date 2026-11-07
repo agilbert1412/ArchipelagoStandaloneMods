@@ -19,6 +19,14 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
 
             var activeAccounts = ViewerEventsService.Instance.CreditAccounts.GetAccountsActiveInThePastMinutes(30);
             var activeNames = activeAccounts.Select(x => x.discordName).ToArray();
+            if (!activeNames.Any())
+            {
+                activeNames = ViewerEventsService.Instance.CreditAccounts.GetAllAccounts().Select(x => x.discordName).ToArray();
+            }
+            if (!activeNames.Any())
+            {
+                activeNames = new[] { "Cow1", "Cow2", "Cow3" };
+            }
 
             var amount = NUMBER_COWS_PER_PURCHASE * QueuedEvent.queueCount;
             _cowSpawner.SpawnManyInvisibleCows(amount, activeNames, false);

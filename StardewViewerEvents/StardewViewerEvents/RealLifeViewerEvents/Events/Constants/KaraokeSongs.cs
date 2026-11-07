@@ -33,7 +33,7 @@
             new("Still Alive", "Portal"),
             new("Want You Gone", "Portal"),
             new("How Bad Can I Be", "The Lorax"),
-            new("Just Ken", "Barbie and Ken"),
+            new("Just Ken", "Barbie"),
             new("The Duck Song", "The Duck Song"),
         }.Where(x => !string.IsNullOrWhiteSpace(x.Title)).OrderBy(x => x.Context).ThenBy(x => x.Title).ToList();
     }

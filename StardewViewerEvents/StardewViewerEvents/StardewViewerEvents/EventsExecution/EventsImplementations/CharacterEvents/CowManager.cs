@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using StardewModdingAPI;
 using StardewValley;
-using StardewViewerEvents.Extensions;
 using ViewerEventsLibrary.Logging;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEvents
@@ -110,16 +109,39 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
 
                 var color = __instance.hitGlowTimer > 0 ? Color.Red : new Color(tone, tone, tone, transparencyThisFrame);
                 var cowScale = 4f;
+                var cowScaleX = cowScale;
+                var cowScaleY = cowScale;
                 var drawPosition = Utility.snapDrawPosition(Game1.GlobalToLocal(Game1.viewport,
                     __instance.Position - new Vector2(0.0f, 24f) + vector2));
                 if (isLongCow)
                 {
-                    const float longCowScaleFactor = 2f;
-                    cowScale *= longCowScaleFactor;
-                    drawPosition.X -= (__instance.Sprite.SpriteWidth * longCowScaleFactor / 2);
-                    drawPosition.Y -= (__instance.Sprite.SpriteHeight * longCowScaleFactor / 2);
+                    const float longCowScaleFactor = 3f;
+                    if (__instance.FacingDirection == 1 || __instance.FacingDirection == 3)
+                    {
+                        cowScaleX *= longCowScaleFactor;
+                        drawPosition.X -= (__instance.Sprite.SpriteWidth * longCowScaleFactor / 2);
+                    }
+                    else
+                    {
+                        cowScaleY *= longCowScaleFactor;
+                        drawPosition.Y -= (__instance.Sprite.SpriteHeight * longCowScaleFactor / 2);
+                    }
                 }
-                __instance.Sprite.draw(b, drawPosition, layerDepth, 0, 0, color, __instance.FacingDirection == 3, cowScale);
+
+                var cowScaleVec = new Vector2(cowScaleX, cowScaleY);
+                var sprite = __instance.Sprite;
+                var flip = __instance.FacingDirection == 3;
+                if (sprite.Texture != null)
+                {
+                    var sourceRectangle = new Rectangle(sprite.sourceRect.X + 0, sprite.sourceRect.Y + 0,
+                        sprite.sourceRect.Width, sprite.sourceRect.Height);
+                    //b.Draw(sprite.Texture, drawPosition, sourceRectangle, color, 0.0f, Vector2.Zero, cowScale, flip || sprite.CurrentAnimation != null && sprite.CurrentAnimation[sprite.currentAnimationIndex].flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, layerDepth);
+                    b.Draw(sprite.Texture, drawPosition, sourceRectangle, color, 0.0f, Vector2.Zero, cowScaleVec, flip || sprite.CurrentAnimation != null && sprite.CurrentAnimation[sprite.currentAnimationIndex].flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, layerDepth);
+                }
+                else
+                {
+                    sprite.draw(b, drawPosition, layerDepth, 0, 0, color, flip, cowScale);
+                }
 
                 if (!__instance.isEmoting)
                 {

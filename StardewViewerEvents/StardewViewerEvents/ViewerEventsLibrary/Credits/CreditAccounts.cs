@@ -24,11 +24,26 @@ namespace ViewerEventsLibrary.Credits
         public void SetCommunicator(IBotCommunicator botCommunications)
         {
             _communications = botCommunications;
+            if (_communications == null)
+            {
+                return;
+            }
+            foreach (var (accountId, account) in _accounts)
+            {
+                account.discordName = _communications.GetDisplayName(account.discordId);
+            }
         }
 
         public CreditAccount this[ulong discordId]
         {
             get { return GetAccount(discordId); }
+        }
+
+        public CreditAccount[] GetAllAccounts()
+        {
+            var accounts = _accounts
+                .OrderByDescending(kvp => kvp.Value.lastActivityTime);
+            return accounts.Select(x => x.Value).ToArray();
         }
 
         public CreditAccount GetRandomAccount()
@@ -120,6 +135,10 @@ namespace ViewerEventsLibrary.Credits
             foreach (JObject creditAccountString in jsonData)
             {
                 var creditAccount = new CreditAccount(creditAccountString);
+                if (_communications != null)
+                {
+                    creditAccount.discordName = _communications.GetDisplayName(creditAccount.discordId);
+                }
                 accounts.Add(creditAccount);
             }
 
