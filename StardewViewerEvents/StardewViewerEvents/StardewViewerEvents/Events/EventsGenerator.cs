@@ -17,10 +17,10 @@ public class EventsGenerator : IEventsGenerator
     {
         var events = new List<ViewerEvent>
         {
-            CreateUnstackableEvent(EventName.TELEPORT_HOME, Alignment.NEUTRAL, 10, "Teleport home"),
-            CreateUnstackableEvent(EventName.TELEPORT_NEAR, Alignment.NEGATIVE, 4, "Teleport to a random tile on the current map"),
-            CreateUnstackableEvent(EventName.TELEPORT_RANDOM, Alignment.NEUTRAL, 15, "Teleport to a random map"),
-            CreateParameterUnstackableEvent(EventName.TELEPORT_MAP, Alignment.NEUTRAL, 50, "Teleport to a specific map. Must use stardew internal map names"),
+            CreateUnstackableEvent(EventName.TELEPORT_HOME, Alignment.NEUTRAL, 12, "Teleport home"),
+            CreateUnstackableEvent(EventName.TELEPORT_NEAR, Alignment.NEGATIVE, 3, "Teleport to a random tile on the current map"),
+            CreateUnstackableEvent(EventName.TELEPORT_RANDOM, Alignment.NEUTRAL, 8, "Teleport to a random map"),
+            CreateParameterUnstackableEvent(EventName.TELEPORT_MAP, Alignment.NEUTRAL, 40, "Teleport to a specific map. Must use stardew internal map names"),
 
             CreateStackableEvent(EventName.ITEM_GET_RANDOM, Alignment.POSITIVE, 10, "Give a random item"),
             CreateParameterStackableEvent(EventName.ITEM_GET_SPECIFIC, Alignment.POSITIVE, 25, "Give a specific item. Can use either an item ID, a Qualified item ID, or an item name"),
@@ -35,7 +35,7 @@ public class EventsGenerator : IEventsGenerator
             CreateUnstackableEvent(EventName.ITEM_QUALITY_DOWN, Alignment.NEUTRAL, 20, "Lower the quality of a random item"),
             CreateUnstackableEvent(EventName.ITEM_QUALITY_UP, Alignment.POSITIVE, 10, "Increase the quality of a random item"),
 
-            CreateStackableEvent(EventName.SPAWN_MONSTER_RANDOM, Alignment.NEGATIVE, 4, "Spawn a random monster nearby"),
+            CreateStackableEvent(EventName.SPAWN_MONSTER_RANDOM, Alignment.NEGATIVE, 5, "Spawn a random monster nearby"),
             CreateParameterStackableEvent(EventName.SPAWN_MONSTER_SPECIFIC, Alignment.NEGATIVE, 8, "Spawn specific monster"),
             CreateParameterStackableEvent(EventName.SPAWN_MONSTER_BOOSTED, Alignment.NEGATIVE, 10, "Spawn specific speed-boosted monster. Send many stacks of this event at once. 2 stacks means x2 speed, 3 stacks is x3 speed, and so on."),
             CreateStackableEvent(EventName.TEMPORARY_BABY, Alignment.NEGATIVE, 4, $"Spawn {SpawnTemporaryBabyEvent.NUMBER_TEMPORARY_BABIES} temporary babies"),
@@ -51,6 +51,7 @@ public class EventsGenerator : IEventsGenerator
             CreateUnstackableEvent(EventName.SMALL_BOMB, Alignment.NEGATIVE, 10, "Spawn a small lit bomb"),
             CreateUnstackableEvent(EventName.BOMB, Alignment.NEGATIVE, 50, "Spawn a medium lit bomb"),
             CreateUnstackableEvent(EventName.BIG_BOMB, Alignment.NEGATIVE, 80, "Spawn a large lit bomb"),
+            CreateUnstackableEvent(EventName.NUKE, Alignment.NEGATIVE, 500, "Spawn a massive lit bomb. How massive? Have you heard of Fallout?"),
 
             CreateStackableEvent(EventName.SOUND_MEOW, Alignment.NEUTRAL, 1, "Play a series of meows"),
             CreateStackableEvent(EventName.SOUND_BARK, Alignment.NEUTRAL, 1, "Play a series of barks"),
@@ -87,7 +88,7 @@ public class EventsGenerator : IEventsGenerator
             CreateStackableEvent(EventName.TIME_FORWARD, Alignment.NEUTRAL, 2, $"Advance time by {TimeForwardsEvent.MINUTES_FORWARD} minutes"),
             CreateStackableEvent(EventName.TIME_BACKWARDS, Alignment.NEUTRAL, 2, $"Move time backwards by {TimeBackwardsEvent.MINUTES_BACKWARDS} minutes"),
 
-            CreateUnstackableEvent(EventName.OPEN_MENU, Alignment.NEGATIVE, 1, $"Open a random menu"),
+            CreateUnstackableEvent(EventName.OPEN_MENU, Alignment.NEGATIVE, 2, $"Open a random menu"),
 
             CreateStackableEvent(EventName.CROW, Alignment.NEGATIVE, 10, $"Instantly send {CrowEvent.NUMBER_CROWS} crows to try to eat crops. Each crow has a {(int)(CrowEvent.SCARECROW_EFFICIENCY * 100)}% chance of getting stopped by each scarecrow in range."),
             CreateStackableEvent(EventName.BENJAMIN_BUDTON, Alignment.NEGATIVE, 10, $"Instantly degrow {UngrowEvent.NUMBER_CROPS} random crops by {UngrowEvent.NUMBER_DAYS} days"),
@@ -103,8 +104,8 @@ public class EventsGenerator : IEventsGenerator
             //CreateEvent(EventName.SLEEP_WEEK, Alignment.NEGATIVE, 200, "Sleep a whole week", false),
             //CreateEvent(EventName.SLEEP_MONTH, Alignment.NEGATIVE, 1000, "Sleep a whole month", false),
 
-            CreateUnstackableEvent(EventName.RANDOM_BUFF, Alignment.NEUTRAL, 5, $"Add a random buff to the player. Duration varies based on the buff"),
-            CreateParameterUnqueueableEvent(EventName.SPECIFIC_BUFF, Alignment.NEUTRAL, 15, $"Add a specific buff to the player. Must specify a buff ID or name from Stardew Valley"),
+            CreateUnstackableEvent(EventName.RANDOM_BUFF, Alignment.NEUTRAL, 2, $"Add a random buff to the player. Duration varies based on the buff"),
+            CreateParameterUnqueueableEvent(EventName.SPECIFIC_BUFF, Alignment.NEUTRAL, 8, $"Add a specific buff to the player. Must specify a buff ID or name from Stardew Valley"),
         };
 
         return events;

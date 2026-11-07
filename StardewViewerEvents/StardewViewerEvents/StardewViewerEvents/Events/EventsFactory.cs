@@ -90,6 +90,8 @@ namespace StardewViewerEvents.Events
                     return new MediumBombEvent(logger, modHelper, queuedEvent);
                 case EventName.BIG_BOMB:
                     return new BigBombEvent(logger, modHelper, queuedEvent);
+                case EventName.NUKE:
+                    return new NukeEvent(logger, modHelper, queuedEvent);
                 case EventName.SOUND_MEOW:
                     return new PlayMeowEvent(logger, modHelper, queuedEvent);
                 case EventName.SOUND_BARK:

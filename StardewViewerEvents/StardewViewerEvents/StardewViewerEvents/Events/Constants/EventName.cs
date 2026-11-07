@@ -39,6 +39,7 @@
         public const string SMALL_BOMB = "boomling";
         public const string BOMB = "boom";
         public const string BIG_BOMB = "bigboom";
+        public const string NUKE = "omegaboom";
 
         public const string SOUND_SPECIFIC = "sound";
         public const string SOUND_BARK = "bark";

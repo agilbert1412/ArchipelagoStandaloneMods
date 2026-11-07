@@ -57,7 +57,7 @@ namespace RealLifeViewerEvents.EventsExecution
                 if (!executableEvent.ValidateParameters(out var errorMessage))
                 {
                     var accountToRefund = accounts[eventToSend.userId];
-                    var refundAmount = baseEvent.GetMultiplierCost(Events.CurrentMultiplier) * eventToSend.queueCount;
+                    var refundAmount = baseEvent.GetMultiplierCost(eventToSend.currentMultiplier) * eventToSend.queueCount;
                     accountToRefund.RefundCredits(refundAmount);
                     await communications.SendMessageAsync(channels.EventsChannel,
                         $"{errorMessage} You have been refunded {refundAmount} credits. Current Balance: {accountToRefund.GetCredits()}");
@@ -264,7 +264,7 @@ namespace RealLifeViewerEvents.EventsExecution
 
             var baseEvent = eventToRefund.BaseEvent;
             var accountToRefund = accounts[eventToRefund.userId];
-            var refundAmount = baseEvent.GetMultiplierCost(Events.CurrentMultiplier) * eventToRefund.queueCount;
+            var refundAmount = baseEvent.GetMultiplierCost(eventToRefund.currentMultiplier) * eventToRefund.queueCount;
             accountToRefund.RefundCredits(refundAmount);
             communications.SendMessageAsync(channels.EventsChannel, $"Event '{baseEvent.name}' was cancelled. You have been refunded {refundAmount} credits. Current Balance: {accountToRefund.GetCredits()}").FireAndForget();
             _logger.LogInfo($"Event '{baseEvent.name}' cancelled. {refundAmount} credits were refunded to {accountToRefund.discordName}");
