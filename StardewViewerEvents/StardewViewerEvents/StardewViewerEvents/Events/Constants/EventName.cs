@@ -4,6 +4,7 @@
     {
         public const string INVISIBLE_COWS = "wemoounseen";
         public const string LONG_INVISIBLE_COWS = "wemoooounseen";
+        public const string DELETE_COWS = "ripcow";
 
         public const string ITEM_HOME = "sendhome";
         public const string ITEM_SELL = "salesman";

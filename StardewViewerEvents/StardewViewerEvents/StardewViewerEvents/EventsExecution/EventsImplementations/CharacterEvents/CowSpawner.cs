@@ -1,4 +1,5 @@
 ﻿using StardewValley;
+using xTile;
 
 namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEvents
 {
@@ -66,6 +67,72 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
             } while (npcNames.Contains(cowName));
 
             return cowName;
+        }
+
+        public int CountGhostCowsOnCurrentMap()
+        {
+            var map = Game1.player.currentLocation;
+            var ghostCows = map.Animals.Values.Where(x => x.modData.ContainsKey(CowManager.INVISIBLE_COW_KEY));
+            return ghostCows.Count();
+        }
+
+        public void RemoveInvisibleCows(int amount)
+        {
+            while (amount > 0)
+            {
+                if (TryDeleteLongCowOnCurrentMap())
+                {
+                    amount--;
+                    continue;
+                }
+                if (TryDeleteSmallCowOnCurrentMap())
+                {
+                    amount--;
+                    continue;
+                }
+
+                return;
+            }
+        }
+
+        private bool TryDeleteLongCowOnCurrentMap()
+        {
+            var map = Game1.player.currentLocation;
+            var cowsOnMap = map.Animals.Values.Where(x => x.modData.ContainsKey(CowManager.INVISIBLE_COW_KEY) && x.modData.ContainsKey(CowManager.LONG_INVISIBLE_COW_KEY)).ToArray();
+
+            if (!cowsOnMap.Any())
+            {
+                return false;
+            }
+
+            DeleteRandomCow(cowsOnMap);
+            return true;
+        }
+
+        private bool TryDeleteSmallCowOnCurrentMap()
+        {
+            var map = Game1.player.currentLocation;
+            var cowsOnMap = map.Animals.Values.Where(x => x.modData.ContainsKey(CowManager.INVISIBLE_COW_KEY) && !x.modData.ContainsKey(CowManager.LONG_INVISIBLE_COW_KEY)).ToArray();
+
+            if (!cowsOnMap.Any())
+            {
+                return false;
+            }
+
+            DeleteRandomCow(cowsOnMap);
+            return true;
+        }
+
+        private static void DeleteRandomCow(FarmAnimal[] cowsOnMap)
+        {
+            var cowToDelete = cowsOnMap[Game1.random.Next(cowsOnMap.Length)];
+
+            if (cowToDelete.homeInterior is AnimalHouse animalHouse)
+            {
+                animalHouse.animalsThatLiveHere.Remove(cowToDelete.myID.Value);
+            }
+
+            cowToDelete.currentLocation.Animals.Remove(cowToDelete.myID.Value);
         }
     }
 }

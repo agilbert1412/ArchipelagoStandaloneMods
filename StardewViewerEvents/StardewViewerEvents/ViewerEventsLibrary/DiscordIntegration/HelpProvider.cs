@@ -122,6 +122,11 @@ namespace ViewerEventsLibrary.DiscordIntegration
                             break;
                         }
                     }
+
+                    if (foundEvent == null)
+                    {
+                        continue;
+                    }
                     eventsByCategory[category].Add(foundEvent);
                     events.Remove(foundEvent);
                 }

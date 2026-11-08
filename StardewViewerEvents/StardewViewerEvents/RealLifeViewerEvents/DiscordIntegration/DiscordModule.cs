@@ -41,7 +41,7 @@ namespace RealLifeViewerEvents.DiscordIntegration
             _directory = path;
             _commandReader = commandReader;
 
-            _helpProvider = new HelpProvider(_communications, ActiveChannels, new Dictionary<string, string[]>());
+            _helpProvider = new HelpProvider(_communications, ActiveChannels, EventCategory.CATEGORY_MAP);
             _creditsCommandsHandler = new CreditsCommandsHandler(_communications, _commandReader);
             _eventsCommandsHandler = new EventsCommandsHandler<QueuedEvent>(_communications, _commandReader, _helpProvider);
             _donationsCommandsHandler = new DonationsCommandsHandler(_communications, ActiveChannels);

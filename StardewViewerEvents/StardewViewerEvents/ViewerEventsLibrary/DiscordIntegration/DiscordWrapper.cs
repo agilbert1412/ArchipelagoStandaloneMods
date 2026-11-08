@@ -17,6 +17,7 @@ namespace ViewerEventsLibrary.DiscordIntegration
         {
             // How much logging do you want to see?
             LogLevel = LogSeverity.Info,
+            AlwaysDownloadUsers = true,
 
             // If you or another service needs to do anything with messages
             // (eg. checking Reactions, checking the content of edited/deleted messages),

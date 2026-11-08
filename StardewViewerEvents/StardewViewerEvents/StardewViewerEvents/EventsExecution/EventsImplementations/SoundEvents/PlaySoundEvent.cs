@@ -27,7 +27,7 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.SoundEvents
 
         protected virtual bool SoundCueIsValid(string soundCue)
         {
-            if (Game1.soundBank.Exists(soundCue))
+            if (!Game1.soundBank.Exists(soundCue))
             {
                 return false;
             }

@@ -89,6 +89,11 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.ItemEvents
         {
             foreach (var chestItem in inventory)
             {
+                if (chestItem == null)
+                {
+                    continue;
+                }
+
                 if (chestItem.canStackWith(item) && chestItem.Stack + item.Stack < maxStack)
                 {
                     chestItem.Stack += item.Stack;

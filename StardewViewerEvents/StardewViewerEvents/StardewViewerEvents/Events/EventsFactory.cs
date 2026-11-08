@@ -116,6 +116,8 @@ namespace StardewViewerEvents.Events
                     return new SpawnInvisibleCowEvent(logger, modHelper, queuedEvent);
                 case EventName.LONG_INVISIBLE_COWS:
                     return new SpawnLongInvisibleCowEvent(logger, modHelper, queuedEvent);
+                case EventName.DELETE_COWS:
+                    return new DeleteCowsEvent(logger, modHelper, queuedEvent);
                 case EventName.THEMATIC_FULL_OUTFIT:
                     return new ThemedOutfitEvent(logger, modHelper, queuedEvent);
                 case EventName.RANDOMIZE_FULL_OUTFIT:

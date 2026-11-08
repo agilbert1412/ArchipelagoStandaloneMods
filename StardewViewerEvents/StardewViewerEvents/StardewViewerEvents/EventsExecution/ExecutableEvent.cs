@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using StardewModdingAPI;
 using StardewValley;
+using StardewValley.Locations;
 using StardewViewerEvents.Events;
 using StardewViewerEvents.Events.Constants;
 using StardewViewerEvents.EventsExecution.EventsImplementations;
@@ -57,6 +58,11 @@ namespace StardewViewerEvents.EventsExecution
             }
 
             if (AnyMenuActive())
+            {
+                return false;
+            }
+
+            if (Game1.player.currentLocation is FarmHouse)
             {
                 return false;
             }

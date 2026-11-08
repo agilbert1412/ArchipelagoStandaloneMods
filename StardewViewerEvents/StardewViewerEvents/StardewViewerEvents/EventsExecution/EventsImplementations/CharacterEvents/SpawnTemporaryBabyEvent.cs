@@ -17,9 +17,22 @@ namespace StardewViewerEvents.EventsExecution.EventsImplementations.CharacterEve
             base.Execute();
 
             var activeAccounts = ViewerEventsService.Instance.CreditAccounts.GetAccountsActiveInThePastMinutes(30);
-            var activeNames = activeAccounts.Select(x => x.discordName).ToArray();
+            var activeNames = activeAccounts.Select(x => x.discordName).ToList();
+
+            if (!activeNames.Any())
+            {
+                activeNames = ViewerEventsService.Instance.CreditAccounts.GetAllAccounts().Select(x => x.discordName).ToList();
+            }
+
+            var i = 0;
+            while (activeNames.Count < 30)
+            {
+                activeNames.Add($"Baby{i}");
+                i++;
+            }
+
             var amount = NUMBER_TEMPORARY_BABIES * QueuedEvent.queueCount;
-            _babyBirther.SpawnTemporaryBabies(activeNames, amount);
+            _babyBirther.SpawnTemporaryBabies(activeNames.ToArray(), amount);
         }
     }
 }

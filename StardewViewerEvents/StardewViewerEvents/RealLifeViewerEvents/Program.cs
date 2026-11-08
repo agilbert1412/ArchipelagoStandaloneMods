@@ -207,7 +207,7 @@ namespace RealLifeViewerEvents
 
             if (inputWords.Length > 1)
             {
-                refundRateForSpentCredits = double.Parse(inputWords[1]);
+                refundRateForRemainingCredits = double.Parse(inputWords[1]);
             }
 
             if (inputWords.Length > 2)

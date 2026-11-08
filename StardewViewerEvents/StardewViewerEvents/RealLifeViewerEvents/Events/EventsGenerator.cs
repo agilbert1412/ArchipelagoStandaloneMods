@@ -13,10 +13,10 @@ public class EventsGenerator : IEventsGenerator
         {
             CreateParameterUnstackableEvent(EventName.KARAOKE_SONG, Alignment.NEUTRAL, 1000, "Make me sing a song. Warning: I sing VERY badly"),
             CreateParameterUnstackableEvent(EventName.MOVIE_RECAP, Alignment.NEUTRAL, 200, "Pick a movie, and I'll do a very bad recap of it. If I haven't seen the movie, I will refund the event."),
-            CreateStackableEvent(EventName.OVEN_MITTS, Alignment.NEGATIVE, 50, "Wear Oven Mitts for 1 minute"),
-            CreateUnstackableEvent(EventName.DOGGO, Alignment.POSITIVE, 50, "Show the stream a good boy"),
-            CreateStackableEvent(EventName.PUSH_UPS, Alignment.NEGATIVE, 50, "Do one push-up"),
-            CreateStackableEvent(EventName.HORNET_MASK, Alignment.NEGATIVE, 40, "Wear a Hornet Mask for 1 minute"),
+            CreateStackableEvent(EventName.OVEN_MITTS, Alignment.NEGATIVE, 100, "Wear Oven Mitts for 1 minute"),
+            CreateUnstackableEvent(EventName.DOGGO, Alignment.POSITIVE, 40, "Show the stream a good boy"),
+            CreateStackableEvent(EventName.PUSH_UPS, Alignment.NEGATIVE, 60, "Do one push-up"),
+            CreateStackableEvent(EventName.HORNET_MASK, Alignment.NEGATIVE, 50, "Wear a Hornet Mask for 1 minute"),
             CreateStackableEvent(EventName.BLINDFOLD, Alignment.NEGATIVE, 200, "Wear a Blindfold for 30 seconds"),
             CreateStackableEvent(EventName.SILENCE, Alignment.NEGATIVE, 40, "Lose all audio for 1 minute"),
             CreateStackableEvent(EventName.MUTE, Alignment.NEGATIVE, 20, "Mute your Discord microphone for 1 minute (stream mic will still work). Only relevant if I'm in a multiplayer game."),
@@ -24,7 +24,7 @@ public class EventsGenerator : IEventsGenerator
             CreateStackableEvent(EventName.NO_MOUSE, Alignment.NEGATIVE, 50, "Can't use mouse for 1 minute"),
             CreateStackableEvent(EventName.INVERT_HANDS, Alignment.NEGATIVE, 75, "Swap hands for mouse and keyboard for 1 minute"),
             CreateStackableEvent(EventName.CALL_A_FRIEND, Alignment.NEUTRAL, 75, "Give control of the game to someone else for 1 minute. If nobody is available, will be refunded."),
-            CreateUnstackableEvent(EventName.HYDRATE, Alignment.POSITIVE, 50, "Drink something"),
+            CreateUnstackableEvent(EventName.HYDRATE, Alignment.POSITIVE, 40, "Drink something"),
             // CreateUnstackableEvent(EventName.SPLASH, Alignment.NEGATIVE, 1000, "Splash something on your head"),
             CreateParameterStackableEvent(EventName.WORD_BAN, Alignment.NEUTRAL, 50, "Ban a word for 1 minute. Every time I say the word, you are refunded 1x the base cost of the event"),
             CreateStackableEvent(EventName.PIRATE_SPEAK, Alignment.NEUTRAL, 100, "Speak like a pirate for 1 minute"),
@@ -33,7 +33,7 @@ public class EventsGenerator : IEventsGenerator
             CreateStackableEvent(EventName.PESSIMIST, Alignment.NEUTRAL, 50, "Be extremely negative and grumpy for 1 minute"),
             CreateStackableEvent(EventName.HYPE, Alignment.NEUTRAL, 50, "Be extremely hype and energetic for 1 minute"),
             // CreateUnstackableEvent(EventName.REVERSE_SHIRT, Alignment.NEUTRAL, 100, "Reverse your shirt"),
-            CreateParameterUnstackableEvent(EventName.PICK_NEXT_GAME, Alignment.NEUTRAL, 1000, "Choose the next game I'll play. I'll try to switch relatively soon. Has to be a game I already own."),
+            CreateParameterUnstackableEvent(EventName.PICK_NEXT_GAME, Alignment.NEUTRAL, 1000, "Choose the next game I'll play. I'll try to switch relatively soon, and play it for a decent chunk of time, but not necessarily until the next switch, I reserve the right to stop when I want. Has to be a game I already own."),
             /*
              *
              */
